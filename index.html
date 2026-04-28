@@ -421,10 +421,12 @@ const ALPHABET = [
     enHint:"a soft neutral vowel, not i",
     idHint:"seperti e pepet, bukan i",
     contrast:"ı ≠ i",
-    soundAudio:"audio/dotless_i_sound.mp3",
-    syllableAudio:"audio/dotless_i_syllables.mp3",
-    wordAudio:"audio/ilik.mp3",
-    compareAudio:"audio/dotless_i_i_compare.mp3"
+    soundAudio:"audio/letter_ı_pure_sound.mp3",
+    syllableAudio:"audio/letter_ı_syllables_lı_kı_sı.mp3",
+    wordAudio:"audio/word_ılık_correct.mp3",
+    compareAudio:"audio/compare_ı_vs_i.mp3",
+    noTtsNote_en:"Do not use browser TTS for ı. Record and use a real Turkish audio file for the pure ı sound.",
+    noTtsNote_id:"Jangan gunakan TTS browser untuk ı. Gunakan file audio asli bahasa Turki untuk bunyi ı."
   },
   {
     id:"o2",
@@ -775,6 +777,12 @@ function renderAlphabet(){
     </div>
   ` : "";
 
+  const noTtsBox = item.noTtsNote_en ? `
+    <div class="logic important">
+      ${lang()==="id" ? item.noTtsNote_id : item.noTtsNote_en}
+    </div>
+  ` : "";
+
   const firstButton = item.softG
     ? `<button class="primary" onclick="playAudio('${item.syllableAudio}','${item.word}')">${T("listenExamples")}</button>`
     : `<button class="primary" onclick="playAudio('${item.soundAudio}','${item.letter}')">${T("listenSound")}</button>`;
@@ -784,6 +792,7 @@ function renderAlphabet(){
     <div class="meaning">${item.word} = ${text(item)}</div>
     <div class="logic">${lang()==="id"?item.idHint:item.enHint}<br><b>${item.contrast}</b></div>
     ${softGBox}
+    ${noTtsBox}
     <div class="row">
       ${firstButton}
       <button class="primary" onclick="playAudio('${item.syllableAudio}','${item.word}')">${item.softG ? T("listenExamples") : T("listenSyllables")}</button>
