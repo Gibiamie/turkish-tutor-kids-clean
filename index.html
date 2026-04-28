@@ -249,6 +249,23 @@
   </div>
 
 <script>
+
+window.addEventListener("error", function(event){
+  try{
+    document.body.style.visibility = "visible";
+    const msg = event && event.message ? event.message : "Unknown error";
+    const line = event && event.lineno ? event.lineno : "";
+    document.body.innerHTML = `
+      <div style="font-family:Arial,sans-serif;max-width:720px;margin:40px auto;padding:24px;border:2px solid #fee2e2;border-radius:24px;background:#fff;color:#0f172a">
+        <h2 style="margin-top:0;color:#991b1b">App loading error</h2>
+        <p>The app could not start because of stored browser data or a JavaScript error.</p>
+        <p><b>Error:</b> ${msg}${line ? " / line " + line : ""}</p>
+        <button onclick="localStorage.clear(); location.reload();" style="padding:14px 18px;border:0;border-radius:14px;background:#2563eb;color:white;font-weight:900;cursor:pointer">Clear saved data and reload</button>
+      </div>
+    `;
+  }catch(e){}
+});
+
 const UI = {
   en: {
     initialSubtitle: "Choose your learner profile first. Then choose the learning style that fits you best.",
@@ -395,12 +412,30 @@ const UI = {
 };
 
 let learner = localStorage.getItem("tmb_learner") || "";
+if(learner !== "bella" && learner !== "ayza") learner = "";
 let style = localStorage.getItem("tmb_style") || "";
+if(style !== "family" && style !== "kids" && style !== "adult") style = "";
 let currentLesson = "meaning";
 let index = 0;
 
-let stats = JSON.parse(localStorage.getItem("tmb_stats") || '{"score":0,"attempts":0}');
-let completed = JSON.parse(localStorage.getItem("tmb_done") || '{"alphabet":[],"root":[],"meaning":[],"evolution":[],"plural":[],"accusative":[],"mutation":[]}');
+function safeJSON(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    if(!raw) return fallback;
+    const parsed = JSON.parse(raw);
+    if(!parsed || typeof parsed !== "object") return fallback;
+    return parsed;
+  }catch(e){
+    localStorage.removeItem(key);
+    return fallback;
+  }
+}
+
+let stats = safeJSON("tmb_stats", {"score":0,"attempts":0});
+if(typeof stats.score !== "number") stats.score = 0;
+if(typeof stats.attempts !== "number") stats.attempts = 0;
+
+let completed = safeJSON("tmb_done", {"alphabet":[],"root":[],"meaning":[],"evolution":[],"plural":[],"accusative":[],"mutation":[]});
 
 function normalizeCompletedShape(){
   const keys = ["alphabet","root","meaning","evolution","plural","accusative","mutation"];
