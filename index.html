@@ -491,13 +491,11 @@ function speakText(text){
 
 function playTurkishLetterSound(letterId){
   /*
-    Important:
-    Browser Turkish TTS is unreliable for isolated letters like "ş" and "ç".
-    The previous synthetic noise method sounded unnatural.
-    Therefore, Listen Letter now uses a clear sample word:
+    Browser Turkish TTS is unreliable for isolated Turkish letters like "ş" and "ç".
+    Instead of artificial noise, this uses a clear sample word:
       ş → şapka
       ç → çay
-    This gives the learner the real Turkish sound in context.
+      ğ → dağ
   */
   const sampleWords = {
     "s-cedilla": "şapka",
@@ -511,7 +509,9 @@ function playTurkishLetterSound(letterId){
   }
 
   const item = ALPHABET.find(x => x.id === letterId);
-  if(item) speakText(item.letterSpeak);
+  if(item){
+    speakText(item.letterSpeak);
+  }
 }
 
 function listenLetter(id){
