@@ -1,792 +1,1184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Turkish Meaning Builder</title>
-<style>
-:root{
-  --bg:#edf4ff;
-  --card:#ffffff;
-  --ink:#0f172a;
-  --muted:#64748b;
-  --line:#dbe3ef;
-  --blue:#2563eb;
-  --blue2:#1d4ed8;
-  --green:#16a34a;
-  --green-bg:#dcfce7;
-  --red:#991b1b;
-  --red-bg:#fee2e2;
-  --purple:#6d28d9;
-  --purple-bg:#ede9fe;
-  --yellow:#92400e;
-  --yellow-bg:#fef3c7;
-  --soft:#f8fafc;
-}
-*{box-sizing:border-box}
-html,body{min-height:100%}
-body{
-  margin:0;
-  font-family:Inter,Arial,sans-serif;
-  background:linear-gradient(180deg,#eef4ff 0%,#f8fbff 100%);
-  color:var(--ink);
-  visibility:hidden;
-}
-.app{
-  max-width:680px;
-  margin:0 auto;
-  min-height:100vh;
-  background:#fff;
-  padding:18px;
-}
-.header{
-  text-align:center;
-  padding:16px 8px 10px;
-}
-h1{
-  margin:0 0 8px;
-  font-size:32px;
-  letter-spacing:-.6px;
-}
-.subtitle{
-  color:#475569;
-  font-size:15px;
-  line-height:1.45;
-}
-.card{
-  background:rgba(255,255,255,.96);
-  border:1.5px solid var(--line);
-  border-radius:28px;
-  padding:18px;
-  margin:16px 0;
-  box-shadow:0 12px 30px rgba(15,23,42,.07);
-}
-.prompt{
-  text-align:center;
-  font-size:25px;
-  font-weight:950;
-  margin:8px 0 16px;
-  letter-spacing:-.3px;
-}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.row{display:flex;gap:10px;margin-top:12px}
-.row button{flex:1}
-button{
-  border:0;
-  border-radius:20px;
-  padding:15px 14px;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
-  background:#dbeafe;
-  color:#1e3a8a;
-  min-height:58px;
-  transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-}
-button:hover{box-shadow:0 8px 18px rgba(37,99,235,.12)}
-button:active{transform:scale(.98)}
-.primary{background:var(--blue);color:white}
-.success{background:var(--green-bg);color:#166534}
-.warning{background:var(--yellow-bg);color:var(--yellow)}
-.danger{background:var(--red-bg);color:var(--red)}
-.ghost{background:#f1f5f9;color:#334155}
-.purple{background:var(--purple-bg);color:var(--purple)}
-.hidden{display:none!important}
-.user-btn{
-  text-align:left;
-  min-height:118px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:8px;
-}
-.user-title{font-size:20px;font-weight:950}
-.user-sub{font-size:15px;font-weight:850;opacity:.9}
-.user-hint{font-size:12px;font-weight:800;opacity:.78}
-.select-wrap{position:relative}
-.style-options{
-  display:grid;
-  gap:10px;
-}
-.style-card{
-  border:2px solid var(--line);
-  border-radius:20px;
-  padding:14px;
-  background:#fff;
-  cursor:pointer;
-  transition:border-color .15s ease, background .15s ease, transform .15s ease;
-}
-.style-card:hover{transform:translateY(-1px)}
-.style-card.active{
-  border-color:var(--blue);
-  background:#eff6ff;
-}
-.style-title{
-  font-size:17px;
-  font-weight:950;
-  margin-bottom:4px;
-}
-.style-desc{
-  color:#475569;
-  line-height:1.4;
-  font-weight:750;
-  font-size:14px;
-}
-.big{
-  font-size:54px;
-  font-weight:950;
-  text-align:center;
-  margin:16px 0;
-  color:var(--blue);
-  letter-spacing:-.5px;
-}
-.meaning{
-  text-align:center;
-  font-size:21px;
-  font-weight:950;
-  color:#334155;
-  margin:12px 0;
-}
-.small{font-size:14px;color:var(--muted);line-height:1.5}
-.feedback{
-  margin-top:12px;
-  padding:13px;
-  border-radius:18px;
-  background:#f1f5f9;
-  text-align:center;
-  font-weight:900;
-}
-.logic{
-  margin-top:12px;
-  padding:14px;
-  border-radius:20px;
-  background:#eef2ff;
-  color:#3730a3;
-  font-weight:850;
-  line-height:1.55;
-  text-align:center;
-}
-.logic.adult{background:#ecfeff;color:#155e75;text-align:left}
-.logic.kids{background:#fff7ed;color:#9a3412}
-.table{width:100%;border-collapse:collapse;margin-top:10px}
-.table td{border-bottom:1px solid #e5e7eb;padding:10px;font-weight:850}
-.progress{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px}
-.bar{height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);width:0}
-.stat{background:#f8fafc;border-radius:18px;padding:13px;text-align:center;font-weight:950}
-.stat small{display:block;color:var(--muted);margin-top:4px;font-size:13px}
-.mode-pill{
-  display:inline-block;
-  background:#f8fafc;
-  border:1px solid #e2e8f0;
-  border-radius:999px;
-  padding:7px 11px;
-  margin:4px;
-  font-size:12px;
-  font-weight:950;
-  color:#334155;
-}
-.path-card{
-  border:2px solid #e2e8f0;
-  border-radius:24px;
-  padding:15px;
-  margin:12px 0;
-  background:#fff;
-}
-.path-card.current{border-color:var(--blue);background:#eff6ff}
-.path-card.done{border-color:#22c55e;background:#f0fdf4}
-.path-title{font-size:20px;font-weight:950;margin-bottom:6px}
-.path-desc{color:#475569;margin-bottom:8px;font-weight:750}
-.part-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media(max-width:520px){
-  .app{padding:12px}
-  h1{font-size:28px}
-  .grid2,.grid3,.part-grid{grid-template-columns:1fr}
-  .row{flex-direction:column}
-  .big{font-size:46px}
-}
-</style>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turkish Meaning Builder</title>
 
+  <style>
+    :root{
+      --bg:#edf4ff;
+      --card:#ffffff;
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#dbe3ef;
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --blue-soft:#eff6ff;
+      --green:#16a34a;
+      --green-soft:#dcfce7;
+      --purple:#6d28d9;
+      --purple-soft:#ede9fe;
+      --yellow:#92400e;
+      --yellow-soft:#fef3c7;
+      --red:#991b1b;
+      --red-soft:#fee2e2;
+      --soft:#f8fafc;
+      --shadow:0 14px 34px rgba(15,23,42,.08);
+      --radius:28px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{min-height:100%}
+
+    body{
+      margin:0;
+      font-family:Inter, Arial, sans-serif;
+      background:linear-gradient(180deg,#eef4ff 0%,#f8fbff 100%);
+      color:var(--ink);
+      visibility:hidden;
+    }
+
+    .app{
+      max-width:760px;
+      margin:0 auto;
+      min-height:100vh;
+      background:#fff;
+      padding:18px;
+    }
+
+    .header{
+      text-align:center;
+      padding:10px 8px 12px;
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size:32px;
+      letter-spacing:-.6px;
+    }
+
+    .subtitle{
+      color:#475569;
+      font-size:15px;
+      line-height:1.5;
+      min-height:22px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.98);
+      border:1.5px solid var(--line);
+      border-radius:var(--radius);
+      padding:20px;
+      margin:16px 0;
+      box-shadow:var(--shadow);
+    }
+
+    .hidden{display:none !important}
+
+    .section-title{
+      text-align:center;
+      font-size:18px;
+      font-weight:900;
+      color:#334155;
+      margin:4px 0 14px;
+    }
+
+    .prompt{
+      text-align:center;
+      font-size:24px;
+      font-weight:950;
+      margin:8px 0 16px;
+      letter-spacing:-.3px;
+    }
+
+    .step-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid #dbeafe;
+      color:#1d4ed8;
+      background:#eff6ff;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      margin:0 auto 14px;
+    }
+
+    .center{
+      display:flex;
+      justify-content:center;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .grid3{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .row button{
+      flex:1;
+    }
+
+    button{
+      border:0;
+      border-radius:20px;
+      padding:15px 14px;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      min-height:58px;
+      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
+    }
+
+    button:hover{
+      box-shadow:0 10px 22px rgba(37,99,235,.12);
+    }
+
+    button:active{
+      transform:scale(.985);
+    }
+
+    .primary{
+      background:var(--blue);
+      color:white;
+    }
+
+    .ghost{
+      background:#f1f5f9;
+      color:#334155;
+    }
+
+    .danger{
+      background:var(--red-soft);
+      color:var(--red);
+    }
+
+    .success{
+      background:var(--green-soft);
+      color:#166534;
+    }
+
+    .warning{
+      background:var(--yellow-soft);
+      color:var(--yellow);
+    }
+
+    .purple{
+      background:var(--purple-soft);
+      color:var(--purple);
+    }
+
+    .user-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .user-card{
+      border:2px solid transparent;
+      border-radius:24px;
+      padding:18px;
+      min-height:140px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:8px;
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      text-align:left;
+    }
+
+    .user-card:hover{
+      transform:translateY(-1px);
+      box-shadow:0 12px 24px rgba(15,23,42,.08);
+    }
+
+    .user-card.active{
+      border-color:#0f172a;
+    }
+
+    .user-bella{
+      background:linear-gradient(180deg,#2f66e6 0%, #3166e3 100%);
+      color:#fff;
+    }
+
+    .user-ayza{
+      background:#cfeeda;
+      color:#0f5132;
+    }
+
+    .user-title{
+      font-size:20px;
+      font-weight:950;
+      line-height:1.1;
+    }
+
+    .user-main{
+      font-size:15px;
+      font-weight:900;
+      opacity:.96;
+    }
+
+    .user-sub{
+      font-size:13px;
+      font-weight:800;
+      opacity:.9;
+    }
+
+    .style-list{
+      display:grid;
+      gap:12px;
+      margin-top:6px;
+    }
+
+    .style-card{
+      border:2px solid var(--line);
+      border-radius:22px;
+      padding:16px;
+      background:#fff;
+      cursor:pointer;
+      transition:border-color .15s ease, background .15s ease, transform .15s ease, box-shadow .15s ease;
+    }
+
+    .style-card:hover{
+      transform:translateY(-1px);
+      box-shadow:0 10px 20px rgba(15,23,42,.06);
+    }
+
+    .style-card.active{
+      border-color:var(--blue);
+      background:var(--blue-soft);
+    }
+
+    .style-title{
+      font-size:18px;
+      font-weight:950;
+      margin-bottom:4px;
+    }
+
+    .style-desc{
+      color:#475569;
+      line-height:1.45;
+      font-weight:800;
+      font-size:14px;
+    }
+
+    .logic{
+      margin-top:12px;
+      padding:14px;
+      border-radius:20px;
+      background:#eef2ff;
+      color:#3730a3;
+      font-weight:850;
+      line-height:1.55;
+      text-align:center;
+    }
+
+    .logic.adult{
+      background:#ecfeff;
+      color:#155e75;
+      text-align:left;
+    }
+
+    .logic.kids{
+      background:#fff7ed;
+      color:#9a3412;
+    }
+
+    .mode-pill{
+      display:inline-block;
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:999px;
+      padding:7px 11px;
+      margin:4px;
+      font-size:12px;
+      font-weight:950;
+      color:#334155;
+    }
+
+    .stat{
+      background:#f8fafc;
+      border-radius:18px;
+      padding:13px;
+      text-align:center;
+      font-weight:950;
+    }
+
+    .stat small{
+      display:block;
+      color:var(--muted);
+      margin-top:4px;
+      font-size:13px;
+    }
+
+    .progress{
+      height:12px;
+      background:#e5e7eb;
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:10px;
+    }
+
+    .bar{
+      height:100%;
+      background:linear-gradient(90deg,#22c55e,#16a34a);
+      width:0;
+    }
+
+    .path-card{
+      border:2px solid #e2e8f0;
+      border-radius:24px;
+      padding:15px;
+      margin:12px 0;
+      background:#fff;
+    }
+
+    .path-card.current{
+      border-color:var(--blue);
+      background:#eff6ff;
+    }
+
+    .path-card.done{
+      border-color:#22c55e;
+      background:#f0fdf4;
+    }
+
+    .path-title{
+      font-size:20px;
+      font-weight:950;
+      margin-bottom:6px;
+    }
+
+    .path-desc{
+      color:#475569;
+      margin-bottom:8px;
+      font-weight:750;
+    }
+
+    .big{
+      font-size:54px;
+      font-weight:950;
+      text-align:center;
+      margin:16px 0;
+      color:var(--blue);
+      letter-spacing:-.5px;
+    }
+
+    .meaning{
+      text-align:center;
+      font-size:21px;
+      font-weight:950;
+      color:#334155;
+      margin:12px 0;
+    }
+
+    .feedback{
+      margin-top:12px;
+      padding:13px;
+      border-radius:18px;
+      background:#f1f5f9;
+      text-align:center;
+      font-weight:900;
+    }
+
+    .table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+    }
+
+    .table td{
+      border-bottom:1px solid #e5e7eb;
+      padding:10px;
+      font-weight:850;
+    }
+
+    .part-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .hint-box{
+      margin-top:12px;
+      padding:14px;
+      border-radius:20px;
+      background:#f8fafc;
+      border:1px dashed #cbd5e1;
+      color:#475569;
+      font-size:14px;
+      font-weight:800;
+      line-height:1.5;
+      text-align:center;
+    }
+
+    .small-muted{
+      font-size:13px;
+      color:#64748b;
+      text-align:center;
+      margin-top:8px;
+      font-weight:700;
+    }
+
+    @media(max-width:640px){
+      .app{padding:12px}
+      h1{font-size:28px}
+      .user-grid,.grid2,.grid3,.part-grid{grid-template-columns:1fr}
+      .row{flex-direction:column}
+      .big{font-size:46px}
+      .prompt{font-size:22px}
+    }
+  </style>
+</head>
 <body>
-<div class="app">
-  <div class="header">
-    <h1>Turkish Meaning Builder</h1>
-    <div class="subtitle" id="subtitle"></div>
+  <div class="app">
+
+    <div class="header">
+      <h1>Turkish Meaning Builder</h1>
+      <div class="subtitle" id="subtitle"></div>
+    </div>
+
+    <!-- START PAGE -->
+    <section id="startPage" class="card">
+      <div class="center">
+        <div class="step-badge" id="step1Badge">1 • Choose learner / Pilih pengguna</div>
+      </div>
+
+      <div class="prompt" id="chooseLearnerTitle">Choose learner / Pilih pengguna</div>
+
+      <div class="user-grid">
+        <div class="user-card user-bella" id="bellaCard" onclick="chooseLearner('bella')">
+          <div class="user-title">Bella</div>
+          <div class="user-main">English</div>
+          <div class="user-sub">English explanations</div>
+        </div>
+
+        <div class="user-card user-ayza" id="ayzaCard" onclick="chooseLearner('ayza')">
+          <div class="user-title">Ayza</div>
+          <div class="user-main">Bahasa Indonesia</div>
+          <div class="user-sub">Penjelasan bahasa Indonesia</div>
+        </div>
+      </div>
+
+      <div id="styleStep" class="hidden" style="margin-top:26px">
+        <div class="center">
+          <div class="step-badge" id="step2Badge"></div>
+        </div>
+
+        <div class="prompt" id="learningStyleTitle"></div>
+
+        <div class="style-list" id="styleList"></div>
+
+        <div class="hint-box" id="styleHint"></div>
+
+        <div class="row">
+          <button class="primary" id="continueBtn" onclick="goHome()"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOME PAGE -->
+    <section id="homePage" class="hidden">
+      <div class="card">
+        <div class="row">
+          <button class="ghost" id="changeLearnerBtn" onclick="backToStart()"></button>
+          <button class="danger" id="deleteProgressBtn" onclick="deleteProgress()"></button>
+        </div>
+
+        <div class="prompt" id="homeTitle"></div>
+
+        <div id="modeInfo"></div>
+
+        <div id="positioning" class="logic"></div>
+
+        <div class="grid3">
+          <div class="stat">
+            <span id="score">0</span>
+            <small id="scoreLabel"></small>
+          </div>
+
+          <div class="stat">
+            <span id="attempts">0</span>
+            <small id="attemptsLabel"></small>
+          </div>
+
+          <div class="stat">
+            <span id="accuracy">0%</span>
+            <small id="accuracyLabel"></small>
+          </div>
+        </div>
+
+        <div class="progress">
+          <div id="bar" class="bar"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="prompt" id="pathTitle"></div>
+        <div id="pathBox"></div>
+      </div>
+    </section>
+
+    <!-- LESSON PAGE -->
+    <section id="lessonPage" class="hidden">
+      <div class="card">
+        <div class="row">
+          <button class="ghost" id="mainMenuBtn" onclick="showHome()"></button>
+          <button class="primary" id="nextBtn" onclick="nextItem()"></button>
+        </div>
+
+        <div class="prompt" id="lessonTitle"></div>
+        <div id="activity"></div>
+      </div>
+    </section>
+
   </div>
 
-  <section id="startPage" class="card">
-    <div class="prompt" id="chooseLearner"></div>
-
-    <div class="grid2">
-      <button class="primary user-btn" onclick="chooseLearner('bella')">
-        <span class="user-title">Bella</span>
-        <span class="user-sub">English</span>
-        <span class="user-hint">English explanations</span>
-      </button>
-
-      <button class="success user-btn" onclick="chooseLearner('ayza')">
-        <span class="user-title">Ayza</span>
-        <span class="user-sub">Bahasa Indonesia</span>
-        <span class="user-hint">Penjelasan bahasa Indonesia</span>
-      </button>
-    </div>
-
-    <div class="prompt" id="learningStyleTitle" style="margin-top:24px"></div>
-
-    <div class="style-options" id="styleOptions"></div>
-  </section>
-
-  <section id="homePage" class="hidden">
-    <div class="card">
-      <div class="row">
-        <button class="ghost" onclick="backToStart()" id="changeLearner"></button>
-        <button class="danger" onclick="deleteProgress()" id="deleteProgress"></button>
-      </div>
-
-      <div class="prompt" id="mainTitle"></div>
-      <div id="modeInfo"></div>
-      <div id="positioning" class="logic"></div>
-
-      <div class="grid3">
-        <div class="stat"><span id="score">0</span><small id="scoreLabel"></small></div>
-        <div class="stat"><span id="attempts">0</span><small id="attemptsLabel"></small></div>
-        <div class="stat"><span id="accuracy">0%</span><small id="accuracyLabel"></small></div>
-      </div>
-
-      <div class="progress"><div id="bar" class="bar"></div></div>
-    </div>
-
-    <div class="card">
-      <div class="prompt" id="pathTitle"></div>
-      <div id="pathBox"></div>
-    </div>
-  </section>
-
-  <section id="lessonPage" class="hidden">
-    <div class="card">
-      <div class="row">
-        <button class="ghost" onclick="showHome()" id="mainMenuBtn"></button>
-        <button class="primary" onclick="nextItem()" id="nextBtn"></button>
-      </div>
-
-      <div class="prompt" id="lessonTitle"></div>
-      <div id="activity"></div>
-    </div>
-  </section>
-</div>
-
-<script>
-const UI = {
-  en: {
-    subtitle: "Turkish is not memorized word by word. Meaning is built from roots and suffixes.",
-    chooseLearner: "Choose learner",
-    learningStyleTitle: "Choose learning style",
-    familyTitle: "Family Mode",
-    familyDesc: "Short games first, then simple logic. Best when a parent and child learn together.",
-    kidsTitle: "Kids Mode",
-    kidsDesc: "Very simple screens, fewer grammar notes, more play and sound.",
-    adultTitle: "Adult Mode",
-    adultDesc: "More logic, suffix explanations, and short grammar notes without long theory.",
-    changeLearner: "Change learner",
-    deleteProgress: "Delete progress",
-    homePage: "Home Page",
-    positioning: "You do not memorize words. You build meaning: root word + suffix + suffix.",
-    score: "Score",
-    attempts: "Practice",
-    accuracy: "Accuracy",
-    pathTitle: "Path of Meaning",
-    atMoment: "Now",
-    open: "Open",
-    mainMenu: "Main Page",
-    next: "Next",
-    alphabet: "Alphabet Pro",
-    alphabetDesc: "Stable sounds: ı, ö, ü, ş, ç, ğ",
-    root: "Root Words",
-    rootDesc: "Base words that can grow with suffixes",
-    meaning: "Meaning Builder",
-    meaningDesc: "Build meaning with root + suffix + suffix",
-    evolution: "Word Evolution",
-    evolutionDesc: "Watch a word grow: ev → evim → evimde",
-    listenLetter: "Listen Letter",
-    listenWord: "Listen Word",
-    iKnow: "I know this",
-    listen: "Listen",
-    buildPrompt: "Build the Turkish meaning",
-    tapParts: "Tap the parts in the correct order.",
-    clear: "Clear",
-    check: "Check",
-    correctBuild: "Correct. You built a Turkish meaning.",
-    tryAgain: "Try again. The order of suffixes matters.",
-    wordGrow: "Watch the word grow",
-    understand: "I understand",
-    rootNote: "This is the base word. Later, suffixes will add new meaning to it.",
-    kidsLogic: "Build the word like blocks.",
-    familyLogic: "The suffixes add meaning to the root word.",
-    adultLogic: "Logic"
-  },
-  id: {
-    subtitle: "Bahasa Turki tidak dihafal kata demi kata. Makna dibangun dari akar kata dan akhiran.",
-    chooseLearner: "Pilih pengguna",
-    learningStyleTitle: "Pilih gaya belajar",
-    familyTitle: "Mode Keluarga",
-    familyDesc: "Permainan singkat dulu, lalu logika sederhana. Cocok untuk anak dan orang tua belajar bersama.",
-    kidsTitle: "Mode Anak",
-    kidsDesc: "Tampilan sangat sederhana, catatan tata bahasa lebih sedikit, lebih banyak permainan dan suara.",
-    adultTitle: "Mode Dewasa",
-    adultDesc: "Lebih banyak logika, penjelasan akhiran, dan catatan tata bahasa singkat tanpa teori panjang.",
-    changeLearner: "Ganti pengguna",
-    deleteProgress: "Hapus progres",
-    homePage: "Halaman Utama",
-    positioning: "Kamu tidak menghafal kata. Kamu membangun makna: akar kata + akhiran + akhiran.",
-    score: "Skor",
-    attempts: "Latihan",
-    accuracy: "Akurasi",
-    pathTitle: "Jalur Makna",
-    atMoment: "Saat ini",
-    open: "Buka",
-    mainMenu: "Halaman Utama",
-    next: "Berikutnya",
-    alphabet: "Alfabet Pro",
-    alphabetDesc: "Bunyi stabil: ı, ö, ü, ş, ç, ğ",
-    root: "Akar Kata",
-    rootDesc: "Kata dasar yang bisa berkembang dengan akhiran",
-    meaning: "Pembuat Makna",
-    meaningDesc: "Bangun makna dengan akar kata + akhiran + akhiran",
-    evolution: "Perkembangan Kata",
-    evolutionDesc: "Lihat kata berkembang: ev → evim → evimde",
-    listenLetter: "Dengar Huruf",
-    listenWord: "Dengar Kata",
-    iKnow: "Saya tahu",
-    listen: "Dengar",
-    buildPrompt: "Bangun makna bahasa Turki",
-    tapParts: "Tekan bagian kata dalam urutan yang benar.",
-    clear: "Hapus",
-    check: "Periksa",
-    correctBuild: "Benar. Kamu membangun makna bahasa Turki.",
-    tryAgain: "Coba lagi. Urutan akhiran penting.",
-    wordGrow: "Lihat kata berkembang",
-    understand: "Saya mengerti",
-    rootNote: "Ini kata dasar. Nanti akhiran akan menambah makna baru pada kata ini.",
-    kidsLogic: "Susun kata seperti blok.",
-    familyLogic: "Akhiran menambah makna pada akar kata.",
-    adultLogic: "Logika"
-  }
-};
-
-let learner = localStorage.getItem("tmb_learner") || "";
-let style = localStorage.getItem("tmb_style") || "family";
-let currentLesson = "meaning";
-let index = 0;
-let stats = JSON.parse(localStorage.getItem("tmb_stats") || '{"score":0,"attempts":0}');
-let completed = JSON.parse(localStorage.getItem("tmb_done") || '{"alphabet":[],"meaning":[]}');
-
-const ALPHABET = [
-  {letter:"e", word:"ev", en:"house", id:"rumah", enSound:"e like e in bed", idSound:"e seperti e pada enak", contrast:"e ≠ i"},
-  {letter:"ı", word:"ılık", en:"warm", id:"hangat", enSound:"soft uh, not i", idSound:"seperti e pepet, bukan i", contrast:"ı ≠ i"},
-  {letter:"ö", word:"göz", en:"eye", id:"mata", enSound:"say e while rounding lips", idSound:"ucapkan e dengan bibir bulat", contrast:"ö ≠ o"},
-  {letter:"ü", word:"gül", en:"rose", id:"mawar", enSound:"say ee while rounding lips", idSound:"seperti i, tetapi bibir bulat", contrast:"ü ≠ u"},
-  {letter:"ş", word:"şapka", en:"hat", id:"topi", enSound:"sh like ship", idSound:"sy seperti syarat", contrast:"ş ≠ ç"},
-  {letter:"ç", word:"çay", en:"tea", id:"teh", enSound:"ch like chair", idSound:"c seperti cari", contrast:"ç ≠ ş"},
-  {letter:"ğ", word:"dağ", en:"mountain", id:"gunung", enSound:"soft g, usually stretches the vowel", idSound:"tidak dibaca jelas; memanjangkan bunyi", contrast:"dağ → daa"}
-];
-
-const ROOTS = [
-  {root:"ev", en:"house", id:"rumah"},
-  {root:"okul", en:"school", id:"sekolah"},
-  {root:"araba", en:"car", id:"mobil"},
-  {root:"kitap", en:"book", id:"buku"},
-  {root:"göz", en:"eye", id:"mata"}
-];
-
-const MEANINGS = [
-  {
-    parts:[["ev","root","house","rumah"],["im","suffix","my","saya"],["de","suffix","in / at","di dalam"]],
-    result:"evimde",
-    en:"in my house",
-    id:"di rumah saya",
-    adult_en:"Root + possession + location. The location suffix comes after possession.",
-    adult_id:"Akar kata + kepemilikan + tempat. Akhiran tempat datang setelah kepemilikan."
-  },
-  {
-    parts:[["okul","root","school","sekolah"],["um","suffix","my","saya"],["da","suffix","in / at","di dalam"]],
-    result:"okulumda",
-    en:"in my school",
-    id:"di sekolah saya",
-    adult_en:"The vowel in the suffix changes by vowel harmony: okul + um + da.",
-    adult_id:"Vokal pada akhiran berubah sesuai harmoni vokal: okul + um + da."
-  },
-  {
-    parts:[["araba","root","car","mobil"],["m","suffix","my","saya"],["dan","suffix","from","dari"]],
-    result:"arabamdan",
-    en:"from my car",
-    id:"dari mobil saya",
-    adult_en:"After a vowel-ending root, possession can be -m: araba + m.",
-    adult_id:"Jika akar kata berakhir dengan vokal, kepemilikan bisa menjadi -m: araba + m."
-  },
-  {
-    parts:[["ev","root","house","rumah"],["im","suffix","my","saya"],["e","suffix","to","ke"]],
-    result:"evime",
-    en:"to my house",
-    id:"ke rumah saya",
-    adult_en:"Direction suffix -e/-a means to or towards.",
-    adult_id:"Akhiran arah -e/-a berarti ke atau menuju."
-  },
-  {
-    parts:[["okul","root","school","sekolah"],["um","suffix","my","saya"],["dan","suffix","from","dari"]],
-    result:"okulumdan",
-    en:"from my school",
-    id:"dari sekolah saya",
-    adult_en:"Meaning is carried by the suffix sequence, not by extra separate words.",
-    adult_id:"Makna dibawa oleh urutan akhiran, bukan oleh kata tambahan yang terpisah."
-  }
-];
-
-function lang(){
-  return learner === "ayza" ? "id" : "en";
-}
-
-function U(key){
-  return UI[lang()][key] || UI.en[key] || key;
-}
-
-function meaning(obj){
-  return lang() === "id" ? obj.id : obj.en;
-}
-
-function setText(id, text){
-  const el = document.getElementById(id);
-  if(el) el.textContent = text;
-}
-
-function localizeBase(){
-  setText("subtitle", U("subtitle"));
-  setText("chooseLearner", U("chooseLearner"));
-  setText("learningStyleTitle", U("learningStyleTitle"));
-  renderStyleOptions();
-}
-
-function renderStyleOptions(){
-  const styles = [
-    ["family", U("familyTitle"), U("familyDesc")],
-    ["kids", U("kidsTitle"), U("kidsDesc")],
-    ["adult", U("adultTitle"), U("adultDesc")]
-  ];
-
-  document.getElementById("styleOptions").innerHTML = styles.map(s => `
-    <div class="style-card ${style === s[0] ? "active" : ""}" onclick="setStyle('${s[0]}')">
-      <div class="style-title">${s[1]}</div>
-      <div class="style-desc">${s[2]}</div>
-    </div>
-  `).join("");
-}
-
-function setStyle(selectedStyle){
-  style = selectedStyle;
-  localStorage.setItem("tmb_style", style);
-  localizeBase();
-  if(learner) showHome();
-}
-
-function chooseLearner(selectedLearner){
-  learner = selectedLearner;
-  localStorage.setItem("tmb_learner", learner);
-  localizeBase();
-  showHome();
-}
-
-function backToStart(){
-  document.getElementById("homePage").classList.add("hidden");
-  document.getElementById("lessonPage").classList.add("hidden");
-  document.getElementById("startPage").classList.remove("hidden");
-  localizeBase();
-}
-
-function showHome(){
-  document.getElementById("startPage").classList.add("hidden");
-  document.getElementById("lessonPage").classList.add("hidden");
-  document.getElementById("homePage").classList.remove("hidden");
-
-  setText("changeLearner", U("changeLearner"));
-  setText("deleteProgress", U("deleteProgress"));
-  setText("mainTitle", (learner === "ayza" ? "Ayza — " : "Bella — ") + U("homePage"));
-  setText("scoreLabel", U("score"));
-  setText("attemptsLabel", U("attempts"));
-  setText("accuracyLabel", U("accuracy"));
-  setText("pathTitle", U("pathTitle"));
-  setText("mainMenuBtn", U("mainMenu"));
-  setText("nextBtn", U("next"));
-
-  document.getElementById("positioning").textContent = U("positioning");
-  document.getElementById("modeInfo").innerHTML =
-    `<span class="mode-pill">${learner === "ayza" ? "Ayza / Bahasa Indonesia" : "Bella / English"}</span>
-     <span class="mode-pill">${U(style + "Title")}</span>
-     <span class="mode-pill">root + suffix</span>`;
-
-  renderPath();
-  updateProgress();
-}
-
-function renderPath(){
-  const lessons = [
-    ["alphabet", U("alphabet"), U("alphabetDesc"), completed.alphabet.length, ALPHABET.length],
-    ["root", U("root"), U("rootDesc"), 0, ROOTS.length],
-    ["meaning", U("meaning"), U("meaningDesc"), completed.meaning.length, MEANINGS.length],
-    ["evolution", U("evolution"), U("evolutionDesc"), completed.meaning.length, MEANINGS.length]
-  ];
-
-  document.getElementById("pathBox").innerHTML = lessons.map((lesson, i) => {
-    const percent = Math.min(100, Math.round((lesson[3] / Math.max(1, lesson[4])) * 100));
-
-    return `
-      <div class="path-card ${percent === 100 ? "done" : i === 0 ? "current" : ""}">
-        <div class="path-title">${lesson[1]}</div>
-        <div class="path-desc">${lesson[2]}</div>
-        <span class="mode-pill">${U("atMoment")}</span>
-        <span class="mode-pill">${percent}%</span>
-        <div class="progress"><div class="bar" style="width:${percent}%"></div></div>
-        <button class="primary" style="width:100%;margin-top:12px" onclick="openLesson('${lesson[0]}')">${U("open")}</button>
-      </div>
-    `;
-  }).join("");
-}
-
-function openLesson(type){
-  currentLesson = type;
-  index = 0;
-  document.getElementById("homePage").classList.add("hidden");
-  document.getElementById("lessonPage").classList.remove("hidden");
-  setText("mainMenuBtn", U("mainMenu"));
-  setText("nextBtn", U("next"));
-  renderLesson();
-}
-
-function renderLesson(){
-  if(currentLesson === "alphabet") renderAlphabet();
-  if(currentLesson === "root") renderRoot();
-  if(currentLesson === "meaning") renderMeaning();
-  if(currentLesson === "evolution") renderEvolution();
-}
-
-function nextItem(){
-  index++;
-  const max = currentLesson === "alphabet" ? ALPHABET.length : currentLesson === "root" ? ROOTS.length : MEANINGS.length;
-  if(index >= max) index = 0;
-  renderLesson();
-}
-
-function speak(text){
-  if(!("speechSynthesis" in window)) return;
-  speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "tr-TR";
-  utterance.rate = .75;
-  speechSynthesis.speak(utterance);
-}
-
-function shuffle(array){
-  return [...array].sort(() => Math.random() - .5);
-}
-
-function mark(type, id){
-  if(!completed[type]) completed[type] = [];
-  if(!completed[type].includes(id)) completed[type].push(id);
-
-  localStorage.setItem("tmb_done", JSON.stringify(completed));
-  stats.score++;
-  stats.attempts++;
-  localStorage.setItem("tmb_stats", JSON.stringify(stats));
-
-  updateProgress();
-  renderPath();
-}
-
-function updateProgress(){
-  const totalPercent = Math.min(100, Math.round(((completed.alphabet.length + completed.meaning.length) / (ALPHABET.length + MEANINGS.length)) * 100));
-  const accuracy = stats.attempts ? Math.round((stats.score / stats.attempts) * 100) : 0;
-
-  setText("score", stats.score);
-  setText("attempts", stats.attempts);
-  setText("accuracy", accuracy + "%");
-
-  document.getElementById("bar").style.width = totalPercent + "%";
-}
-
-function modeExplanation(item){
-  if(style === "kids"){
-    return `<div class="logic kids">🎮 ${U("kidsLogic")}</div>`;
-  }
-
-  if(style === "family"){
-    return `
-      <div class="logic">
-        🧩 ${item.parts.map(part => part[0]).join(" + ")} = <b>${item.result}</b><br>
-        ${U("familyLogic")}
-      </div>
-    `;
-  }
-
-  const adultText = lang() === "id" ? item.adult_id : item.adult_en;
-
-  return `
-    <div class="logic adult">
-      <b>${U("adultLogic")}:</b><br>
-      ${item.parts.map(part => `${part[0]} = ${lang() === "id" ? part[3] : part[2]}`).join("<br>")}
-      <br><br>
-      ${adultText}
-    </div>
-  `;
-}
-
-function renderAlphabet(){
-  const item = ALPHABET[index];
-  setText("lessonTitle", U("alphabet"));
-
-  document.getElementById("activity").innerHTML = `
-    <div class="big">${item.letter}</div>
-    <div class="meaning">${item.word} = ${meaning(item)}</div>
-    <div class="logic ${style === "kids" ? "kids" : style === "adult" ? "adult" : ""}">
-      ${lang() === "id" ? item.idSound : item.enSound}<br>
-      <b>${item.contrast}</b>
-    </div>
-
-    <div class="row">
-      <button class="primary" onclick="speak('${item.letter}')">${U("listenLetter")}</button>
-      <button class="primary" onclick="speak('${item.word}')">${U("listenWord")}</button>
-    </div>
-
-    <div class="row">
-      <button class="success" onclick="mark('alphabet','${item.word}')">${U("iKnow")}</button>
-      <button class="warning" onclick="nextItem()">${U("next")}</button>
-    </div>
-  `;
-}
-
-function renderRoot(){
-  const item = ROOTS[index];
-  setText("lessonTitle", U("root"));
-
-  document.getElementById("activity").innerHTML = `
-    <div class="big">${item.root}</div>
-    <div class="meaning">${meaning(item)}</div>
-    <div class="logic ${style === "kids" ? "kids" : style === "adult" ? "adult" : ""}">
-      ${U("rootNote")}
-    </div>
-
-    <div class="row">
-      <button class="primary" onclick="speak('${item.root}')">${U("listen")}</button>
-      <button class="warning" onclick="nextItem()">${U("next")}</button>
-    </div>
-  `;
-}
-
-function renderMeaning(){
-  const item = MEANINGS[index];
-  setText("lessonTitle", U("meaning"));
-
-  const options = shuffle(item.parts);
-  window.currentAnswer = [];
-
-  document.getElementById("activity").innerHTML = `
-    <div class="prompt">${U("buildPrompt")}</div>
-    <div class="meaning">${meaning(item)}</div>
-    <div id="answer" class="big"></div>
-
-    <div class="part-grid">
-      ${options.map(part => `
-        <button class="${part[1] === "root" ? "success" : "warning"}" onclick="pickPart('${part[0]}')">
-          ${part[0]}
-        </button>
-      `).join("")}
-    </div>
-
-    <div class="row">
-      <button class="danger" onclick="renderMeaning()">${U("clear")}</button>
-      <button class="primary" onclick="checkBuild('${item.result}')">${U("check")}</button>
-    </div>
-
-    ${modeExplanation(item)}
-    <div id="fb" class="feedback">${U("tapParts")}</div>
-  `;
-}
-
-function pickPart(part){
-  window.currentAnswer.push(part);
-  document.getElementById("answer").textContent = window.currentAnswer.join("");
-}
-
-function checkBuild(correct){
-  const given = window.currentAnswer.join("");
-  const ok = given === correct;
-
-  stats.attempts++;
-  if(ok) stats.score++;
-
-  localStorage.setItem("tmb_stats", JSON.stringify(stats));
-
-  const feedback = document.getElementById("fb");
-  feedback.textContent = ok ? U("correctBuild") : U("tryAgain");
-  feedback.style.background = ok ? "#dcfce7" : "#fee2e2";
-  feedback.style.color = ok ? "#166534" : "#991b1b";
-
-  if(ok){
-    speak(correct);
-    if(!completed.meaning.includes(correct)) completed.meaning.push(correct);
-    localStorage.setItem("tmb_done", JSON.stringify(completed));
-  }
-
-  updateProgress();
-}
-
-function renderEvolution(){
-  const item = MEANINGS[index];
-  setText("lessonTitle", U("evolution"));
-
-  let steps = [item.parts[0][0]];
-  if(item.parts.length > 1) steps.push(item.parts[0][0] + item.parts[1][0]);
-  steps.push(item.result);
-
-  document.getElementById("activity").innerHTML = `
-    <div class="prompt">${U("wordGrow")}</div>
-    <div class="big">${steps.join(" → ")}</div>
-    <div class="meaning">${meaning(item)}</div>
-
-    ${modeExplanation(item)}
-
-    <table class="table">
-      ${item.parts.map(part => `
-        <tr>
-          <td>${part[0]}</td>
-          <td>${lang() === "id" ? part[3] : part[2]}</td>
-        </tr>
-      `).join("")}
-    </table>
-
-    <div class="row">
-      <button class="primary" onclick="speak('${item.result}')">${U("listen")}</button>
-      <button class="success" onclick="mark('meaning','${item.result}')">${U("understand")}</button>
-    </div>
-  `;
-}
-
-function deleteProgress(){
-  completed = { alphabet: [], meaning: [] };
-  stats = { score: 0, attempts: 0 };
-
-  localStorage.setItem("tmb_done", JSON.stringify(completed));
-  localStorage.setItem("tmb_stats", JSON.stringify(stats));
-
-  showHome();
-}
-
-localizeBase();
-
-if(learner){
-  localizeBase();
-  showHome();
-}
-
-document.body.style.visibility = "visible";
-</script>
+  <script>
+    const UI = {
+      en: {
+        initialSubtitle: "Choose your learner profile first. Then choose the learning style that fits you best.",
+        subtitle: "Turkish is not memorized word by word. Meaning is built from roots and suffixes.",
+        chooseLearnerTitle: "Choose learner",
+        step2Badge: "2 • Choose learning style",
+        learningStyleTitle: "Choose a learning style",
+        continue: "Continue",
+        styleHint: "Pick the style that feels easiest and most comfortable. You can change it later anytime.",
+
+        familyTitle: "Family Mode",
+        familyDesc: "Short games first, then simple logic. Perfect for kids and parents to learn together.",
+
+        kidsTitle: "Kids Mode",
+        kidsDesc: "Very simple interface, fewer grammar notes, more games and sounds.",
+
+        adultTitle: "Adult Mode",
+        adultDesc: "More logic, ending explanations, and short grammar notes without long theories.",
+
+        changeLearner: "Change learner",
+        deleteProgress: "Delete progress",
+        homePage: "Home Page",
+        positioning: "You do not memorize words. You build meaning: root word + suffix + suffix.",
+
+        score: "Score",
+        attempts: "Practice",
+        accuracy: "Accuracy",
+
+        pathTitle: "Path of Meaning",
+        atMoment: "Now",
+        open: "Open",
+        mainMenu: "Main Page",
+        next: "Next",
+
+        alphabet: "Alphabet Pro",
+        alphabetDesc: "Stable sounds: ı, ö, ü, ş, ç, ğ",
+
+        root: "Root Words",
+        rootDesc: "Base words that can grow with suffixes",
+
+        meaning: "Meaning Builder",
+        meaningDesc: "Build meaning with root + suffix + suffix",
+
+        evolution: "Word Evolution",
+        evolutionDesc: "Watch a word grow: ev → evim → evimde",
+
+        listenLetter: "Listen Letter",
+        listenWord: "Listen Word",
+        iKnow: "I know this",
+        listen: "Listen",
+
+        buildPrompt: "Build the Turkish meaning",
+        tapParts: "Tap the parts in the correct order.",
+        clear: "Clear",
+        check: "Check",
+        correctBuild: "Correct. You built a Turkish meaning.",
+        tryAgain: "Try again. The order of suffixes matters.",
+
+        wordGrow: "Watch the word grow",
+        understand: "I understand",
+
+        rootNote: "This is the base word. Later, suffixes will add new meaning to it.",
+
+        kidsLogic: "Build the word like blocks.",
+        familyLogic: "The suffixes add meaning to the root word.",
+        adultLogic: "Logic"
+      },
+
+      id: {
+        initialSubtitle: "Pilih profil pengguna terlebih dahulu. Setelah itu pilih gaya belajar yang paling cocok.",
+        subtitle: "Bahasa Turki tidak dihafal kata demi kata. Makna dibangun dari akar kata dan akhiran.",
+        chooseLearnerTitle: "Pilih pengguna",
+        step2Badge: "2 • Pilih gaya belajar",
+        learningStyleTitle: "Pilih gaya belajar",
+        continue: "Lanjut",
+        styleHint: "Pilih gaya yang terasa paling mudah dan nyaman. Kamu bisa mengubahnya nanti kapan saja.",
+
+        familyTitle: "Mode Keluarga",
+        familyDesc: "Permainan singkat dulu, lalu logika sederhana. Cocok untuk anak dan orang tua belajar bersama.",
+
+        kidsTitle: "Mode Anak",
+        kidsDesc: "Tampilan sangat sederhana, catatan tata bahasa lebih sedikit, lebih banyak permainan dan suara.",
+
+        adultTitle: "Mode Dewasa",
+        adultDesc: "Lebih banyak logika, penjelasan akhiran, dan catatan tata bahasa singkat tanpa teori panjang.",
+
+        changeLearner: "Ganti pengguna",
+        deleteProgress: "Hapus progres",
+        homePage: "Halaman Utama",
+        positioning: "Kamu tidak menghafal kata. Kamu membangun makna: akar kata + akhiran + akhiran.",
+
+        score: "Skor",
+        attempts: "Latihan",
+        accuracy: "Akurasi",
+
+        pathTitle: "Jalur Makna",
+        atMoment: "Saat ini",
+        open: "Buka",
+        mainMenu: "Halaman Utama",
+        next: "Berikutnya",
+
+        alphabet: "Alfabet Pro",
+        alphabetDesc: "Bunyi stabil: ı, ö, ü, ş, ç, ğ",
+
+        root: "Akar Kata",
+        rootDesc: "Kata dasar yang bisa berkembang dengan akhiran",
+
+        meaning: "Pembuat Makna",
+        meaningDesc: "Bangun makna dengan akar kata + akhiran + akhiran",
+
+        evolution: "Perkembangan Kata",
+        evolutionDesc: "Lihat kata berkembang: ev → evim → evimde",
+
+        listenLetter: "Dengar Huruf",
+        listenWord: "Dengar Kata",
+        iKnow: "Saya tahu",
+        listen: "Dengar",
+
+        buildPrompt: "Bangun makna bahasa Turki",
+        tapParts: "Tekan bagian kata dalam urutan yang benar.",
+        clear: "Hapus",
+        check: "Periksa",
+        correctBuild: "Benar. Kamu membangun makna bahasa Turki.",
+        tryAgain: "Coba lagi. Urutan akhiran penting.",
+
+        wordGrow: "Lihat kata berkembang",
+        understand: "Saya mengerti",
+
+        rootNote: "Ini kata dasar. Nanti akhiran akan menambah makna baru pada kata ini.",
+
+        kidsLogic: "Susun kata seperti blok.",
+        familyLogic: "Akhiran menambah makna pada akar kata.",
+        adultLogic: "Logika"
+      }
+    };
+
+    let learner = localStorage.getItem("tmb_learner") || "";
+    let style = localStorage.getItem("tmb_style") || "";
+    let currentLesson = "meaning";
+    let index = 0;
+
+    let stats = JSON.parse(localStorage.getItem("tmb_stats") || '{"score":0,"attempts":0}');
+    let completed = JSON.parse(localStorage.getItem("tmb_done") || '{"alphabet":[],"meaning":[]}');
+
+    const ALPHABET = [
+      {letter:"e", word:"ev", en:"house", id:"rumah", enSound:"e like e in bed", idSound:"e seperti e pada enak", contrast:"e ≠ i"},
+      {letter:"ı", word:"ılık", en:"warm", id:"hangat", enSound:"soft uh, not i", idSound:"seperti e pepet, bukan i", contrast:"ı ≠ i"},
+      {letter:"ö", word:"göz", en:"eye", id:"mata", enSound:"say e while rounding lips", idSound:"ucapkan e dengan bibir bulat", contrast:"ö ≠ o"},
+      {letter:"ü", word:"gül", en:"rose", id:"mawar", enSound:"say ee while rounding lips", idSound:"seperti i, tetapi bibir bulat", contrast:"ü ≠ u"},
+      {letter:"ş", word:"şapka", en:"hat", id:"topi", enSound:"sh like ship", idSound:"sy seperti syarat", contrast:"ş ≠ ç"},
+      {letter:"ç", word:"çay", en:"tea", id:"teh", enSound:"ch like chair", idSound:"c seperti cari", contrast:"ç ≠ ş"},
+      {letter:"ğ", word:"dağ", en:"mountain", id:"gunung", enSound:"soft g, usually stretches the vowel", idSound:"tidak dibaca jelas; memanjangkan bunyi", contrast:"dağ → daa"}
+    ];
+
+    const ROOTS = [
+      {root:"ev", en:"house", id:"rumah"},
+      {root:"okul", en:"school", id:"sekolah"},
+      {root:"araba", en:"car", id:"mobil"},
+      {root:"kitap", en:"book", id:"buku"},
+      {root:"göz", en:"eye", id:"mata"}
+    ];
+
+    const MEANINGS = [
+      {
+        parts:[["ev","root","house","rumah"],["im","suffix","my","saya"],["de","suffix","in / at","di dalam"]],
+        result:"evimde",
+        en:"in my house",
+        id:"di rumah saya",
+        adult_en:"Root + possession + location. The location suffix comes after possession.",
+        adult_id:"Akar kata + kepemilikan + tempat. Akhiran tempat datang setelah kepemilikan."
+      },
+      {
+        parts:[["okul","root","school","sekolah"],["um","suffix","my","saya"],["da","suffix","in / at","di dalam"]],
+        result:"okulumda",
+        en:"in my school",
+        id:"di sekolah saya",
+        adult_en:"The vowel in the suffix changes by vowel harmony: okul + um + da.",
+        adult_id:"Vokal pada akhiran berubah sesuai harmoni vokal: okul + um + da."
+      },
+      {
+        parts:[["araba","root","car","mobil"],["m","suffix","my","saya"],["dan","suffix","from","dari"]],
+        result:"arabamdan",
+        en:"from my car",
+        id:"dari mobil saya",
+        adult_en:"After a vowel-ending root, possession can be -m: araba + m.",
+        adult_id:"Jika akar kata berakhir dengan vokal, kepemilikan bisa menjadi -m: araba + m."
+      },
+      {
+        parts:[["ev","root","house","rumah"],["im","suffix","my","saya"],["e","suffix","to","ke"]],
+        result:"evime",
+        en:"to my house",
+        id:"ke rumah saya",
+        adult_en:"Direction suffix -e/-a means to or towards.",
+        adult_id:"Akhiran arah -e/-a berarti ke atau menuju."
+      },
+      {
+        parts:[["okul","root","school","sekolah"],["um","suffix","my","saya"],["dan","suffix","from","dari"]],
+        result:"okulumdan",
+        en:"from my school",
+        id:"dari sekolah saya",
+        adult_en:"Meaning is carried by the suffix sequence, not by extra separate words.",
+        adult_id:"Makna dibawa oleh urutan akhiran, bukan oleh kata tambahan yang terpisah."
+      }
+    ];
+
+    function lang(){
+      return learner === "ayza" ? "id" : "en";
+    }
+
+    function U(key){
+      return UI[lang()][key] || UI.en[key] || key;
+    }
+
+    function setText(id, text){
+      const el = document.getElementById(id);
+      if(el) el.textContent = text;
+    }
+
+    function meaning(obj){
+      return lang() === "id" ? obj.id : obj.en;
+    }
+
+    function speak(text){
+      if(!("speechSynthesis" in window)) return;
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "tr-TR";
+      utterance.rate = .75;
+      speechSynthesis.speak(utterance);
+    }
+
+    function shuffle(array){
+      return [...array].sort(() => Math.random() - 0.5);
+    }
+
+    function updateHeaderSubtitle(){
+      const subtitle = document.getElementById("subtitle");
+      if(!learner){
+        subtitle.textContent = "Choose your learner profile first / Pilih profil pengguna terlebih dahulu";
+      }else{
+        subtitle.textContent = U("subtitle");
+      }
+    }
+
+    function highlightUserCard(){
+      document.getElementById("bellaCard").classList.toggle("active", learner === "bella");
+      document.getElementById("ayzaCard").classList.toggle("active", learner === "ayza");
+    }
+
+    function renderStyleList(){
+      if(!learner){
+        document.getElementById("styleStep").classList.add("hidden");
+        return;
+      }
+
+      document.getElementById("styleStep").classList.remove("hidden");
+
+      setText("step2Badge", U("step2Badge"));
+      setText("learningStyleTitle", U("learningStyleTitle"));
+      setText("styleHint", U("styleHint"));
+      setText("continueBtn", U("continue"));
+
+      const styles = [
+        ["family", U("familyTitle"), U("familyDesc")],
+        ["kids", U("kidsTitle"), U("kidsDesc")],
+        ["adult", U("adultTitle"), U("adultDesc")]
+      ];
+
+      document.getElementById("styleList").innerHTML = styles.map(item => `
+        <div class="style-card ${style === item[0] ? "active" : ""}" onclick="setStyle('${item[0]}')">
+          <div class="style-title">${item[1]}</div>
+          <div class="style-desc">${item[2]}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderStartPage(){
+      updateHeaderSubtitle();
+      highlightUserCard();
+
+      if(!learner){
+        document.getElementById("chooseLearnerTitle").textContent = "Choose learner / Pilih pengguna";
+      }else{
+        document.getElementById("chooseLearnerTitle").textContent = U("chooseLearnerTitle");
+      }
+
+      renderStyleList();
+    }
+
+    function chooseLearner(selectedLearner){
+      learner = selectedLearner;
+      localStorage.setItem("tmb_learner", learner);
+
+      if(!style){
+        style = "family";
+        localStorage.setItem("tmb_style", style);
+      }
+
+      renderStartPage();
+    }
+
+    function setStyle(selectedStyle){
+      style = selectedStyle;
+      localStorage.setItem("tmb_style", style);
+      renderStartPage();
+    }
+
+    function goHome(){
+      if(!learner) return;
+      if(!style){
+        style = "family";
+        localStorage.setItem("tmb_style", style);
+      }
+      showHome();
+    }
+
+    function backToStart(){
+      document.getElementById("homePage").classList.add("hidden");
+      document.getElementById("lessonPage").classList.add("hidden");
+      document.getElementById("startPage").classList.remove("hidden");
+      renderStartPage();
+    }
+
+    function showHome(){
+      document.getElementById("startPage").classList.add("hidden");
+      document.getElementById("lessonPage").classList.add("hidden");
+      document.getElementById("homePage").classList.remove("hidden");
+
+      updateHeaderSubtitle();
+
+      setText("changeLearnerBtn", U("changeLearner"));
+      setText("deleteProgressBtn", U("deleteProgress"));
+      setText("homeTitle", (learner === "ayza" ? "Ayza — " : "Bella — ") + U("homePage"));
+      setText("scoreLabel", U("score"));
+      setText("attemptsLabel", U("attempts"));
+      setText("accuracyLabel", U("accuracy"));
+      setText("pathTitle", U("pathTitle"));
+      setText("mainMenuBtn", U("mainMenu"));
+      setText("nextBtn", U("next"));
+
+      document.getElementById("positioning").textContent = U("positioning");
+      document.getElementById("modeInfo").innerHTML =
+        `<span class="mode-pill">${learner === "ayza" ? "Ayza / Bahasa Indonesia" : "Bella / English"}</span>
+         <span class="mode-pill">${U(style + "Title")}</span>
+         <span class="mode-pill">root + suffix</span>`;
+
+      renderPath();
+      updateProgress();
+    }
+
+    function renderPath(){
+      const lessons = [
+        ["alphabet", U("alphabet"), U("alphabetDesc"), completed.alphabet.length, ALPHABET.length],
+        ["root", U("root"), U("rootDesc"), 0, ROOTS.length],
+        ["meaning", U("meaning"), U("meaningDesc"), completed.meaning.length, MEANINGS.length],
+        ["evolution", U("evolution"), U("evolutionDesc"), completed.meaning.length, MEANINGS.length]
+      ];
+
+      document.getElementById("pathBox").innerHTML = lessons.map((lesson, i) => {
+        const percent = Math.min(100, Math.round((lesson[3] / Math.max(1, lesson[4])) * 100));
+
+        return `
+          <div class="path-card ${percent === 100 ? "done" : i === 0 ? "current" : ""}">
+            <div class="path-title">${lesson[1]}</div>
+            <div class="path-desc">${lesson[2]}</div>
+            <span class="mode-pill">${U("atMoment")}</span>
+            <span class="mode-pill">${percent}%</span>
+            <div class="progress"><div class="bar" style="width:${percent}%"></div></div>
+            <button class="primary" style="width:100%;margin-top:12px" onclick="openLesson('${lesson[0]}')">${U("open")}</button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function updateProgress(){
+      const totalPercent = Math.min(
+        100,
+        Math.round(
+          ((completed.alphabet.length + completed.meaning.length) /
+          (ALPHABET.length + MEANINGS.length)) * 100
+        )
+      );
+
+      const accuracy = stats.attempts
+        ? Math.round((stats.score / stats.attempts) * 100)
+        : 0;
+
+      setText("score", stats.score);
+      setText("attempts", stats.attempts);
+      setText("accuracy", accuracy + "%");
+
+      document.getElementById("bar").style.width = totalPercent + "%";
+    }
+
+    function openLesson(type){
+      currentLesson = type;
+      index = 0;
+
+      document.getElementById("homePage").classList.add("hidden");
+      document.getElementById("lessonPage").classList.remove("hidden");
+
+      setText("mainMenuBtn", U("mainMenu"));
+      setText("nextBtn", U("next"));
+
+      renderLesson();
+    }
+
+    function renderLesson(){
+      if(currentLesson === "alphabet") renderAlphabet();
+      if(currentLesson === "root") renderRoot();
+      if(currentLesson === "meaning") renderMeaning();
+      if(currentLesson === "evolution") renderEvolution();
+    }
+
+    function nextItem(){
+      index++;
+      const max =
+        currentLesson === "alphabet" ? ALPHABET.length :
+        currentLesson === "root" ? ROOTS.length :
+        MEANINGS.length;
+
+      if(index >= max) index = 0;
+      renderLesson();
+    }
+
+    function modeExplanation(item){
+      if(style === "kids"){
+        return `<div class="logic kids">🎮 ${U("kidsLogic")}</div>`;
+      }
+
+      if(style === "family"){
+        return `
+          <div class="logic">
+            🧩 ${item.parts.map(part => part[0]).join(" + ")} = <b>${item.result}</b><br>
+            ${U("familyLogic")}
+          </div>
+        `;
+      }
+
+      const adultText = lang() === "id" ? item.adult_id : item.adult_en;
+
+      return `
+        <div class="logic adult">
+          <b>${U("adultLogic")}:</b><br>
+          ${item.parts.map(part => `${part[0]} = ${lang() === "id" ? part[3] : part[2]}`).join("<br>")}
+          <br><br>
+          ${adultText}
+        </div>
+      `;
+    }
+
+    function renderAlphabet(){
+      const item = ALPHABET[index];
+      setText("lessonTitle", U("alphabet"));
+
+      document.getElementById("activity").innerHTML = `
+        <div class="big">${item.letter}</div>
+        <div class="meaning">${item.word} = ${meaning(item)}</div>
+
+        <div class="logic ${style === "kids" ? "kids" : style === "adult" ? "adult" : ""}">
+          ${lang() === "id" ? item.idSound : item.enSound}<br>
+          <b>${item.contrast}</b>
+        </div>
+
+        <div class="row">
+          <button class="primary" onclick="speak('${item.letter}')">${U("listenLetter")}</button>
+          <button class="primary" onclick="speak('${item.word}')">${U("listenWord")}</button>
+        </div>
+
+        <div class="row">
+          <button class="success" onclick="mark('alphabet','${item.word}')">${U("iKnow")}</button>
+          <button class="warning" onclick="nextItem()">${U("next")}</button>
+        </div>
+      `;
+    }
+
+    function renderRoot(){
+      const item = ROOTS[index];
+      setText("lessonTitle", U("root"));
+
+      document.getElementById("activity").innerHTML = `
+        <div class="big">${item.root}</div>
+        <div class="meaning">${meaning(item)}</div>
+
+        <div class="logic ${style === "kids" ? "kids" : style === "adult" ? "adult" : ""}">
+          ${U("rootNote")}
+        </div>
+
+        <div class="row">
+          <button class="primary" onclick="speak('${item.root}')">${U("listen")}</button>
+          <button class="warning" onclick="nextItem()">${U("next")}</button>
+        </div>
+      `;
+    }
+
+    function renderMeaning(){
+      const item = MEANINGS[index];
+      setText("lessonTitle", U("meaning"));
+
+      const options = shuffle(item.parts);
+      window.currentAnswer = [];
+
+      document.getElementById("activity").innerHTML = `
+        <div class="prompt">${U("buildPrompt")}</div>
+        <div class="meaning">${meaning(item)}</div>
+        <div id="answer" class="big"></div>
+
+        <div class="part-grid">
+          ${options.map(part => `
+            <button class="${part[1] === "root" ? "success" : "warning"}" onclick="pickPart('${part[0]}')">
+              ${part[0]}
+            </button>
+          `).join("")}
+        </div>
+
+        <div class="row">
+          <button class="danger" onclick="renderMeaning()">${U("clear")}</button>
+          <button class="primary" onclick="checkBuild('${item.result}')">${U("check")}</button>
+        </div>
+
+        ${modeExplanation(item)}
+        <div id="fb" class="feedback">${U("tapParts")}</div>
+      `;
+    }
+
+    function renderEvolution(){
+      const item = MEANINGS[index];
+      setText("lessonTitle", U("evolution"));
+
+      let steps = [item.parts[0][0]];
+      if(item.parts.length > 1){
+        steps.push(item.parts[0][0] + item.parts[1][0]);
+      }
+      steps.push(item.result);
+
+      document.getElementById("activity").innerHTML = `
+        <div class="prompt">${U("wordGrow")}</div>
+        <div class="big">${steps.join(" → ")}</div>
+        <div class="meaning">${meaning(item)}</div>
+
+        ${modeExplanation(item)}
+
+        <table class="table">
+          ${item.parts.map(part => `
+            <tr>
+              <td>${part[0]}</td>
+              <td>${lang() === "id" ? part[3] : part[2]}</td>
+            </tr>
+          `).join("")}
+        </table>
+
+        <div class="row">
+          <button class="primary" onclick="speak('${item.result}')">${U("listen")}</button>
+          <button class="success" onclick="mark('meaning','${item.result}')">${U("understand")}</button>
+        </div>
+      `;
+    }
+
+    function pickPart(part){
+      window.currentAnswer.push(part);
+      document.getElementById("answer").textContent = window.currentAnswer.join("");
+    }
+
+    function checkBuild(correct){
+      const given = window.currentAnswer.join("");
+      const ok = given === correct;
+
+      stats.attempts++;
+      if(ok) stats.score++;
+
+      localStorage.setItem("tmb_stats", JSON.stringify(stats));
+
+      const feedback = document.getElementById("fb");
+      feedback.textContent = ok ? U("correctBuild") : U("tryAgain");
+      feedback.style.background = ok ? "#dcfce7" : "#fee2e2";
+      feedback.style.color = ok ? "#166534" : "#991b1b";
+
+      if(ok){
+        speak(correct);
+
+        if(!completed.meaning.includes(correct)){
+          completed.meaning.push(correct);
+        }
+
+        localStorage.setItem("tmb_done", JSON.stringify(completed));
+      }
+
+      updateProgress();
+    }
+
+    function mark(type, id){
+      if(!completed[type]) completed[type] = [];
+      if(!completed[type].includes(id)) completed[type].push(id);
+
+      localStorage.setItem("tmb_done", JSON.stringify(completed));
+
+      stats.score++;
+      stats.attempts++;
+      localStorage.setItem("tmb_stats", JSON.stringify(stats));
+
+      updateProgress();
+      renderPath();
+    }
+
+    function deleteProgress(){
+      completed = { alphabet: [], meaning: [] };
+      stats = { score: 0, attempts: 0 };
+
+      localStorage.setItem("tmb_done", JSON.stringify(completed));
+      localStorage.setItem("tmb_stats", JSON.stringify(stats));
+
+      showHome();
+    }
+
+    function initApp(){
+      renderStartPage();
+
+      if(learner && style){
+        showHome();
+      }else{
+        document.getElementById("startPage").classList.remove("hidden");
+        document.getElementById("homePage").classList.add("hidden");
+        document.getElementById("lessonPage").classList.add("hidden");
+      }
+
+      document.body.style.visibility = "visible";
+    }
+
+    initApp();
+  </script>
 </body>
 </html>
