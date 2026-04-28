@@ -137,7 +137,7 @@
     .path-icon{width:46px;height:46px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:#eef2ff;font-size:24px;flex:0 0 auto}
     .path-title{font-size:20px;font-weight:950;margin-bottom:4px}
     .path-desc{color:#475569;font-weight:750;line-height:1.35}
-    .big{font-size:56px;font-weight:950;text-align:center;margin:16px 0;color:var(--blue);letter-spacing:-.7px}
+    .big{font-size:56px;font-weight:950;text-align:center;margin:16px 0;color:var(--blue);letter-spacing:-.7px;text-transform:none}
     .meaning{text-align:center;font-size:21px;font-weight:950;color:#334155;margin:12px 0}
     .feedback{margin-top:12px;padding:13px;border-radius:18px;background:#f1f5f9;text-align:center;font-weight:900}
     .table{width:100%;border-collapse:collapse;margin-top:10px}
@@ -278,6 +278,7 @@ const UI = {
     previous: "Previous",
     mainMenu: "Main Page",
     next: "Next",
+    finish: "Finish",
     alphabet: "Alphabet Pro",
     alphabetDesc: "Stable sounds: ı, ö, ü, ş, ç, ğ",
     root: "Root Words",
@@ -348,6 +349,7 @@ const UI = {
     previous: "Sebelumnya",
     mainMenu: "Halaman Utama",
     next: "Berikutnya",
+    finish: "Selesai",
     alphabet: "Alfabet Pro",
     alphabetDesc: "Bunyi stabil: ı, ö, ü, ş, ç, ğ",
     root: "Akar Kata",
@@ -485,6 +487,66 @@ function speakText(text){
   utterance.rate = 0.72;
   utterance.pitch = 1;
   speechSynthesis.speak(utterance);
+}
+
+function playNoiseSound(durationMs, bandType, frequency, qValue, attackMs=15){
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if(!AudioContext){
+    return false;
+  }
+
+  const ctx = new AudioContext();
+  const sampleRate = ctx.sampleRate;
+  const frameCount = Math.max(1, Math.floor(sampleRate * durationMs / 1000));
+  const buffer = ctx.createBuffer(1, frameCount, sampleRate);
+  const data = buffer.getChannelData(0);
+
+  for(let i=0;i<frameCount;i++){
+    data[i] = Math.random() * 2 - 1;
+  }
+
+  const source = ctx.createBufferSource();
+  source.buffer = buffer;
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = bandType;
+  filter.frequency.value = frequency;
+  filter.Q.value = qValue;
+
+  const gain = ctx.createGain();
+  const now = ctx.currentTime;
+  gain.gain.setValueAtTime(0.001, now);
+  gain.gain.exponentialRampToValueAtTime(0.35, now + attackMs/1000);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + durationMs/1000);
+
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+
+  source.start(now);
+  source.stop(now + durationMs/1000 + 0.02);
+  return true;
+}
+
+function playTurkishLetterSound(letterId){
+  // Browser Turkish TTS can misread isolated "ş" as "ç".
+  // For these two letters we use a simple sound model:
+  // ş = continuous "sh" noise, ç = short burst + "sh" noise.
+  if(letterId === "s-cedilla"){
+    const ok = playNoiseSound(700, "bandpass", 3200, 0.8, 20);
+    if(!ok) speakText("şapka");
+    return;
+  }
+
+  if(letterId === "c-cedilla"){
+    const ok1 = playNoiseSound(90, "highpass", 2500, 0.7, 3);
+    setTimeout(() => playNoiseSound(420, "bandpass", 3200, 0.9, 8), 80);
+    if(!ok1) speakText("çay");
+    return;
+  }
+
+  const item = ALPHABET.find(x => x.id === letterId);
+  if(item) speakText(item.letterSpeak);
 }
 function shuffle(array){
   const copy = [...array];
@@ -646,10 +708,21 @@ function updateLessonNav(){
   const total = getTotalFor(currentLesson);
   const onFirst = index <= 0;
   const onLast = index >= total - 1;
-  document.getElementById("topPrevBtn").disabled = onFirst;
-  document.getElementById("bottomPrevBtn").disabled = onFirst;
-  document.getElementById("topNextBtn").disabled = onLast;
-  document.getElementById("bottomNextBtn").disabled = onLast;
+
+  const topPrev = document.getElementById("topPrevBtn");
+  const bottomPrev = document.getElementById("bottomPrevBtn");
+  const topNext = document.getElementById("topNextBtn");
+  const bottomNext = document.getElementById("bottomNextBtn");
+
+  topPrev.disabled = onFirst;
+  bottomPrev.disabled = onFirst;
+
+  topNext.disabled = false;
+  bottomNext.disabled = false;
+
+  topNext.textContent = onLast ? U("finish") : U("next");
+  bottomNext.textContent = onLast ? U("finish") : U("next");
+
   document.getElementById("lessonCounter").textContent = U("itemCounter")(Math.min(index+1,total), total);
 }
 function prevItem(){
@@ -657,15 +730,25 @@ function prevItem(){
 }
 function nextItem(){
   const total = getTotalFor(currentLesson);
-  if(index < total - 1){ index++; renderLesson(); }
+
+  if(index < total - 1){
+    index++;
+    renderLesson();
+    return;
+  }
+
+  showHome();
 }
 function markCompleted(type, id){
   if(!completed[type]) completed[type] = [];
   if(!completed[type].includes(id)){
     completed[type].push(id);
     localStorage.setItem("tmb_done", JSON.stringify(completed));
+    updateProgress();
+    return true;
   }
   updateProgress();
+  return false;
 }
 function addScore(correct=true){
   stats.attempts++;
@@ -732,21 +815,21 @@ function renderAlphabet(){
     </div>
     <div class="row">
       <button class="success" onclick="completeAlphabet('${item.id}')">${U("iKnow")}</button>
-      <button class="primary" onclick="nextAfterComplete('alphabet','${item.id}')">${U("next")}</button>
     </div>
   `;
 }
 function listenLetter(id){
-  const item = ALPHABET.find(x => x.id === id);
-  if(item) speakText(item.letterSpeak);
+  playTurkishLetterSound(id);
 }
 function completeAlphabet(id){
-  markCompleted("alphabet", id);
-  addScore(true);
+  if(markCompleted("alphabet", id)){
+    addScore(true);
+  }
 }
 function nextAfterComplete(type,id){
-  markCompleted(type, id);
-  addScore(true);
+  if(markCompleted(type, id)){
+    addScore(true);
+  }
   nextItem();
 }
 function renderRoot(){
@@ -762,14 +845,13 @@ function renderRoot(){
       <button class="primary" onclick="speakText('${item.root}')">${U("listen")}</button>
       <button class="success" onclick="completeRoot('${item.id}')">${U("iKnow")}</button>
     </div>
-    <div class="row">
-      <button class="primary" onclick="nextAfterComplete('root','${item.id}')">${U("next")}</button>
-    </div>
+
   `;
 }
 function completeRoot(id){
-  markCompleted("root", id);
-  addScore(true);
+  if(markCompleted("root", id)){
+    addScore(true);
+  }
 }
 function renderBuilder(item, type, promptText){
   setText("lessonTitle",
@@ -870,8 +952,9 @@ function renderEvolution(){
   `;
 }
 function understandEvolution(id){
-  markCompleted("evolution", id);
-  addScore(true);
+  if(markCompleted("evolution", id)){
+    addScore(true);
+  }
 }
 function deleteProgress(){
   completed = { alphabet: [], root: [], meaning: [], evolution: [], plural: [], accusative: [], mutation: [] };
