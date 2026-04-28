@@ -293,7 +293,7 @@ const UI = {
     accusativeDesc: "Build specific objects: gazete → gazeteyi",
     mutation: "Mutation Builder",
     mutationDesc: "See sound changes: kitap → kitabı",
-    listenLetter: "Listen Letter",
+    listenLetter: "Listen Sound",
     listenWord: "Listen Word",
     iKnow: "I know this",
     listen: "Listen",
@@ -364,7 +364,7 @@ const UI = {
     accusativeDesc: "Bangun objek tertentu: gazete → gazeteyi",
     mutation: "Pembuat Perubahan Bunyi",
     mutationDesc: "Lihat perubahan bunyi: kitap → kitabı",
-    listenLetter: "Dengar Huruf",
+    listenLetter: "Dengar Bunyi",
     listenWord: "Dengar Kata",
     iKnow: "Saya tahu",
     listen: "Dengar",
@@ -489,335 +489,31 @@ function speakText(text){
   speechSynthesis.speak(utterance);
 }
 
-function playNoiseSound(durationMs, bandType, frequency, qValue, attackMs=15){
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if(!AudioContext){
-    return false;
-  }
-
-  const ctx = new AudioContext();
-  const sampleRate = ctx.sampleRate;
-  const frameCount = Math.max(1, Math.floor(sampleRate * durationMs / 1000));
-  const buffer = ctx.createBuffer(1, frameCount, sampleRate);
-  const data = buffer.getChannelData(0);
-
-  for(let i=0;i<frameCount;i++){
-    data[i] = Math.random() * 2 - 1;
-  }
-
-  const source = ctx.createBufferSource();
-  source.buffer = buffer;
-
-  const filter = ctx.createBiquadFilter();
-  filter.type = bandType;
-  filter.frequency.value = frequency;
-  filter.Q.value = qValue;
-
-  const gain = ctx.createGain();
-  const now = ctx.currentTime;
-  gain.gain.setValueAtTime(0.001, now);
-  gain.gain.exponentialRampToValueAtTime(0.35, now + attackMs/1000);
-  gain.gain.exponentialRampToValueAtTime(0.001, now + durationMs/1000);
-
-  source.connect(filter);
-  filter.connect(gain);
-  gain.connect(ctx.destination);
-
-  source.start(now);
-  source.stop(now + durationMs/1000 + 0.02);
-  return true;
-}
-
 function playTurkishLetterSound(letterId){
-  // Browser Turkish TTS can misread isolated "ş" as "ç".
-  // For these two letters we use a simple sound model:
-  // ş = continuous "sh" noise, ç = short burst + "sh" noise.
-  if(letterId === "s-cedilla"){
-    const ok = playNoiseSound(700, "bandpass", 3200, 0.8, 20);
-    if(!ok) speakText("şapka");
-    return;
-  }
+  /*
+    Important:
+    Browser Turkish TTS is unreliable for isolated letters like "ş" and "ç".
+    The previous synthetic noise method sounded unnatural.
+    Therefore, Listen Letter now uses a clear sample word:
+      ş → şapka
+      ç → çay
+    This gives the learner the real Turkish sound in context.
+  */
+  const sampleWords = {
+    "s-cedilla": "şapka",
+    "c-cedilla": "çay",
+    "g-breve": "dağ"
+  };
 
-  if(letterId === "c-cedilla"){
-    const ok1 = playNoiseSound(90, "highpass", 2500, 0.7, 3);
-    setTimeout(() => playNoiseSound(420, "bandpass", 3200, 0.9, 8), 80);
-    if(!ok1) speakText("çay");
+  if(sampleWords[letterId]){
+    speakText(sampleWords[letterId]);
     return;
   }
 
   const item = ALPHABET.find(x => x.id === letterId);
   if(item) speakText(item.letterSpeak);
 }
-function shuffle(array){
-  const copy = [...array];
-  for(let i=copy.length-1;i>0;i--){
-    const j = Math.floor(Math.random() * (i+1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
-function updateHeaderSubtitle(){
-  const subtitle = document.getElementById("subtitle");
-  if(!learner){ subtitle.textContent = "Choose your learner profile first / Pilih profil pengguna terlebih dahulu"; }
-  else{ subtitle.textContent = U("subtitle"); }
-}
-function highlightUserCard(){
-  document.getElementById("bellaCard").classList.toggle("active", learner === "bella");
-  document.getElementById("ayzaCard").classList.toggle("active", learner === "ayza");
-}
-function renderStyleList(){
-  if(!learner){ document.getElementById("styleStep").classList.add("hidden"); return; }
-  document.getElementById("styleStep").classList.remove("hidden");
-  setText("step2Badge", U("step2Badge"));
-  setText("learningStyleTitle", U("learningStyleTitle"));
-  setText("styleHint", U("styleHint"));
-  setText("continueBtn", U("continue"));
 
-  const icons = {family:"👨‍👧", kids:"🧒", adult:"🧠"};
-  const styles = [
-    ["family", U("familyTitle"), U("familyDesc")],
-    ["kids", U("kidsTitle"), U("kidsDesc")],
-    ["adult", U("adultTitle"), U("adultDesc")]
-  ];
-
-  document.getElementById("styleList").innerHTML = styles.map(item => `
-    <div class="style-card ${style === item[0] ? "active" : ""}" onclick="setStyle('${item[0]}')">
-      <div class="style-icon">${icons[item[0]]}</div>
-      <div>
-        <div class="style-title">${item[1]}</div>
-        <div class="style-desc">${item[2]}</div>
-      </div>
-    </div>
-  `).join("");
-}
-function renderStartPage(){
-  updateHeaderSubtitle();
-  highlightUserCard();
-  document.getElementById("chooseLearnerTitle").textContent = learner ? U("chooseLearnerTitle") : "Choose learner / Pilih pengguna";
-  renderStyleList();
-}
-function chooseLearner(selectedLearner){
-  learner = selectedLearner;
-  localStorage.setItem("tmb_learner", learner);
-  if(!style){ style = "family"; localStorage.setItem("tmb_style", style); }
-  renderStartPage();
-}
-function setStyle(selectedStyle){
-  style = selectedStyle;
-  localStorage.setItem("tmb_style", style);
-  renderStartPage();
-}
-function goHome(){
-  if(!learner) return;
-  if(!style){ style = "family"; localStorage.setItem("tmb_style", style); }
-  showHome();
-}
-function backToStart(){
-  document.getElementById("homePage").classList.add("hidden");
-  document.getElementById("lessonPage").classList.add("hidden");
-  document.getElementById("startPage").classList.remove("hidden");
-  renderStartPage();
-}
-function calcPercent(done, total){ return Math.min(100, Math.round((done / Math.max(1,total)) * 100)); }
-function overallProgressPercent(){
-  const totals = ["alphabet","root","meaning","evolution","plural","accusative","mutation"].reduce((sum,k)=>sum+getTotalFor(k),0);
-  const done = ["alphabet","root","meaning","evolution","plural","accusative","mutation"].reduce((sum,k)=>sum+(completed[k]?.length||0),0);
-  return calcPercent(done, totals);
-}
-function updateProgress(){
-  const accuracy = stats.attempts ? Math.round((stats.score / stats.attempts) * 100) : 0;
-  setText("score", stats.score);
-  setText("attempts", stats.attempts);
-  setText("accuracy", accuracy + "%");
-  document.getElementById("bar").style.width = overallProgressPercent() + "%";
-}
-function renderPath(){
-  const lessons = [
-    ["alphabet","🔤",U("alphabet"),U("alphabetDesc"),completed.alphabet.length,ALPHABET.length],
-    ["root","🌱",U("root"),U("rootDesc"),completed.root.length,ROOTS.length],
-    ["meaning","🧩",U("meaning"),U("meaningDesc"),completed.meaning.length,MEANINGS.length],
-    ["evolution","🚀",U("evolution"),U("evolutionDesc"),completed.evolution.length,MEANINGS.length],
-    ["plural","🔢",U("plural"),U("pluralDesc"),completed.plural.length,PLURALS.length],
-    ["accusative","🎯",U("accusative"),U("accusativeDesc"),completed.accusative.length,ACCUSATIVES.length],
-    ["mutation","🔄",U("mutation"),U("mutationDesc"),completed.mutation.length,MUTATIONS.length]
-  ];
-
-  document.getElementById("pathBox").innerHTML = lessons.map((lesson, i) => {
-    const percent = calcPercent(lesson[4], lesson[5]);
-    const statusLabel = percent === 100 ? U("completed") : U("atMoment");
-    return `
-      <div class="path-card ${percent === 100 ? "done" : i === 0 ? "current" : ""}">
-        <div class="path-top">
-          <div class="path-icon">${lesson[1]}</div>
-          <div>
-            <div class="path-title">${lesson[2]}</div>
-            <div class="path-desc">${lesson[3]}</div>
-          </div>
-        </div>
-        <span class="mode-pill">${statusLabel}</span>
-        <span class="mode-pill">${percent}%</span>
-        <div class="progress"><div class="bar" style="width:${percent}%"></div></div>
-        <button class="primary" style="width:100%;margin-top:12px" onclick="openLesson('${lesson[0]}')">${U("open")}</button>
-      </div>
-    `;
-  }).join("");
-}
-function showHome(){
-  document.getElementById("startPage").classList.add("hidden");
-  document.getElementById("lessonPage").classList.add("hidden");
-  document.getElementById("homePage").classList.remove("hidden");
-
-  updateHeaderSubtitle();
-  setText("changeLearnerBtn", U("changeLearner"));
-  setText("deleteProgressBtn", U("deleteProgress"));
-  setText("homeTitle", (learner === "ayza" ? "Ayza — " : "Bella — ") + U("homePage"));
-  setText("scoreLabel", U("score"));
-  setText("attemptsLabel", U("attempts"));
-  setText("accuracyLabel", U("accuracy"));
-  setText("pathTitle", U("pathTitle"));
-  setText("mainMenuBtn", U("mainMenu"));
-  setText("topPrevBtn", U("previous"));
-  setText("topNextBtn", U("next"));
-  setText("bottomPrevBtn", U("previous"));
-  setText("bottomNextBtn", U("next"));
-
-  document.getElementById("positioning").textContent = U("positioning");
-  document.getElementById("modeInfo").innerHTML =
-    `<span class="mode-pill">${learner === "ayza" ? "Ayza / Bahasa Indonesia" : "Bella / English"}</span>
-     <span class="mode-pill">${U(style + "Title")}</span>
-     <span class="mode-pill">root + suffix</span>`;
-
-  renderPath();
-  updateProgress();
-}
-function openLesson(type){
-  currentLesson = type;
-  index = 0;
-
-  document.getElementById("homePage").classList.add("hidden");
-  document.getElementById("lessonPage").classList.remove("hidden");
-
-  setText("mainMenuBtn", U("mainMenu"));
-  setText("topPrevBtn", U("previous"));
-  setText("topNextBtn", U("next"));
-  setText("bottomPrevBtn", U("previous"));
-  setText("bottomNextBtn", U("next"));
-  renderLesson();
-}
-function updateLessonNav(){
-  const total = getTotalFor(currentLesson);
-  const onFirst = index <= 0;
-  const onLast = index >= total - 1;
-
-  const topPrev = document.getElementById("topPrevBtn");
-  const bottomPrev = document.getElementById("bottomPrevBtn");
-  const topNext = document.getElementById("topNextBtn");
-  const bottomNext = document.getElementById("bottomNextBtn");
-
-  topPrev.disabled = onFirst;
-  bottomPrev.disabled = onFirst;
-
-  topNext.disabled = false;
-  bottomNext.disabled = false;
-
-  topNext.textContent = onLast ? U("finish") : U("next");
-  bottomNext.textContent = onLast ? U("finish") : U("next");
-
-  document.getElementById("lessonCounter").textContent = U("itemCounter")(Math.min(index+1,total), total);
-}
-function prevItem(){
-  if(index > 0){ index--; renderLesson(); }
-}
-function nextItem(){
-  const total = getTotalFor(currentLesson);
-
-  if(index < total - 1){
-    index++;
-    renderLesson();
-    return;
-  }
-
-  showHome();
-}
-function markCompleted(type, id){
-  if(!completed[type]) completed[type] = [];
-  if(!completed[type].includes(id)){
-    completed[type].push(id);
-    localStorage.setItem("tmb_done", JSON.stringify(completed));
-    updateProgress();
-    return true;
-  }
-  updateProgress();
-  return false;
-}
-function addScore(correct=true){
-  stats.attempts++;
-  if(correct) stats.score++;
-  localStorage.setItem("tmb_stats", JSON.stringify(stats));
-  updateProgress();
-}
-function modeExplanation(item, type="meaning"){
-  let rule = "";
-  if(type === "plural") rule = lang() === "id" ? item.rule_id : item.rule_en;
-  if(type === "accusative") rule = lang() === "id" ? item.rule_id : item.rule_en;
-  if(type === "mutation") rule = lang() === "id" ? item.rule_id : item.rule_en;
-
-  if(style === "kids"){
-    return `<div class="logic kids">🎮 ${U("kidsLogic")}${rule ? "<br>" + rule : ""}</div>`;
-  }
-  if(style === "family"){
-    return `
-      <div class="logic">
-        🧩 ${item.parts.map(part => part[0]).join(" + ")} = <b>${item.result}</b><br>
-        ${type === "meaning" ? U("familyLogic") : rule}
-      </div>
-    `;
-  }
-
-  if(type !== "meaning"){
-    return `<div class="logic adult"><b>${U("rule")}:</b><br>${rule}</div>`;
-  }
-
-  const adultText = lang() === "id" ? item.adult_id : item.adult_en;
-  return `
-    <div class="logic adult">
-      <b>${U("adultLogic")}:</b><br>
-      ${item.parts.map(part => `${part[0]} = ${lang() === "id" ? part[3] : part[2]}`).join("<br>")}
-      <br><br>
-      ${adultText}
-    </div>
-  `;
-}
-function renderLesson(){
-  updateLessonNav();
-  if(currentLesson === "alphabet") renderAlphabet();
-  if(currentLesson === "root") renderRoot();
-  if(currentLesson === "meaning") renderBuilder(MEANINGS[index], "meaning", U("buildPrompt"));
-  if(currentLesson === "evolution") renderEvolution();
-  if(currentLesson === "plural") renderBuilder(PLURALS[index], "plural", U("buildPlural"));
-  if(currentLesson === "accusative") renderBuilder(ACCUSATIVES[index], "accusative", U("buildAcc"));
-  if(currentLesson === "mutation") renderBuilder(MUTATIONS[index], "mutation", U("buildMutation"));
-  updateLessonNav();
-}
-function renderAlphabet(){
-  const item = ALPHABET[index];
-  setText("lessonTitle", U("alphabet"));
-  document.getElementById("activity").innerHTML = `
-    <div class="big">${item.letter}</div>
-    <div class="meaning">${item.word} = ${meaningLabel(item)}</div>
-    <div class="logic ${style === "kids" ? "kids" : style === "adult" ? "adult" : ""}">
-      ${lang() === "id" ? item.idSound : item.enSound}<br>
-      <b>${item.contrast}</b>
-    </div>
-    <div class="row">
-      <button class="primary" onclick="listenLetter('${item.id}')">${U("listenLetter")}</button>
-      <button class="primary" onclick="speakText('${item.word}')">${U("listenWord")}</button>
-    </div>
-    <div class="row">
-      <button class="success" onclick="completeAlphabet('${item.id}')">${U("iKnow")}</button>
-    </div>
-  `;
-}
 function listenLetter(id){
   playTurkishLetterSound(id);
 }
