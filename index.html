@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Turkish Meaning Builder</title>
+  <title>Turkish Meaning Builder Premium</title>
 
   <style>
     :root{
-      --bg:#edf4ff;
+      --bg1:#eef6ff;
+      --bg2:#f8fbff;
       --card:#ffffff;
       --ink:#0f172a;
       --muted:#64748b;
@@ -24,8 +25,8 @@
       --red:#991b1b;
       --red-soft:#fee2e2;
       --soft:#f8fafc;
-      --shadow:0 14px 34px rgba(15,23,42,.08);
-      --radius:28px;
+      --shadow:0 16px 40px rgba(15,23,42,.09);
+      --radius:30px;
     }
 
     *{box-sizing:border-box}
@@ -34,7 +35,10 @@
     body{
       margin:0;
       font-family:Inter, Arial, sans-serif;
-      background:linear-gradient(180deg,#eef4ff 0%,#f8fbff 100%);
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,.12), transparent 32%),
+        radial-gradient(circle at top right, rgba(22,163,74,.10), transparent 30%),
+        linear-gradient(180deg,var(--bg1),var(--bg2));
       color:var(--ink);
       visibility:hidden;
     }
@@ -43,19 +47,34 @@
       max-width:760px;
       margin:0 auto;
       min-height:100vh;
-      background:#fff;
+      background:rgba(255,255,255,.92);
       padding:18px;
+      backdrop-filter: blur(8px);
     }
 
     .header{
       text-align:center;
-      padding:10px 8px 12px;
+      padding:14px 8px 12px;
+    }
+
+    .logo{
+      width:58px;
+      height:58px;
+      margin:0 auto 10px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#2563eb,#7c3aed);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-size:30px;
+      box-shadow:0 14px 28px rgba(37,99,235,.25);
     }
 
     h1{
       margin:0 0 8px;
       font-size:32px;
-      letter-spacing:-.6px;
+      letter-spacing:-.7px;
     }
 
     .subtitle{
@@ -63,6 +82,8 @@
       font-size:15px;
       line-height:1.5;
       min-height:22px;
+      max-width:560px;
+      margin:0 auto;
     }
 
     .card{
@@ -76,20 +97,12 @@
 
     .hidden{display:none !important}
 
-    .section-title{
-      text-align:center;
-      font-size:18px;
-      font-weight:900;
-      color:#334155;
-      margin:4px 0 14px;
-    }
-
     .prompt{
       text-align:center;
       font-size:24px;
       font-weight:950;
       margin:8px 0 16px;
-      letter-spacing:-.3px;
+      letter-spacing:-.35px;
     }
 
     .step-badge{
@@ -106,81 +119,7 @@
       margin:0 auto 14px;
     }
 
-    .center{
-      display:flex;
-      justify-content:center;
-    }
-
-    .grid2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-
-    .grid3{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:10px;
-    }
-
-    .row{
-      display:flex;
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .row button{
-      flex:1;
-    }
-
-    button{
-      border:0;
-      border-radius:20px;
-      padding:15px 14px;
-      font-size:16px;
-      font-weight:900;
-      cursor:pointer;
-      min-height:58px;
-      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
-    }
-
-    button:hover{
-      box-shadow:0 10px 22px rgba(37,99,235,.12);
-    }
-
-    button:active{
-      transform:scale(.985);
-    }
-
-    .primary{
-      background:var(--blue);
-      color:white;
-    }
-
-    .ghost{
-      background:#f1f5f9;
-      color:#334155;
-    }
-
-    .danger{
-      background:var(--red-soft);
-      color:var(--red);
-    }
-
-    .success{
-      background:var(--green-soft);
-      color:#166534;
-    }
-
-    .warning{
-      background:var(--yellow-soft);
-      color:var(--yellow);
-    }
-
-    .purple{
-      background:var(--purple-soft);
-      color:var(--purple);
-    }
+    .center{display:flex;justify-content:center}
 
     .user-grid{
       display:grid;
@@ -190,9 +129,9 @@
 
     .user-card{
       border:2px solid transparent;
-      border-radius:24px;
+      border-radius:26px;
       padding:18px;
-      min-height:140px;
+      min-height:145px;
       display:flex;
       flex-direction:column;
       justify-content:center;
@@ -200,29 +139,47 @@
       cursor:pointer;
       transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
       text-align:left;
+      position:relative;
+      overflow:hidden;
     }
 
     .user-card:hover{
-      transform:translateY(-1px);
-      box-shadow:0 12px 24px rgba(15,23,42,.08);
+      transform:translateY(-2px);
+      box-shadow:0 14px 26px rgba(15,23,42,.10);
     }
 
     .user-card.active{
       border-color:#0f172a;
     }
 
+    .user-card:after{
+      content:"";
+      position:absolute;
+      right:-28px;
+      top:-28px;
+      width:90px;
+      height:90px;
+      border-radius:50%;
+      background:rgba(255,255,255,.18);
+    }
+
     .user-bella{
-      background:linear-gradient(180deg,#2f66e6 0%, #3166e3 100%);
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
       color:#fff;
     }
 
     .user-ayza{
-      background:#cfeeda;
+      background:linear-gradient(135deg,#d9fbe7,#bbf7d0);
       color:#0f5132;
     }
 
+    .user-icon{
+      font-size:30px;
+      margin-bottom:2px;
+    }
+
     .user-title{
-      font-size:20px;
+      font-size:21px;
       font-weight:950;
       line-height:1.1;
     }
@@ -247,21 +204,36 @@
 
     .style-card{
       border:2px solid var(--line);
-      border-radius:22px;
+      border-radius:24px;
       padding:16px;
       background:#fff;
       cursor:pointer;
       transition:border-color .15s ease, background .15s ease, transform .15s ease, box-shadow .15s ease;
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:12px;
+      align-items:center;
     }
 
     .style-card:hover{
       transform:translateY(-1px);
-      box-shadow:0 10px 20px rgba(15,23,42,.06);
+      box-shadow:0 12px 24px rgba(15,23,42,.07);
     }
 
     .style-card.active{
       border-color:var(--blue);
       background:var(--blue-soft);
+    }
+
+    .style-icon{
+      width:44px;
+      height:44px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#f1f5f9;
+      font-size:24px;
     }
 
     .style-title{
@@ -277,6 +249,46 @@
       font-size:14px;
     }
 
+    .hint-box{
+      margin-top:12px;
+      padding:14px;
+      border-radius:20px;
+      background:#f8fafc;
+      border:1px dashed #cbd5e1;
+      color:#475569;
+      font-size:14px;
+      font-weight:800;
+      line-height:1.5;
+      text-align:center;
+    }
+
+    .row{display:flex;gap:10px;margin-top:12px}
+    .row button{flex:1}
+
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+    button{
+      border:0;
+      border-radius:20px;
+      padding:15px 14px;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      min-height:58px;
+      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
+    }
+
+    button:hover{box-shadow:0 10px 22px rgba(37,99,235,.12)}
+    button:active{transform:scale(.985)}
+
+    .primary{background:var(--blue);color:white}
+    .ghost{background:#f1f5f9;color:#334155}
+    .danger{background:var(--red-soft);color:var(--red)}
+    .success{background:var(--green-soft);color:#166534}
+    .warning{background:var(--yellow-soft);color:var(--yellow)}
+    .purple{background:var(--purple-soft);color:var(--purple)}
+
     .logic{
       margin-top:12px;
       padding:14px;
@@ -288,16 +300,8 @@
       text-align:center;
     }
 
-    .logic.adult{
-      background:#ecfeff;
-      color:#155e75;
-      text-align:left;
-    }
-
-    .logic.kids{
-      background:#fff7ed;
-      color:#9a3412;
-    }
+    .logic.adult{background:#ecfeff;color:#155e75;text-align:left}
+    .logic.kids{background:#fff7ed;color:#9a3412}
 
     .mode-pill{
       display:inline-block;
@@ -313,10 +317,11 @@
 
     .stat{
       background:#f8fafc;
-      border-radius:18px;
+      border-radius:20px;
       padding:13px;
       text-align:center;
       font-weight:950;
+      border:1px solid #edf2f7;
     }
 
     .stat small{
@@ -348,26 +353,38 @@
       background:#fff;
     }
 
-    .path-card.current{
-      border-color:var(--blue);
-      background:#eff6ff;
+    .path-card.current{border-color:var(--blue);background:#eff6ff}
+    .path-card.done{border-color:#22c55e;background:#f0fdf4}
+
+    .path-top{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:8px;
     }
 
-    .path-card.done{
-      border-color:#22c55e;
-      background:#f0fdf4;
+    .path-icon{
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#eef2ff;
+      font-size:24px;
+      flex:0 0 auto;
     }
 
     .path-title{
       font-size:20px;
       font-weight:950;
-      margin-bottom:6px;
+      margin-bottom:4px;
     }
 
     .path-desc{
       color:#475569;
-      margin-bottom:8px;
       font-weight:750;
+      line-height:1.35;
     }
 
     .big{
@@ -414,25 +431,12 @@
       gap:10px;
     }
 
-    .hint-box{
-      margin-top:12px;
-      padding:14px;
-      border-radius:20px;
-      background:#f8fafc;
-      border:1px dashed #cbd5e1;
-      color:#475569;
-      font-size:14px;
-      font-weight:800;
-      line-height:1.5;
+    .footer-note{
       text-align:center;
-    }
-
-    .small-muted{
-      font-size:13px;
       color:#64748b;
-      text-align:center;
-      margin-top:8px;
-      font-weight:700;
+      font-size:12px;
+      padding:12px 6px 4px;
+      font-weight:750;
     }
 
     @media(max-width:640px){
@@ -442,18 +446,21 @@
       .row{flex-direction:column}
       .big{font-size:46px}
       .prompt{font-size:22px}
+      .style-card{grid-template-columns:1fr}
+      .style-icon{width:42px;height:42px}
     }
   </style>
 </head>
+
 <body>
   <div class="app">
 
     <div class="header">
+      <div class="logo">🧩</div>
       <h1>Turkish Meaning Builder</h1>
       <div class="subtitle" id="subtitle"></div>
     </div>
 
-    <!-- START PAGE -->
     <section id="startPage" class="card">
       <div class="center">
         <div class="step-badge" id="step1Badge">1 • Choose learner / Pilih pengguna</div>
@@ -463,12 +470,14 @@
 
       <div class="user-grid">
         <div class="user-card user-bella" id="bellaCard" onclick="chooseLearner('bella')">
+          <div class="user-icon">👧</div>
           <div class="user-title">Bella</div>
           <div class="user-main">English</div>
           <div class="user-sub">English explanations</div>
         </div>
 
         <div class="user-card user-ayza" id="ayzaCard" onclick="chooseLearner('ayza')">
+          <div class="user-icon">🌸</div>
           <div class="user-title">Ayza</div>
           <div class="user-main">Bahasa Indonesia</div>
           <div class="user-sub">Penjelasan bahasa Indonesia</div>
@@ -492,7 +501,6 @@
       </div>
     </section>
 
-    <!-- HOME PAGE -->
     <section id="homePage" class="hidden">
       <div class="card">
         <div class="row">
@@ -507,25 +515,12 @@
         <div id="positioning" class="logic"></div>
 
         <div class="grid3">
-          <div class="stat">
-            <span id="score">0</span>
-            <small id="scoreLabel"></small>
-          </div>
-
-          <div class="stat">
-            <span id="attempts">0</span>
-            <small id="attemptsLabel"></small>
-          </div>
-
-          <div class="stat">
-            <span id="accuracy">0%</span>
-            <small id="accuracyLabel"></small>
-          </div>
+          <div class="stat"><span id="score">0</span><small id="scoreLabel"></small></div>
+          <div class="stat"><span id="attempts">0</span><small id="attemptsLabel"></small></div>
+          <div class="stat"><span id="accuracy">0%</span><small id="accuracyLabel"></small></div>
         </div>
 
-        <div class="progress">
-          <div id="bar" class="bar"></div>
-        </div>
+        <div class="progress"><div id="bar" class="bar"></div></div>
       </div>
 
       <div class="card">
@@ -534,7 +529,6 @@
       </div>
     </section>
 
-    <!-- LESSON PAGE -->
     <section id="lessonPage" class="hidden">
       <div class="card">
         <div class="row">
@@ -547,6 +541,7 @@
       </div>
     </section>
 
+    <div class="footer-note">Offline first • No login • Progress saved on this device</div>
   </div>
 
   <script>
@@ -562,10 +557,8 @@
 
         familyTitle: "Family Mode",
         familyDesc: "Short games first, then simple logic. Perfect for kids and parents to learn together.",
-
         kidsTitle: "Kids Mode",
         kidsDesc: "Very simple interface, fewer grammar notes, more games and sounds.",
-
         adultTitle: "Adult Mode",
         adultDesc: "More logic, ending explanations, and short grammar notes without long theories.",
 
@@ -629,10 +622,8 @@
 
         familyTitle: "Mode Keluarga",
         familyDesc: "Permainan singkat dulu, lalu logika sederhana. Cocok untuk anak dan orang tua belajar bersama.",
-
         kidsTitle: "Mode Anak",
         kidsDesc: "Tampilan sangat sederhana, catatan tata bahasa lebih sedikit, lebih banyak permainan dan suara.",
-
         adultTitle: "Mode Dewasa",
         adultDesc: "Lebih banyak logika, penjelasan akhiran, dan catatan tata bahasa singkat tanpa teori panjang.",
 
@@ -812,6 +803,7 @@
       setText("styleHint", U("styleHint"));
       setText("continueBtn", U("continue"));
 
+      const icons = {family:"👨‍👧", kids:"🧒", adult:"🧠"};
       const styles = [
         ["family", U("familyTitle"), U("familyDesc")],
         ["kids", U("kidsTitle"), U("kidsDesc")],
@@ -820,8 +812,11 @@
 
       document.getElementById("styleList").innerHTML = styles.map(item => `
         <div class="style-card ${style === item[0] ? "active" : ""}" onclick="setStyle('${item[0]}')">
-          <div class="style-title">${item[1]}</div>
-          <div class="style-desc">${item[2]}</div>
+          <div class="style-icon">${icons[item[0]]}</div>
+          <div>
+            <div class="style-title">${item[1]}</div>
+            <div class="style-desc">${item[2]}</div>
+          </div>
         </div>
       `).join("");
     }
@@ -902,19 +897,24 @@
 
     function renderPath(){
       const lessons = [
-        ["alphabet", U("alphabet"), U("alphabetDesc"), completed.alphabet.length, ALPHABET.length],
-        ["root", U("root"), U("rootDesc"), 0, ROOTS.length],
-        ["meaning", U("meaning"), U("meaningDesc"), completed.meaning.length, MEANINGS.length],
-        ["evolution", U("evolution"), U("evolutionDesc"), completed.meaning.length, MEANINGS.length]
+        ["alphabet", "🔤", U("alphabet"), U("alphabetDesc"), completed.alphabet.length, ALPHABET.length],
+        ["root", "🌱", U("root"), U("rootDesc"), 0, ROOTS.length],
+        ["meaning", "🧩", U("meaning"), U("meaningDesc"), completed.meaning.length, MEANINGS.length],
+        ["evolution", "🚀", U("evolution"), U("evolutionDesc"), completed.meaning.length, MEANINGS.length]
       ];
 
       document.getElementById("pathBox").innerHTML = lessons.map((lesson, i) => {
-        const percent = Math.min(100, Math.round((lesson[3] / Math.max(1, lesson[4])) * 100));
+        const percent = Math.min(100, Math.round((lesson[4] / Math.max(1, lesson[5])) * 100));
 
         return `
           <div class="path-card ${percent === 100 ? "done" : i === 0 ? "current" : ""}">
-            <div class="path-title">${lesson[1]}</div>
-            <div class="path-desc">${lesson[2]}</div>
+            <div class="path-top">
+              <div class="path-icon">${lesson[1]}</div>
+              <div>
+                <div class="path-title">${lesson[2]}</div>
+                <div class="path-desc">${lesson[3]}</div>
+              </div>
+            </div>
             <span class="mode-pill">${U("atMoment")}</span>
             <span class="mode-pill">${percent}%</span>
             <div class="progress"><div class="bar" style="width:${percent}%"></div></div>
