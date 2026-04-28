@@ -4,486 +4,370 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Turkish Meaning Builder</title>
-
 <style>
+:root{
+  --bg:#edf4ff;
+  --card:#ffffff;
+  --ink:#0f172a;
+  --muted:#64748b;
+  --line:#dbe3ef;
+  --blue:#2563eb;
+  --blue2:#1d4ed8;
+  --green:#16a34a;
+  --green-bg:#dcfce7;
+  --red:#991b1b;
+  --red-bg:#fee2e2;
+  --purple:#6d28d9;
+  --purple-bg:#ede9fe;
+  --yellow:#92400e;
+  --yellow-bg:#fef3c7;
+  --soft:#f8fafc;
+}
 *{box-sizing:border-box}
-
+html,body{min-height:100%}
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#eef4ff;
-  color:#0f172a;
+  font-family:Inter,Arial,sans-serif;
+  background:linear-gradient(180deg,#eef4ff 0%,#f8fbff 100%);
+  color:var(--ink);
+  visibility:hidden;
 }
-
 .app{
-  max-width:640px;
+  max-width:680px;
   margin:0 auto;
   min-height:100vh;
   background:#fff;
-  padding:16px;
+  padding:18px;
 }
-
+.header{
+  text-align:center;
+  padding:16px 8px 10px;
+}
 h1{
-  text-align:center;
-  margin:22px 0 6px;
-  font-size:30px;
+  margin:0 0 8px;
+  font-size:32px;
+  letter-spacing:-.6px;
 }
-
 .subtitle{
-  text-align:center;
   color:#475569;
-  font-size:14px;
-  margin-bottom:18px;
+  font-size:15px;
+  line-height:1.45;
 }
-
 .card{
-  background:#fff;
-  border:2px solid #e2e8f0;
-  border-radius:24px;
+  background:rgba(255,255,255,.96);
+  border:1.5px solid var(--line);
+  border-radius:28px;
   padding:18px;
   margin:16px 0;
-  box-shadow:0 8px 24px rgba(15,23,42,.06);
+  box-shadow:0 12px 30px rgba(15,23,42,.07);
 }
-
 .prompt{
   text-align:center;
-  font-size:24px;
-  font-weight:900;
+  font-size:25px;
+  font-weight:950;
   margin:8px 0 16px;
+  letter-spacing:-.3px;
 }
-
-.grid2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.grid3{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:10px;
-}
-
-.row{
-  display:flex;
-  gap:10px;
-  margin-top:12px;
-}
-
-.row button{
-  flex:1;
-}
-
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.row{display:flex;gap:10px;margin-top:12px}
+.row button{flex:1}
 button{
   border:0;
-  border-radius:18px;
-  padding:15px 12px;
+  border-radius:20px;
+  padding:15px 14px;
   font-size:16px;
   font-weight:900;
   cursor:pointer;
   background:#dbeafe;
   color:#1e3a8a;
+  min-height:58px;
+  transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
 }
-
-button:active{
-  transform:scale(.98);
+button:hover{box-shadow:0 8px 18px rgba(37,99,235,.12)}
+button:active{transform:scale(.98)}
+.primary{background:var(--blue);color:white}
+.success{background:var(--green-bg);color:#166534}
+.warning{background:var(--yellow-bg);color:var(--yellow)}
+.danger{background:var(--red-bg);color:var(--red)}
+.ghost{background:#f1f5f9;color:#334155}
+.purple{background:var(--purple-bg);color:var(--purple)}
+.hidden{display:none!important}
+.user-btn{
+  text-align:left;
+  min-height:118px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:8px;
 }
-
-.primary{
-  background:#2563eb;
-  color:#fff;
+.user-title{font-size:20px;font-weight:950}
+.user-sub{font-size:15px;font-weight:850;opacity:.9}
+.user-hint{font-size:12px;font-weight:800;opacity:.78}
+.select-wrap{position:relative}
+.style-options{
+  display:grid;
+  gap:10px;
 }
-
-.success{
-  background:#dcfce7;
-  color:#166534;
-}
-
-.warning{
-  background:#fef3c7;
-  color:#92400e;
-}
-
-.danger{
-  background:#fee2e2;
-  color:#991b1b;
-}
-
-.ghost{
-  background:#f1f5f9;
-  color:#334155;
-}
-
-.purple{
-  background:#ede9fe;
-  color:#5b21b6;
-}
-
-.hidden{
-  display:none!important;
-}
-
-select{
-  width:100%;
-  font-size:17px;
-  font-weight:800;
+.style-card{
+  border:2px solid var(--line);
+  border-radius:20px;
   padding:14px;
-  border-radius:16px;
-  border:2px solid #cbd5e1;
-  background:white;
+  background:#fff;
+  cursor:pointer;
+  transition:border-color .15s ease, background .15s ease, transform .15s ease;
 }
-
+.style-card:hover{transform:translateY(-1px)}
+.style-card.active{
+  border-color:var(--blue);
+  background:#eff6ff;
+}
+.style-title{
+  font-size:17px;
+  font-weight:950;
+  margin-bottom:4px;
+}
+.style-desc{
+  color:#475569;
+  line-height:1.4;
+  font-weight:750;
+  font-size:14px;
+}
 .big{
-  font-size:52px;
-  font-weight:900;
+  font-size:54px;
+  font-weight:950;
   text-align:center;
-  margin:14px 0;
-  color:#2563eb;
+  margin:16px 0;
+  color:var(--blue);
+  letter-spacing:-.5px;
 }
-
 .meaning{
   text-align:center;
-  font-size:20px;
-  font-weight:900;
+  font-size:21px;
+  font-weight:950;
   color:#334155;
-  margin:10px 0;
+  margin:12px 0;
 }
-
-.small{
-  font-size:14px;
-  color:#64748b;
-  line-height:1.5;
-}
-
+.small{font-size:14px;color:var(--muted);line-height:1.5}
 .feedback{
   margin-top:12px;
-  padding:12px;
-  border-radius:16px;
+  padding:13px;
+  border-radius:18px;
   background:#f1f5f9;
   text-align:center;
   font-weight:900;
 }
-
 .logic{
   margin-top:12px;
-  padding:12px;
-  border-radius:18px;
+  padding:14px;
+  border-radius:20px;
   background:#eef2ff;
   color:#3730a3;
-  font-weight:800;
-  line-height:1.5;
+  font-weight:850;
+  line-height:1.55;
   text-align:center;
 }
-
-.logic.adult{
-  background:#ecfeff;
-  color:#155e75;
-  text-align:left;
-}
-
-.logic.kids{
-  background:#fff7ed;
-  color:#9a3412;
-}
-
-.table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:10px;
-}
-
-.table td{
-  border-bottom:1px solid #e5e7eb;
-  padding:9px;
-  font-weight:800;
-}
-
-.progress{
-  height:12px;
-  background:#e5e7eb;
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:10px;
-}
-
-.bar{
-  height:100%;
-  background:#22c55e;
-  width:0;
-}
-
-.stat{
-  background:#f8fafc;
-  border-radius:16px;
-  padding:12px;
-  text-align:center;
-  font-weight:900;
-}
-
-.stat small{
-  display:block;
-  color:#64748b;
-  margin-top:4px;
-}
-
+.logic.adult{background:#ecfeff;color:#155e75;text-align:left}
+.logic.kids{background:#fff7ed;color:#9a3412}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table td{border-bottom:1px solid #e5e7eb;padding:10px;font-weight:850}
+.progress{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px}
+.bar{height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);width:0}
+.stat{background:#f8fafc;border-radius:18px;padding:13px;text-align:center;font-weight:950}
+.stat small{display:block;color:var(--muted);margin-top:4px;font-size:13px}
 .mode-pill{
   display:inline-block;
   background:#f8fafc;
   border:1px solid #e2e8f0;
   border-radius:999px;
-  padding:6px 10px;
+  padding:7px 11px;
   margin:4px;
   font-size:12px;
-  font-weight:900;
+  font-weight:950;
   color:#334155;
 }
-
 .path-card{
   border:2px solid #e2e8f0;
-  border-radius:22px;
-  padding:14px;
+  border-radius:24px;
+  padding:15px;
   margin:12px 0;
   background:#fff;
 }
-
-.path-card.current{
-  border-color:#2563eb;
-  background:#eff6ff;
-}
-
-.path-card.done{
-  border-color:#22c55e;
-  background:#f0fdf4;
-}
-
-.path-title{
-  font-size:20px;
-  font-weight:900;
-  margin-bottom:6px;
-}
-
-.path-desc{
-  color:#475569;
-  margin-bottom:8px;
+.path-card.current{border-color:var(--blue);background:#eff6ff}
+.path-card.done{border-color:#22c55e;background:#f0fdf4}
+.path-title{font-size:20px;font-weight:950;margin-bottom:6px}
+.path-desc{color:#475569;margin-bottom:8px;font-weight:750}
+.part-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:520px){
+  .app{padding:12px}
+  h1{font-size:28px}
+  .grid2,.grid3,.part-grid{grid-template-columns:1fr}
+  .row{flex-direction:column}
+  .big{font-size:46px}
 }
 </style>
 </head>
 
 <body>
 <div class="app">
-
-<h1 id="appTitle">Turkish Meaning Builder</h1>
-<div class="subtitle" id="subtitle"></div>
-
-<section id="startPage" class="card">
-  <div class="prompt" id="chooseLearner"></div>
-
-  <div class="grid2">
-    <button class="primary" onclick="chooseLearner('bella')">
-      Bella<br>
-      <span class="small" id="bellaLabel"></span>
-    </button>
-
-    <button class="success" onclick="chooseLearner('ayza')">
-      Ayza<br>
-      <span class="small" id="ayzaLabel"></span>
-    </button>
+  <div class="header">
+    <h1>Turkish Meaning Builder</h1>
+    <div class="subtitle" id="subtitle"></div>
   </div>
 
-  <div class="prompt" id="learningStyleTitle" style="margin-top:22px"></div>
+  <section id="startPage" class="card">
+    <div class="prompt" id="chooseLearner"></div>
 
-  <select id="styleSelect" onchange="setStyle(this.value)">
-    <option value="family" id="optFamily"></option>
-    <option value="kids" id="optKids"></option>
-    <option value="adult" id="optAdult"></option>
-  </select>
+    <div class="grid2">
+      <button class="primary user-btn" onclick="chooseLearner('bella')">
+        <span class="user-title">Bella</span>
+        <span class="user-sub">English</span>
+        <span class="user-hint">English explanations</span>
+      </button>
 
-  <div id="stylePreview" class="logic"></div>
-</section>
-
-<section id="homePage" class="hidden">
-  <div class="card">
-    <div class="row">
-      <button class="ghost" onclick="backToStart()" id="changeLearner"></button>
-      <button class="danger" onclick="deleteProgress()" id="deleteProgress"></button>
+      <button class="success user-btn" onclick="chooseLearner('ayza')">
+        <span class="user-title">Ayza</span>
+        <span class="user-sub">Bahasa Indonesia</span>
+        <span class="user-hint">Penjelasan bahasa Indonesia</span>
+      </button>
     </div>
 
-    <div class="prompt" id="mainTitle"></div>
+    <div class="prompt" id="learningStyleTitle" style="margin-top:24px"></div>
 
-    <div id="modeInfo"></div>
+    <div class="style-options" id="styleOptions"></div>
+  </section>
 
-    <div id="positioning" class="logic"></div>
-
-    <div class="grid3">
-      <div class="stat">
-        <span id="score">0</span>
-        <small id="scoreLabel"></small>
+  <section id="homePage" class="hidden">
+    <div class="card">
+      <div class="row">
+        <button class="ghost" onclick="backToStart()" id="changeLearner"></button>
+        <button class="danger" onclick="deleteProgress()" id="deleteProgress"></button>
       </div>
 
-      <div class="stat">
-        <span id="attempts">0</span>
-        <small id="attemptsLabel"></small>
+      <div class="prompt" id="mainTitle"></div>
+      <div id="modeInfo"></div>
+      <div id="positioning" class="logic"></div>
+
+      <div class="grid3">
+        <div class="stat"><span id="score">0</span><small id="scoreLabel"></small></div>
+        <div class="stat"><span id="attempts">0</span><small id="attemptsLabel"></small></div>
+        <div class="stat"><span id="accuracy">0%</span><small id="accuracyLabel"></small></div>
       </div>
 
-      <div class="stat">
-        <span id="accuracy">0%</span>
-        <small id="accuracyLabel"></small>
+      <div class="progress"><div id="bar" class="bar"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="prompt" id="pathTitle"></div>
+      <div id="pathBox"></div>
+    </div>
+  </section>
+
+  <section id="lessonPage" class="hidden">
+    <div class="card">
+      <div class="row">
+        <button class="ghost" onclick="showHome()" id="mainMenuBtn"></button>
+        <button class="primary" onclick="nextItem()" id="nextBtn"></button>
       </div>
+
+      <div class="prompt" id="lessonTitle"></div>
+      <div id="activity"></div>
     </div>
-
-    <div class="progress">
-      <div id="bar" class="bar"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="prompt" id="pathTitle"></div>
-    <div id="pathBox"></div>
-  </div>
-</section>
-
-<section id="lessonPage" class="hidden">
-  <div class="card">
-    <div class="row">
-      <button class="ghost" onclick="showHome()" id="mainMenuBtn"></button>
-      <button class="primary" onclick="nextItem()" id="nextBtn"></button>
-    </div>
-
-    <div class="prompt" id="lessonTitle"></div>
-
-    <div id="activity"></div>
-  </div>
-</section>
-
+  </section>
 </div>
 
 <script>
 const UI = {
   en: {
-    subtitle: "Turkish isn't memorized word by word. Meaning is built from roots and endings.",
+    subtitle: "Turkish is not memorized word by word. Meaning is built from roots and suffixes.",
     chooseLearner: "Choose learner",
-    bellaLabel: "English explanations",
-    ayzaLabel: "Indonesian explanations",
-    learningStyleTitle: "Learning style",
-
-    familyOpt: "Family Mode — game + short logic",
-    kidsOpt: "Kids Mode — very simple",
-    adultOpt: "Adult Mode — more logic",
-
-    familyPreview: "👨‍👧 Family Mode: game first, short logic after the answer. Best for child + parent together.",
-    kidsPreview: "🧒 Kids Mode: fewer grammar notes, bigger actions, game-style feedback.",
-    adultPreview: "🧠 Adult Mode: shows why the suffix is used, word order logic, and short grammar explanations.",
-
-    changeLearner: "Change user",
+    learningStyleTitle: "Choose learning style",
+    familyTitle: "Family Mode",
+    familyDesc: "Short games first, then simple logic. Best when a parent and child learn together.",
+    kidsTitle: "Kids Mode",
+    kidsDesc: "Very simple screens, fewer grammar notes, more play and sound.",
+    adultTitle: "Adult Mode",
+    adultDesc: "More logic, suffix explanations, and short grammar notes without long theory.",
+    changeLearner: "Change learner",
     deleteProgress: "Delete progress",
     homePage: "Home Page",
-
-    positioning: "You don't memorize words. You construct meaning: root word + suffix + ending.",
-
+    positioning: "You do not memorize words. You build meaning: root word + suffix + suffix.",
     score: "Score",
-    attempts: "Test",
+    attempts: "Practice",
     accuracy: "Accuracy",
-
     pathTitle: "Path of Meaning",
-    atMoment: "At the moment",
+    atMoment: "Now",
     open: "Open",
     mainMenu: "Main Page",
     next: "Next",
-
     alphabet: "Alphabet Pro",
     alphabetDesc: "Stable sounds: ı, ö, ü, ş, ç, ğ",
-
-    root: "Root Word",
-    rootDesc: "Roots that can grow",
-
+    root: "Root Words",
+    rootDesc: "Base words that can grow with suffixes",
     meaning: "Meaning Builder",
-    meaningDesc: "root + suffix + ending",
-
+    meaningDesc: "Build meaning with root + suffix + suffix",
     evolution: "Word Evolution",
-    evolutionDesc: "ev → evim → evimde",
-
+    evolutionDesc: "Watch a word grow: ev → evim → evimde",
     listenLetter: "Listen Letter",
     listenWord: "Listen Word",
     iKnow: "I know this",
     listen: "Listen",
-
     buildPrompt: "Build the Turkish meaning",
-    tapParts: "Tap parts in the correct order.",
+    tapParts: "Tap the parts in the correct order.",
     clear: "Clear",
     check: "Check",
-    correctBuild: "Correct! You built a Turkish meaning.",
-    tryAgain: "Try again. Suffix order matters.",
-
+    correctBuild: "Correct. You built a Turkish meaning.",
+    tryAgain: "Try again. The order of suffixes matters.",
     wordGrow: "Watch the word grow",
     understand: "I understand",
-
-    rootNote: "This is the base word. It will later receive suffixes.",
-
+    rootNote: "This is the base word. Later, suffixes will add new meaning to it.",
     kidsLogic: "Build the word like blocks.",
-    familyLogic: "The suffixes add meaning to the root.",
+    familyLogic: "The suffixes add meaning to the root word.",
     adultLogic: "Logic"
   },
-
   id: {
     subtitle: "Bahasa Turki tidak dihafal kata demi kata. Makna dibangun dari akar kata dan akhiran.",
     chooseLearner: "Pilih pengguna",
-    bellaLabel: "Penjelasan bahasa Inggris",
-    ayzaLabel: "Penjelasan bahasa Indonesia",
-    learningStyleTitle: "Gaya belajar",
-
-    familyOpt: "Mode Keluarga — permainan + logika singkat",
-    kidsOpt: "Mode Anak — sangat sederhana",
-    adultOpt: "Mode Dewasa — logika lebih lengkap",
-
-    familyPreview: "👨‍👧 Mode Keluarga: permainan dulu, lalu logika singkat. Cocok untuk anak dan orang tua bersama.",
-    kidsPreview: "🧒 Mode Anak: penjelasan tata bahasa lebih sedikit, tombol lebih jelas, umpan balik seperti permainan.",
-    adultPreview: "🧠 Mode Dewasa: menjelaskan mengapa akhiran digunakan, logika urutan kata, dan catatan tata bahasa singkat.",
-
+    learningStyleTitle: "Pilih gaya belajar",
+    familyTitle: "Mode Keluarga",
+    familyDesc: "Permainan singkat dulu, lalu logika sederhana. Cocok untuk anak dan orang tua belajar bersama.",
+    kidsTitle: "Mode Anak",
+    kidsDesc: "Tampilan sangat sederhana, catatan tata bahasa lebih sedikit, lebih banyak permainan dan suara.",
+    adultTitle: "Mode Dewasa",
+    adultDesc: "Lebih banyak logika, penjelasan akhiran, dan catatan tata bahasa singkat tanpa teori panjang.",
     changeLearner: "Ganti pengguna",
     deleteProgress: "Hapus progres",
     homePage: "Halaman Utama",
-
     positioning: "Kamu tidak menghafal kata. Kamu membangun makna: akar kata + akhiran + akhiran.",
-
     score: "Skor",
-    attempts: "Tes",
+    attempts: "Latihan",
     accuracy: "Akurasi",
-
     pathTitle: "Jalur Makna",
     atMoment: "Saat ini",
     open: "Buka",
     mainMenu: "Halaman Utama",
     next: "Berikutnya",
-
     alphabet: "Alfabet Pro",
     alphabetDesc: "Bunyi stabil: ı, ö, ü, ş, ç, ğ",
-
     root: "Akar Kata",
-    rootDesc: "Akar kata yang bisa berkembang",
-
+    rootDesc: "Kata dasar yang bisa berkembang dengan akhiran",
     meaning: "Pembuat Makna",
-    meaningDesc: "akar kata + akhiran + akhiran",
-
+    meaningDesc: "Bangun makna dengan akar kata + akhiran + akhiran",
     evolution: "Perkembangan Kata",
-    evolutionDesc: "ev → evim → evimde",
-
+    evolutionDesc: "Lihat kata berkembang: ev → evim → evimde",
     listenLetter: "Dengar Huruf",
     listenWord: "Dengar Kata",
     iKnow: "Saya tahu",
     listen: "Dengar",
-
     buildPrompt: "Bangun makna bahasa Turki",
     tapParts: "Tekan bagian kata dalam urutan yang benar.",
     clear: "Hapus",
     check: "Periksa",
-    correctBuild: "Benar! Kamu membangun makna bahasa Turki.",
+    correctBuild: "Benar. Kamu membangun makna bahasa Turki.",
     tryAgain: "Coba lagi. Urutan akhiran penting.",
-
     wordGrow: "Lihat kata berkembang",
     understand: "Saya mengerti",
-
-    rootNote: "Ini kata dasar. Nanti kata ini akan menerima akhiran.",
-
+    rootNote: "Ini kata dasar. Nanti akhiran akan menambah makna baru pada kata ini.",
     kidsLogic: "Susun kata seperti blok.",
     familyLogic: "Akhiran menambah makna pada akar kata.",
     adultLogic: "Logika"
@@ -494,132 +378,38 @@ let learner = localStorage.getItem("tmb_learner") || "";
 let style = localStorage.getItem("tmb_style") || "family";
 let currentLesson = "meaning";
 let index = 0;
-
-let stats = JSON.parse(
-  localStorage.getItem("tmb_stats") ||
-  '{"score":0,"attempts":0}'
-);
-
-let completed = JSON.parse(
-  localStorage.getItem("tmb_done") ||
-  '{"alphabet":[],"meaning":[]}'
-);
+let stats = JSON.parse(localStorage.getItem("tmb_stats") || '{"score":0,"attempts":0}');
+let completed = JSON.parse(localStorage.getItem("tmb_done") || '{"alphabet":[],"meaning":[]}');
 
 const ALPHABET = [
-  {
-    letter:"e",
-    word:"ev",
-    en:"house",
-    id:"rumah",
-    enSound:"e like e in bed",
-    idSound:"e seperti e pada enak",
-    contrast:"e ≠ i"
-  },
-  {
-    letter:"ı",
-    word:"ılık",
-    en:"warm",
-    id:"hangat",
-    enSound:"soft uh, not i",
-    idSound:"seperti e pepet, bukan i",
-    contrast:"ı ≠ i"
-  },
-  {
-    letter:"ö",
-    word:"göz",
-    en:"eye",
-    id:"mata",
-    enSound:"say e while rounding lips",
-    idSound:"ucapkan e dengan bibir bulat",
-    contrast:"ö ≠ o"
-  },
-  {
-    letter:"ü",
-    word:"gül",
-    en:"rose",
-    id:"mawar",
-    enSound:"say ee while rounding lips",
-    idSound:"seperti i, tetapi bibir bulat",
-    contrast:"ü ≠ u"
-  },
-  {
-    letter:"ş",
-    word:"şapka",
-    en:"hat",
-    id:"topi",
-    enSound:"sh like ship",
-    idSound:"sy seperti syarat",
-    contrast:"ş ≠ ç"
-  },
-  {
-    letter:"ç",
-    word:"çay",
-    en:"tea",
-    id:"teh",
-    enSound:"ch like chair",
-    idSound:"c seperti cari",
-    contrast:"ç ≠ ş"
-  },
-  {
-    letter:"ğ",
-    word:"dağ",
-    en:"mountain",
-    id:"gunung",
-    enSound:"soft g, usually stretches the vowel",
-    idSound:"tidak dibaca jelas; memanjangkan bunyi",
-    contrast:"dağ → daa"
-  }
+  {letter:"e", word:"ev", en:"house", id:"rumah", enSound:"e like e in bed", idSound:"e seperti e pada enak", contrast:"e ≠ i"},
+  {letter:"ı", word:"ılık", en:"warm", id:"hangat", enSound:"soft uh, not i", idSound:"seperti e pepet, bukan i", contrast:"ı ≠ i"},
+  {letter:"ö", word:"göz", en:"eye", id:"mata", enSound:"say e while rounding lips", idSound:"ucapkan e dengan bibir bulat", contrast:"ö ≠ o"},
+  {letter:"ü", word:"gül", en:"rose", id:"mawar", enSound:"say ee while rounding lips", idSound:"seperti i, tetapi bibir bulat", contrast:"ü ≠ u"},
+  {letter:"ş", word:"şapka", en:"hat", id:"topi", enSound:"sh like ship", idSound:"sy seperti syarat", contrast:"ş ≠ ç"},
+  {letter:"ç", word:"çay", en:"tea", id:"teh", enSound:"ch like chair", idSound:"c seperti cari", contrast:"ç ≠ ş"},
+  {letter:"ğ", word:"dağ", en:"mountain", id:"gunung", enSound:"soft g, usually stretches the vowel", idSound:"tidak dibaca jelas; memanjangkan bunyi", contrast:"dağ → daa"}
 ];
 
 const ROOTS = [
-  {
-    root:"ev",
-    en:"house",
-    id:"rumah"
-  },
-  {
-    root:"okul",
-    en:"school",
-    id:"sekolah"
-  },
-  {
-    root:"araba",
-    en:"car",
-    id:"mobil"
-  },
-  {
-    root:"kitap",
-    en:"book",
-    id:"buku"
-  },
-  {
-    root:"göz",
-    en:"eye",
-    id:"mata"
-  }
+  {root:"ev", en:"house", id:"rumah"},
+  {root:"okul", en:"school", id:"sekolah"},
+  {root:"araba", en:"car", id:"mobil"},
+  {root:"kitap", en:"book", id:"buku"},
+  {root:"göz", en:"eye", id:"mata"}
 ];
 
 const MEANINGS = [
   {
-    root:"ev",
-    parts:[
-      ["ev","root","house","rumah"],
-      ["im","suffix","my","saya"],
-      ["de","suffix","in / at","di dalam"]
-    ],
+    parts:[["ev","root","house","rumah"],["im","suffix","my","saya"],["de","suffix","in / at","di dalam"]],
     result:"evimde",
     en:"in my house",
     id:"di rumah saya",
-    adult_en:"Root + possessive + location. The location suffix comes after possession.",
+    adult_en:"Root + possession + location. The location suffix comes after possession.",
     adult_id:"Akar kata + kepemilikan + tempat. Akhiran tempat datang setelah kepemilikan."
   },
   {
-    root:"okul",
-    parts:[
-      ["okul","root","school","sekolah"],
-      ["um","suffix","my","saya"],
-      ["da","suffix","in / at","di dalam"]
-    ],
+    parts:[["okul","root","school","sekolah"],["um","suffix","my","saya"],["da","suffix","in / at","di dalam"]],
     result:"okulumda",
     en:"in my school",
     id:"di sekolah saya",
@@ -627,12 +417,7 @@ const MEANINGS = [
     adult_id:"Vokal pada akhiran berubah sesuai harmoni vokal: okul + um + da."
   },
   {
-    root:"araba",
-    parts:[
-      ["araba","root","car","mobil"],
-      ["m","suffix","my","saya"],
-      ["dan","suffix","from","dari"]
-    ],
+    parts:[["araba","root","car","mobil"],["m","suffix","my","saya"],["dan","suffix","from","dari"]],
     result:"arabamdan",
     en:"from my car",
     id:"dari mobil saya",
@@ -640,30 +425,20 @@ const MEANINGS = [
     adult_id:"Jika akar kata berakhir dengan vokal, kepemilikan bisa menjadi -m: araba + m."
   },
   {
-    root:"ev",
-    parts:[
-      ["ev","root","house","rumah"],
-      ["im","suffix","my","saya"],
-      ["e","suffix","to","ke"]
-    ],
+    parts:[["ev","root","house","rumah"],["im","suffix","my","saya"],["e","suffix","to","ke"]],
     result:"evime",
     en:"to my house",
     id:"ke rumah saya",
-    adult_en:"Direction suffix -e/-a means to/towards.",
-    adult_id:"Akhiran arah -e/-a berarti ke/menuju."
+    adult_en:"Direction suffix -e/-a means to or towards.",
+    adult_id:"Akhiran arah -e/-a berarti ke atau menuju."
   },
   {
-    root:"okul",
-    parts:[
-      ["okul","root","school","sekolah"],
-      ["um","suffix","my","saya"],
-      ["dan","suffix","from","dari"]
-    ],
+    parts:[["okul","root","school","sekolah"],["um","suffix","my","saya"],["dan","suffix","from","dari"]],
     result:"okulumdan",
     en:"from my school",
     id:"dari sekolah saya",
-    adult_en:"Meaning is carried by suffix sequence, not by extra separate words.",
-    adult_id:"Makna dibawa oleh urutan akhiran, bukan oleh kata-kata tambahan yang terpisah."
+    adult_en:"Meaning is carried by the suffix sequence, not by extra separate words.",
+    adult_id:"Makna dibawa oleh urutan akhiran, bukan oleh kata tambahan yang terpisah."
   }
 ];
 
@@ -684,55 +459,39 @@ function setText(id, text){
   if(el) el.textContent = text;
 }
 
-function localizeStart(){
+function localizeBase(){
   setText("subtitle", U("subtitle"));
   setText("chooseLearner", U("chooseLearner"));
-  setText("bellaLabel", U("bellaLabel"));
-  setText("ayzaLabel", U("ayzaLabel"));
   setText("learningStyleTitle", U("learningStyleTitle"));
+  renderStyleOptions();
+}
 
-  setText("optFamily", U("familyOpt"));
-  setText("optKids", U("kidsOpt"));
-  setText("optAdult", U("adultOpt"));
+function renderStyleOptions(){
+  const styles = [
+    ["family", U("familyTitle"), U("familyDesc")],
+    ["kids", U("kidsTitle"), U("kidsDesc")],
+    ["adult", U("adultTitle"), U("adultDesc")]
+  ];
 
-  document.getElementById("styleSelect").value = style;
-  renderStylePreview();
+  document.getElementById("styleOptions").innerHTML = styles.map(s => `
+    <div class="style-card ${style === s[0] ? "active" : ""}" onclick="setStyle('${s[0]}')">
+      <div class="style-title">${s[1]}</div>
+      <div class="style-desc">${s[2]}</div>
+    </div>
+  `).join("");
 }
 
 function setStyle(selectedStyle){
   style = selectedStyle;
   localStorage.setItem("tmb_style", style);
-  document.getElementById("styleSelect").value = style;
-  renderStylePreview();
-
-  if(learner){
-    showHome();
-  }
-}
-
-function renderStylePreview(){
-  const box = document.getElementById("stylePreview");
-
-  if(style === "kids"){
-    box.className = "logic kids";
-    box.textContent = U("kidsPreview");
-  }
-
-  if(style === "adult"){
-    box.className = "logic adult";
-    box.textContent = U("adultPreview");
-  }
-
-  if(style === "family"){
-    box.className = "logic";
-    box.textContent = U("familyPreview");
-  }
+  localizeBase();
+  if(learner) showHome();
 }
 
 function chooseLearner(selectedLearner){
   learner = selectedLearner;
   localStorage.setItem("tmb_learner", learner);
-  localizeStart();
+  localizeBase();
   showHome();
 }
 
@@ -740,7 +499,7 @@ function backToStart(){
   document.getElementById("homePage").classList.add("hidden");
   document.getElementById("lessonPage").classList.add("hidden");
   document.getElementById("startPage").classList.remove("hidden");
-  localizeStart();
+  localizeBase();
 }
 
 function showHome(){
@@ -750,12 +509,7 @@ function showHome(){
 
   setText("changeLearner", U("changeLearner"));
   setText("deleteProgress", U("deleteProgress"));
-
-  setText(
-    "mainTitle",
-    (learner === "ayza" ? "Ayza — " : "Bella — ") + U("homePage")
-  );
-
+  setText("mainTitle", (learner === "ayza" ? "Ayza — " : "Bella — ") + U("homePage"));
   setText("scoreLabel", U("score"));
   setText("attemptsLabel", U("attempts"));
   setText("accuracyLabel", U("accuracy"));
@@ -764,10 +518,9 @@ function showHome(){
   setText("nextBtn", U("next"));
 
   document.getElementById("positioning").textContent = U("positioning");
-
   document.getElementById("modeInfo").innerHTML =
-    `<span class="mode-pill">${learner === "ayza" ? "Ayza / Indonesia" : "Bella / English"}</span>
-     <span class="mode-pill">${style}</span>
+    `<span class="mode-pill">${learner === "ayza" ? "Ayza / Bahasa Indonesia" : "Bella / English"}</span>
+     <span class="mode-pill">${U(style + "Title")}</span>
      <span class="mode-pill">root + suffix</span>`;
 
   renderPath();
@@ -776,59 +529,23 @@ function showHome(){
 
 function renderPath(){
   const lessons = [
-    [
-      "alphabet",
-      U("alphabet"),
-      U("alphabetDesc"),
-      completed.alphabet.length,
-      ALPHABET.length
-    ],
-    [
-      "root",
-      U("root"),
-      U("rootDesc"),
-      0,
-      ROOTS.length
-    ],
-    [
-      "meaning",
-      U("meaning"),
-      U("meaningDesc"),
-      completed.meaning.length,
-      MEANINGS.length
-    ],
-    [
-      "evolution",
-      U("evolution"),
-      U("evolutionDesc"),
-      completed.meaning.length,
-      MEANINGS.length
-    ]
+    ["alphabet", U("alphabet"), U("alphabetDesc"), completed.alphabet.length, ALPHABET.length],
+    ["root", U("root"), U("rootDesc"), 0, ROOTS.length],
+    ["meaning", U("meaning"), U("meaningDesc"), completed.meaning.length, MEANINGS.length],
+    ["evolution", U("evolution"), U("evolutionDesc"), completed.meaning.length, MEANINGS.length]
   ];
 
-  const box = document.getElementById("pathBox");
-
-  box.innerHTML = lessons.map((lesson, i) => {
-    const percent = Math.min(
-      100,
-      Math.round((lesson[3] / Math.max(1, lesson[4])) * 100)
-    );
+  document.getElementById("pathBox").innerHTML = lessons.map((lesson, i) => {
+    const percent = Math.min(100, Math.round((lesson[3] / Math.max(1, lesson[4])) * 100));
 
     return `
       <div class="path-card ${percent === 100 ? "done" : i === 0 ? "current" : ""}">
         <div class="path-title">${lesson[1]}</div>
         <div class="path-desc">${lesson[2]}</div>
-
         <span class="mode-pill">${U("atMoment")}</span>
         <span class="mode-pill">${percent}%</span>
-
-        <div class="progress">
-          <div class="bar" style="width:${percent}%"></div>
-        </div>
-
-        <button class="primary" style="width:100%;margin-top:12px" onclick="openLesson('${lesson[0]}')">
-          ${U("open")}
-        </button>
+        <div class="progress"><div class="bar" style="width:${percent}%"></div></div>
+        <button class="primary" style="width:100%;margin-top:12px" onclick="openLesson('${lesson[0]}')">${U("open")}</button>
       </div>
     `;
   }).join("");
@@ -837,13 +554,10 @@ function renderPath(){
 function openLesson(type){
   currentLesson = type;
   index = 0;
-
   document.getElementById("homePage").classList.add("hidden");
   document.getElementById("lessonPage").classList.remove("hidden");
-
   setText("mainMenuBtn", U("mainMenu"));
   setText("nextBtn", U("next"));
-
   renderLesson();
 }
 
@@ -856,28 +570,17 @@ function renderLesson(){
 
 function nextItem(){
   index++;
-
-  const max =
-    currentLesson === "alphabet" ? ALPHABET.length :
-    currentLesson === "root" ? ROOTS.length :
-    MEANINGS.length;
-
-  if(index >= max){
-    index = 0;
-  }
-
+  const max = currentLesson === "alphabet" ? ALPHABET.length : currentLesson === "root" ? ROOTS.length : MEANINGS.length;
+  if(index >= max) index = 0;
   renderLesson();
 }
 
 function speak(text){
   if(!("speechSynthesis" in window)) return;
-
   speechSynthesis.cancel();
-
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "tr-TR";
   utterance.rate = .75;
-
   speechSynthesis.speak(utterance);
 }
 
@@ -886,19 +589,12 @@ function shuffle(array){
 }
 
 function mark(type, id){
-  if(!completed[type]){
-    completed[type] = [];
-  }
-
-  if(!completed[type].includes(id)){
-    completed[type].push(id);
-  }
+  if(!completed[type]) completed[type] = [];
+  if(!completed[type].includes(id)) completed[type].push(id);
 
   localStorage.setItem("tmb_done", JSON.stringify(completed));
-
   stats.score++;
   stats.attempts++;
-
   localStorage.setItem("tmb_stats", JSON.stringify(stats));
 
   updateProgress();
@@ -906,27 +602,8 @@ function mark(type, id){
 }
 
 function updateProgress(){
-  const alphabetPercent = Math.min(
-    100,
-    Math.round((completed.alphabet.length / ALPHABET.length) * 100)
-  );
-
-  const meaningPercent = Math.min(
-    100,
-    Math.round((completed.meaning.length / MEANINGS.length) * 100)
-  );
-
-  const totalPercent = Math.min(
-    100,
-    Math.round(
-      ((completed.alphabet.length + completed.meaning.length) /
-      (ALPHABET.length + MEANINGS.length)) * 100
-    )
-  );
-
-  const accuracy = stats.attempts
-    ? Math.round((stats.score / stats.attempts) * 100)
-    : 0;
+  const totalPercent = Math.min(100, Math.round(((completed.alphabet.length + completed.meaning.length) / (ALPHABET.length + MEANINGS.length)) * 100));
+  const accuracy = stats.attempts ? Math.round((stats.score / stats.attempts) * 100) : 0;
 
   setText("score", stats.score);
   setText("attempts", stats.attempts);
@@ -963,14 +640,11 @@ function modeExplanation(item){
 
 function renderAlphabet(){
   const item = ALPHABET[index];
-
   setText("lessonTitle", U("alphabet"));
 
   document.getElementById("activity").innerHTML = `
     <div class="big">${item.letter}</div>
-
     <div class="meaning">${item.word} = ${meaning(item)}</div>
-
     <div class="logic ${style === "kids" ? "kids" : style === "adult" ? "adult" : ""}">
       ${lang() === "id" ? item.idSound : item.enSound}<br>
       <b>${item.contrast}</b>
@@ -990,14 +664,11 @@ function renderAlphabet(){
 
 function renderRoot(){
   const item = ROOTS[index];
-
   setText("lessonTitle", U("root"));
 
   document.getElementById("activity").innerHTML = `
     <div class="big">${item.root}</div>
-
     <div class="meaning">${meaning(item)}</div>
-
     <div class="logic ${style === "kids" ? "kids" : style === "adult" ? "adult" : ""}">
       ${U("rootNote")}
     </div>
@@ -1011,21 +682,17 @@ function renderRoot(){
 
 function renderMeaning(){
   const item = MEANINGS[index];
-
   setText("lessonTitle", U("meaning"));
 
   const options = shuffle(item.parts);
-
   window.currentAnswer = [];
 
   document.getElementById("activity").innerHTML = `
     <div class="prompt">${U("buildPrompt")}</div>
-
     <div class="meaning">${meaning(item)}</div>
-
     <div id="answer" class="big"></div>
 
-    <div class="grid3">
+    <div class="part-grid">
       ${options.map(part => `
         <button class="${part[1] === "root" ? "success" : "warning"}" onclick="pickPart('${part[0]}')">
           ${part[0]}
@@ -1039,7 +706,6 @@ function renderMeaning(){
     </div>
 
     ${modeExplanation(item)}
-
     <div id="fb" class="feedback">${U("tapParts")}</div>
   `;
 }
@@ -1054,26 +720,18 @@ function checkBuild(correct){
   const ok = given === correct;
 
   stats.attempts++;
-
-  if(ok){
-    stats.score++;
-  }
+  if(ok) stats.score++;
 
   localStorage.setItem("tmb_stats", JSON.stringify(stats));
 
   const feedback = document.getElementById("fb");
-
   feedback.textContent = ok ? U("correctBuild") : U("tryAgain");
   feedback.style.background = ok ? "#dcfce7" : "#fee2e2";
   feedback.style.color = ok ? "#166534" : "#991b1b";
 
   if(ok){
     speak(correct);
-
-    if(!completed.meaning.includes(correct)){
-      completed.meaning.push(correct);
-    }
-
+    if(!completed.meaning.includes(correct)) completed.meaning.push(correct);
     localStorage.setItem("tmb_done", JSON.stringify(completed));
   }
 
@@ -1082,22 +740,15 @@ function checkBuild(correct){
 
 function renderEvolution(){
   const item = MEANINGS[index];
-
   setText("lessonTitle", U("evolution"));
 
   let steps = [item.parts[0][0]];
-
-  if(item.parts.length > 1){
-    steps.push(item.parts[0][0] + item.parts[1][0]);
-  }
-
+  if(item.parts.length > 1) steps.push(item.parts[0][0] + item.parts[1][0]);
   steps.push(item.result);
 
   document.getElementById("activity").innerHTML = `
     <div class="prompt">${U("wordGrow")}</div>
-
     <div class="big">${steps.join(" → ")}</div>
-
     <div class="meaning">${meaning(item)}</div>
 
     ${modeExplanation(item)}
@@ -1119,15 +770,8 @@ function renderEvolution(){
 }
 
 function deleteProgress(){
-  completed = {
-    alphabet: [],
-    meaning: []
-  };
-
-  stats = {
-    score: 0,
-    attempts: 0
-  };
+  completed = { alphabet: [], meaning: [] };
+  stats = { score: 0, attempts: 0 };
 
   localStorage.setItem("tmb_done", JSON.stringify(completed));
   localStorage.setItem("tmb_stats", JSON.stringify(stats));
@@ -1135,12 +779,14 @@ function deleteProgress(){
   showHome();
 }
 
-localizeStart();
+localizeBase();
 
 if(learner){
+  localizeBase();
   showHome();
 }
-</script>
 
+document.body.style.visibility = "visible";
+</script>
 </body>
 </html>
