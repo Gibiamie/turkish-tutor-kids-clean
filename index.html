@@ -1,162 +1,747 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Turkish Tutor Kids MVP</title>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,sans-serif;background:#eef4ff;color:#111827}
-    .app{max-width:560px;margin:auto;min-height:100vh;background:#fff;padding:16px}
-    h1{text-align:center;margin:12px 0 4px;font-size:30px}.sub{text-align:center;color:#64748b;margin-bottom:14px}
-    .card{background:#fff;border:2px solid #e5e7eb;border-radius:24px;padding:16px;margin:14px 0;box-shadow:0 6px 18px rgba(0,0,0,.06)}
-    .prompt{text-align:center;font-size:22px;font-weight:900;margin:8px 0 16px}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-    .row{display:flex;gap:10px;margin-top:12px}.row button{flex:1}
-    button{border:0;border-radius:18px;padding:15px 12px;font-size:16px;font-weight:900;background:#dbeafe;color:#1e3a8a;cursor:pointer;position:relative;overflow:visible}
-    button:active{transform:scale(.98)}.primary{background:#2563eb;color:white}.success{background:#dcfce7;color:#166534}.warning{background:#fef3c7;color:#92400e}.danger{background:#fee2e2;color:#991b1b}.ghost{background:#f3f4f6;color:#374151}.purple{background:#ede9fe;color:#5b21b6}
-    .hidden{display:none!important}select,input{width:100%;padding:14px;border:2px solid #d1d5db;border-radius:16px;font-size:16px;font-weight:700;margin:6px 0 10px}
-    .big{font-size:52px;font-weight:900;text-align:center;margin:14px 0}.build-line{text-align:center;font-size:42px;font-weight:900;margin:14px 0}.root{color:#2563eb}.suffix{color:#dc2626}
-    .meaning{text-align:center;font-size:20px;font-weight:900}.small{font-size:14px;color:#64748b;line-height:1.45}.feedback{margin-top:12px;padding:12px;border-radius:16px;text-align:center;font-weight:900;background:#f3f4f6}
-    .progress{height:12px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:#22c55e}.stat{background:#f8fafc;border-radius:18px;padding:12px;text-align:center;font-weight:900}.stat small{display:block;color:#64748b}
-    .tile{min-height:110px;text-align:left}.tile strong{display:block;margin-bottom:8px}.badge{display:inline-block;background:#eef2ff;color:#3730a3;border-radius:999px;padding:6px 10px;margin:3px;font-size:12px;font-weight:900}.table{width:100%;border-collapse:collapse}.table td{border-bottom:1px solid #e5e7eb;padding:10px;font-weight:800}
-    .rtl{direction:rtl;text-align:right}.chatbox{display:flex;flex-direction:column;gap:10px;margin:12px 0}.bubble{max-width:82%;padding:12px 14px;border-radius:18px;font-weight:800;line-height:1.35}.bubble.left{align-self:flex-start;background:#e0f2fe;color:#075985}.bubble.right{align-self:flex-end;background:#dcfce7;color:#166534}.speaker{font-size:12px;color:#64748b;font-weight:900;margin-bottom:4px}.dialogue-scene{text-align:center;font-size:40px;margin:8px 0}
-    .celebrate{background:#bbf7d0!important;color:#14532d!important;transform:scale(1.04)!important}.wrongtap{background:#fecaca!important;color:#7f1d1d!important;animation:shake .25s linear}.sparkle{position:absolute;pointer-events:none;font-size:22px;z-index:20;animation:fly 1.4s ease-out forwards}
-    .modal{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;padding:18px;z-index:99}.modalbox{background:white;border-radius:24px;padding:20px;max-width:430px;width:100%;text-align:center}
-    @keyframes fly{0%{opacity:1;transform:translate(0,0) scale(.7) rotate(0deg)}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.35) rotate(35deg)}}
-    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-    .topStats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0}.topStat{border-radius:18px;padding:12px;text-align:center;font-weight:900;background:#f8fafc;border:1px solid #e5e7eb}.topStat b{display:block;font-size:20px}.topStat small{color:#64748b}.pathCard{border:2px solid #e5e7eb;border-radius:24px;padding:14px;margin:12px 0;background:linear-gradient(180deg,#fff,#f8fafc)}.pathCard.done{border-color:#22c55e;background:#f0fdf4}.pathCard.current{border-color:#2563eb;background:#eff6ff}.pathCard.locked{opacity:.55}.pathTitle{font-size:18px;font-weight:900}.pathMeta{color:#64748b;margin:6px 0 10px}.coach{background:#eef2ff;color:#3730a3;border-radius:18px;padding:12px;margin:12px 0;font-weight:900;text-align:center}.pill{display:inline-block;border-radius:999px;padding:6px 10px;margin:3px;background:#e0f2fe;color:#075985;font-weight:900;font-size:12px}.reward{font-size:34px;text-align:center;margin:10px 0}.scoreRing{width:116px;height:116px;border-radius:50%;display:grid;place-items:center;margin:12px auto;background:conic-gradient(#22c55e var(--score),#e5e7eb 0);font-size:24px;font-weight:900}.scoreRing span{background:white;width:88px;height:88px;border-radius:50%;display:grid;place-items:center}.lessonMini{font-size:13px;color:#64748b;text-align:center;margin-top:6px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Turkish Tutor Kids</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#eef4ff;color:#111827}
+.app{max-width:560px;margin:auto;min-height:100vh;background:#fff;padding:16px}
+h1{text-align:center;margin:14px 0 4px;font-size:30px}
+.sub{text-align:center;color:#64748b;margin-bottom:14px}
+.card{background:#fff;border:2px solid #e5e7eb;border-radius:24px;padding:16px;margin:14px 0;box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.prompt{text-align:center;font-size:22px;font-weight:900;margin:10px 0 16px}
+.row{display:flex;gap:10px;margin-top:12px}
+.row button{flex:1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+button{border:0;border-radius:18px;padding:15px 12px;font-size:16px;font-weight:900;background:#dbeafe;color:#1e3a8a;cursor:pointer;position:relative;overflow:visible}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{background:#2563eb;color:white}
+.success{background:#dcfce7;color:#166534}
+.warning{background:#fef3c7;color:#92400e}
+.danger{background:#fee2e2;color:#991b1b}
+.ghost{background:#f3f4f6;color:#374151}
+.purple{background:#ede9fe;color:#5b21b6}
+.hidden{display:none!important}
+select,input{width:100%;padding:14px;border:2px solid #d1d5db;border-radius:16px;font-size:16px;font-weight:700;margin:6px 0 10px}
+.big{font-size:52px;font-weight:900;text-align:center;margin:14px 0;word-break:break-word}
+.huge{font-size:64px;font-weight:900;text-align:center;margin:16px 0}
+.meaning{text-align:center;font-size:20px;font-weight:900}
+.small{font-size:14px;color:#64748b;line-height:1.45}
+.feedback{margin-top:12px;padding:12px;border-radius:16px;text-align:center;font-weight:900;background:#f3f4f6}
+.progress{height:12px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:10px}
+.bar{height:100%;background:#22c55e;width:0}
+.stat{background:#f8fafc;border-radius:18px;padding:12px;text-align:center;font-weight:900}
+.stat small{display:block;color:#64748b}
+.badge,.pill{display:inline-block;background:#eef2ff;color:#3730a3;border-radius:999px;padding:6px 10px;margin:3px;font-size:12px;font-weight:900}
+.pathCard{border:2px solid #e5e7eb;border-radius:24px;padding:14px;margin:12px 0;background:#fff}
+.pathCard.done{border-color:#22c55e;background:#f0fdf4}
+.pathCard.current{border-color:#2563eb;background:#eff6ff}
+.pathCard.locked{opacity:.55}
+.pathTitle{font-size:18px;font-weight:900}
+.pathMeta{color:#64748b;margin:6px 0 10px}
+.coach{background:#eef2ff;color:#3730a3;border-radius:18px;padding:12px;margin:12px 0;font-weight:900;text-align:center}
+.table{width:100%;border-collapse:collapse}
+.table td{border-bottom:1px solid #e5e7eb;padding:10px;font-weight:800}
+.build-line{text-align:center;font-size:42px;font-weight:900;margin:14px 0}
+.root{color:#2563eb}
+.suffix{color:#dc2626}
+.chatbox{display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:82%;padding:12px 14px;border-radius:18px;font-weight:800}
+.left{align-self:flex-start;background:#e0f2fe;color:#075985}
+.right{align-self:flex-end;background:#dcfce7;color:#166534}
+.speaker{font-size:12px;color:#64748b;font-weight:900}
+.celebrate{background:#bbf7d0!important;color:#14532d!important;transform:scale(1.04)}
+.wrongtap{background:#fecaca!important;color:#7f1d1d!important;animation:shake .25s}
+.sparkle{position:absolute;pointer-events:none;font-size:22px;z-index:20;animation:fly 1.6s ease-out forwards}
+.rtl{direction:rtl;text-align:right}
+@keyframes fly{0%{opacity:1;transform:translate(0,0) scale(.7)}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.4) rotate(35deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+</style>
 </head>
 <body>
 <div class="app">
-  <h1>Turkish Tutor Kids</h1>
-  <div class="sub" id="subtitle">Duolingo-style Turkish MVP</div>
+<h1>Turkish Tutor Kids</h1>
+<div class="sub" id="subtitle">Learn Turkish step by step</div>
 
-  <section id="onboarding" class="card">
-    <div class="prompt" id="onboardingTitle">Onboarding</div>
-    <label id="nativeLangLabel">User native language</label>
-    <select id="nativeLang"><option value="en">English</option><option value="id">Bahasa Indonesia</option><option value="ar">Arabic</option><option value="tr">Turkish</option></select>
-    <label id="ageGroupLabel">Age group</label>
-    <select id="ageGroup"><option value="child">child</option><option value="teen">teen</option><option value="adult">adult</option></select>
-    <label id="dailyGoalLabel">Daily goal</label>
-    <select id="dailyGoal"><option value="5">5 dk</option><option value="10">10 dk</option><option value="20">20 dk</option></select>
-    <label id="levelTestLabel">Level test</label>
-    <select id="levelTest"><option value="beginner">beginner</option><option value="some">knows some Turkish</option></select>
-    <button class="primary" id="startBtn" style="width:100%">Start Learning Turkish</button>
-  </section>
+<section id="onboarding" class="card">
+  <div class="prompt" id="onboardingTitle">Onboarding</div>
+  <label id="nativeLangLabel">User native language</label>
+  <select id="nativeLang">
+    <option value="en">English</option>
+    <option value="id">Bahasa Indonesia</option>
+    <option value="ar">Arabic</option>
+    <option value="tr">Turkish</option>
+  </select>
+  <label id="ageGroupLabel">Age group</label>
+  <select id="ageGroup">
+    <option value="child">child</option>
+    <option value="teen">teen</option>
+    <option value="adult">adult</option>
+  </select>
+  <label id="dailyGoalLabel">Daily goal</label>
+  <select id="dailyGoal">
+    <option value="5">5 dk</option>
+    <option value="10">10 dk</option>
+    <option value="20">20 dk</option>
+  </select>
+  <label id="levelTestLabel">Level test</label>
+  <select id="levelTest">
+    <option value="beginner">beginner</option>
+    <option value="some">knows some Turkish</option>
+  </select>
+  <button class="primary" id="startBtn" style="width:100%">Start Learning Turkish</button>
+</section>
 
-  <section id="home" class="hidden">
-    <div class="card"><div class="row"><button class="ghost" id="changeProfile">Change Profile</button><button class="purple" id="adminOpen">Admin Panel</button></div><div class="prompt" id="homeTitle">Main Page</div><div id="badges"></div><div class="grid3"><div class="stat"><span id="xp">0</span><small>XP</small></div><div class="stat"><span id="streak">0</span><small>Streak</small></div><div class="stat"><span id="goal">5m</span><small>Goal</small></div></div><div class="row"><button class="primary" id="continueLesson">Continue Today</button><button class="warning" id="reviewMistakes">Review Mistakes</button></div></div>
-    <div class="card"><div class="prompt" id="mapTitle">Teaching Map</div><div id="levelMap"></div></div>
-    <div class="card"><div class="prompt" id="progressSummaryTitle">Progress Summary</div><div class="grid3"><div class="stat"><span id="pAlphabet">0%</span><small id="pAlphabetLabel">Alphabet</small></div><div class="stat"><span id="pWords">0%</span><small id="pWordsLabel">Words</small></div><div class="stat"><span id="pTotal">0%</span><small id="pTotalLabel">Total</small></div></div><div class="progress"><div id="pBar" class="bar"></div></div></div>
-  </section>
+<section id="home" class="hidden">
+  <div class="card">
+    <div class="row">
+      <button class="ghost" id="changeProfile">Change Profile</button>
+      <button class="purple" id="adminOpen">Admin Panel</button>
+    </div>
+    <div class="prompt" id="homeTitle">Main Page</div>
+    <div id="badges"></div>
+    <div class="grid3">
+      <div class="stat"><span id="hearts">❤️ 5</span><small id="heartsLabel">Hearts</small></div>
+      <div class="stat"><span id="xp">⚡ 0</span><small>XP</small></div>
+      <div class="stat"><span id="streak">🔥 0</span><small>Streak</small></div>
+    </div>
+    <div class="row">
+      <button class="primary" id="continueLesson">Continue Today</button>
+      <button class="warning" id="reviewMistakes">Review Mistakes</button>
+    </div>
+  </div>
 
-  <section id="lesson" class="hidden">
-    <div class="card"><div class="row"><button class="ghost" id="lessonHomeBtn" onclick="home()">Main Page</button><button class="purple" id="lessonProgressBtn" onclick="showProgress()">Progress</button></div><div class="prompt" id="lessonTitle">Lesson</div><div class="progress"><div id="lessonBar" class="bar"></div></div></div>
-    <div class="card" id="activity"></div>
-  </section>
+  <div class="card">
+    <div class="prompt" id="mapTitle">Teaching Map</div>
+    <div id="levelMap"></div>
+  </div>
 
-  <section id="result" class="hidden"><div class="card"><div class="prompt" id="resultTitle">Lesson Result</div><div class="grid3"><div class="stat"><span id="rCorrect">0</span><small id="rCorrectLabel">Correct</small></div><div class="stat"><span id="rWrong">0</span><small id="rWrongLabel">Wrong</small></div><div class="stat"><span id="rSuccess">0%</span><small id="rSuccessLabel">Success</small></div></div><div id="advice" class="feedback"></div><div class="row"><button class="warning" id="resultRetry">Retry Wrong Items</button><button class="success" id="resultHome">Main Page</button></div></div></section>
-  <section id="progress" class="hidden"><div class="card"><div class="row"><button class="ghost" id="progressHomeBtn" onclick="home()">Main Page</button><button class="danger" id="resetBtn">Reset Progress</button></div><div class="prompt" id="progressTitle">Progress Dashboard</div><table class="table" id="progressTable"></table></div></section>
-  <section id="admin" class="hidden"><div class="card"><div class="row"><button class="ghost" id="adminHomeBtn" onclick="home()">Main Page</button></div><div class="prompt" id="adminTitle">Admin Panel</div><div class="small" id="adminNote">Add local words without coding.</div><input id="newTr" placeholder="Turkish word"><input id="newEn" placeholder="English"><input id="newId" placeholder="Indonesian"><input id="newAr" placeholder="Arabic"><button class="primary" id="addWord" style="width:100%">Add Word</button><div id="adminList"></div></div></section>
-  <div id="modal" class="modal hidden"><div class="modalbox"><div class="prompt" id="modalTitle">Completed</div><div id="modalMsg" class="feedback">Great job.</div><div class="row"><button class="warning" id="modalRetry">Retry Wrong Items</button><button class="success" id="modalHome">Main Page</button></div></div></div>
-  <div class="small" style="text-align:center" id="footerNote">Offline first • No login yet • Ready for Firebase/Supabase later</div><div class="small" id="tests" style="text-align:center"></div>
+  <div class="card">
+    <div class="prompt" id="progressSummaryTitle">Progress Summary</div>
+    <div class="grid3">
+      <div class="stat"><span id="pAlphabet">0%</span><small id="pAlphabetLabel">Alphabet</small></div>
+      <div class="stat"><span id="pWords">0%</span><small id="pWordsLabel">Words</small></div>
+      <div class="stat"><span id="pTotal">0%</span><small id="pTotalLabel">Total</small></div>
+    </div>
+    <div class="progress"><div id="pBar" class="bar"></div></div>
+  </div>
+</section>
+
+<section id="lesson" class="hidden">
+  <div class="card">
+    <div class="row">
+      <button class="ghost" onclick="home()" id="lessonHomeBtn">Main Page</button>
+      <button class="purple" onclick="showProgress()" id="lessonProgressBtn">Progress</button>
+    </div>
+    <div class="prompt" id="lessonTitle">Lesson</div>
+    <div class="progress"><div id="lessonBar" class="bar"></div></div>
+  </div>
+  <div class="card" id="activity"></div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="card">
+    <div class="prompt" id="resultTitle">Lesson Result</div>
+    <div class="grid3">
+      <div class="stat"><span id="rCorrect">0</span><small id="rCorrectLabel">Correct</small></div>
+      <div class="stat"><span id="rWrong">0</span><small id="rWrongLabel">Wrong</small></div>
+      <div class="stat"><span id="rSuccess">0%</span><small id="rSuccessLabel">Success</small></div>
+    </div>
+    <div id="advice" class="feedback"></div>
+    <div class="row">
+      <button class="warning" id="resultRetry">Retry Wrong Items</button>
+      <button class="success" id="resultHome">Main Page</button>
+    </div>
+  </div>
+</section>
+
+<section id="progress" class="hidden">
+  <div class="card">
+    <div class="row">
+      <button class="ghost" onclick="home()" id="progressHomeBtn">Main Page</button>
+      <button class="danger" id="resetBtn">Reset Progress</button>
+    </div>
+    <div class="prompt" id="progressTitle">Progress Dashboard</div>
+    <table class="table" id="progressTable"></table>
+  </div>
+</section>
+
+<section id="admin" class="hidden">
+  <div class="card">
+    <div class="row"><button class="ghost" onclick="home()" id="adminHomeBtn">Main Page</button></div>
+    <div class="prompt" id="adminTitle">Admin Panel</div>
+    <div class="small" id="adminNote">Add local words without coding.</div>
+    <input id="newTr" placeholder="Turkish word">
+    <input id="newEn" placeholder="English">
+    <input id="newId" placeholder="Indonesian">
+    <input id="newAr" placeholder="Arabic">
+    <button class="primary" id="addWord" style="width:100%">Add Word</button>
+    <div id="adminList"></div>
+  </div>
+</section>
+
+<div class="small" style="text-align:center" id="footerNote">Offline first • No login yet • Ready for Firebase/Supabase later</div>
+<div class="small" id="tests" style="text-align:center"></div>
 </div>
+
 <script>
 'use strict';
+
 const L={
-  en:{main:'Main Page',map:'Teaching Map',continue:'Continue Today',review:'Review Mistakes',progress:'Progress',admin:'Admin Panel',correct:'Correct',wrong:'Wrong',listen:'Listen',next:'Next',finish:'Finish',previous:'Previous',onboarding:'Onboarding',userLang:'User native language',age:'Age group',goal:'Daily goal',level:'Level test',start:'Start Learning Turkish',chooseMeaning:'Choose the correct meaning',chooseReply:'Choose the correct reply',listenDialog:'Listen to the dialogue',buildWord:'Build the word',showHint:'Show Hint',tapAnswer:'Tap the answer.',bestReply:'Choose the best reply.',letterPrompt:'Listen and read the Turkish letter',listenLetter:'Listen Letter',listenWord:'Listen Word',iKnow:'I Know This',needPractice:'Need Practice',chooseResult:'Listen. Read. Choose your result.',ending:'Choose the ending.',hiddenList:'Answer list is hidden. Use hint only if needed.',dailyLesson:'Daily Lesson',selectOne:'Select one answer.',progressSummary:'Progress Summary',words:'Words',total:'Total',alphabet:'Alphabet',lessonResult:'Lesson Result',success:'Success',progressDashboard:'Progress Dashboard',reset:'Reset Progress',adminNote:'Add local words without coding.',addWord:'Add Word',footer:'Offline first • No login yet • Ready for Firebase/Supabase later',levelWord:'Level',open:'Open',target:'Target',native:'Native',attempts:'Attempts',mistakes:'Mistakes',noWrongSession:'No wrong items in this lesson.',noWrong:'No wrong items.',completed:'Lesson completed. Great job.',repeat:'Please repeat this lesson.',mastery:'Good. Repeat mistakes for mastery.'},
-  id:{main:'Halaman Utama',map:'Peta Belajar',continue:'Lanjut Hari Ini',review:'Ulangi Kesalahan',progress:'Progres',admin:'Panel Admin',correct:'Benar',wrong:'Salah',listen:'Dengar',next:'Berikutnya',finish:'Selesai',previous:'Sebelumnya',onboarding:'Awal',userLang:'Bahasa pengguna',age:'Kelompok usia',goal:'Target harian',level:'Tes level',start:'Mulai Belajar Bahasa Turki',chooseMeaning:'Pilih arti yang benar',chooseReply:'Pilih jawaban yang benar',listenDialog:'Dengarkan dialog',buildWord:'Susun kata',showHint:'Tampilkan petunjuk',tapAnswer:'Tekan jawaban.',bestReply:'Pilih jawaban terbaik.',letterPrompt:'Dengar dan baca huruf Turki',listenLetter:'Dengar Huruf',listenWord:'Dengar Kata',iKnow:'Saya tahu',needPractice:'Perlu latihan',chooseResult:'Dengar. Baca. Pilih hasilmu.',ending:'Pilih akhiran.',hiddenList:'Daftar jawaban disembunyikan. Gunakan petunjuk jika perlu.',dailyLesson:'Pelajaran Harian',selectOne:'Pilih satu jawaban.',progressSummary:'Ringkasan Progres',words:'Kata',total:'Total',alphabet:'Alfabet',lessonResult:'Hasil Pelajaran',success:'Keberhasilan',progressDashboard:'Dasbor Progres',reset:'Hapus Progres',adminNote:'Tambahkan kata lokal tanpa coding.',addWord:'Tambah Kata',footer:'Offline dahulu • Belum ada login • Siap untuk Firebase/Supabase nanti',levelWord:'Level',open:'Buka',target:'Target',native:'Bahasa',attempts:'Percobaan',mistakes:'Kesalahan',noWrongSession:'Tidak ada kesalahan di pelajaran ini.',noWrong:'Tidak ada kesalahan.',completed:'Pelajaran selesai. Bagus sekali.',repeat:'Ulangi pelajaran ini.',mastery:'Bagus. Ulangi kesalahan agar mahir.'},
-  ar:{main:'الصفحة الرئيسية',map:'خريطة التعلم',continue:'تابع اليوم',review:'راجع الأخطاء',progress:'التقدم',admin:'لوحة الإدارة',correct:'صحيح',wrong:'خطأ',listen:'استمع',next:'التالي',finish:'إنهاء',previous:'السابق',onboarding:'البداية',userLang:'لغة المستخدم',age:'الفئة العمرية',goal:'الهدف اليومي',level:'اختبار المستوى',start:'ابدأ تعلم التركية',chooseMeaning:'اختر المعنى الصحيح',chooseReply:'اختر الرد الصحيح',listenDialog:'استمع إلى الحوار',buildWord:'كوّن الكلمة',showHint:'إظهار تلميح',tapAnswer:'اضغط الإجابة.',bestReply:'اختر أفضل رد.',letterPrompt:'استمع واقرأ الحرف التركي',listenLetter:'استمع للحرف',listenWord:'استمع للكلمة',iKnow:'أعرف هذا',needPractice:'أحتاج تدريب',chooseResult:'استمع. اقرأ. اختر نتيجتك.',ending:'اختر اللاحقة.',hiddenList:'قائمة الإجابات مخفية. استخدم التلميح عند الحاجة.',dailyLesson:'درس اليوم',selectOne:'اختر إجابة واحدة.',progressSummary:'ملخص التقدم',words:'كلمات',total:'المجموع',alphabet:'الأبجدية',lessonResult:'نتيجة الدرس',success:'النجاح',progressDashboard:'لوحة التقدم',reset:'إعادة ضبط التقدم',adminNote:'أضف كلمات محلية بدون برمجة.',addWord:'أضف كلمة',footer:'يعمل بدون اتصال • لا يوجد تسجيل دخول بعد • جاهز لاحقًا لـ Firebase/Supabase',levelWord:'المستوى',open:'افتح',target:'الهدف',native:'اللغة',attempts:'محاولات',mistakes:'أخطاء',noWrongSession:'لا توجد أخطاء في هذا الدرس.',noWrong:'لا توجد أخطاء.',completed:'اكتمل الدرس. عمل رائع.',repeat:'يرجى إعادة هذا الدرس.',mastery:'جيد. راجع الأخطاء للإتقان.'},
-  tr:{main:'Ana Sayfa',map:'Öğretim Haritası',continue:'Bugün Devam Et',review:'Yanlışları Tekrar Et',progress:'İlerleme',admin:'Admin Panel',correct:'Doğru',wrong:'Yanlış',listen:'Dinle',next:'Sonraki',finish:'Bitir',previous:'Önceki',onboarding:'Başlangıç',userLang:'Kullanıcı dili',age:'Yaş grubu',goal:'Günlük hedef',level:'Seviye testi',start:'Türkçe Öğrenmeye Başla',chooseMeaning:'Doğru anlamı seç',chooseReply:'Doğru cevabı seç',listenDialog:'Diyaloğu dinle',buildWord:'Kelimeyi oluştur',showHint:'İpucu göster',tapAnswer:'Cevaba dokun.',bestReply:'En doğru cevabı seç.',letterPrompt:'Türkçe harfi dinle ve oku',listenLetter:'Harfi dinle',listenWord:'Kelimeyi dinle',iKnow:'Bunu biliyorum',needPractice:'Pratik gerekli',chooseResult:'Dinle. Oku. Sonucunu seç.',ending:'Eki seç.',hiddenList:'Cevap listesi gizlidir. Gerekirse ipucu kullan.',dailyLesson:'Günlük Ders',selectOne:'Bir cevap seç.',progressSummary:'İlerleme Özeti',words:'Kelimeler',total:'Toplam',alphabet:'Alfabe',lessonResult:'Ders Sonucu',success:'Başarı',progressDashboard:'İlerleme Paneli',reset:'İlerlemeyi Sıfırla',adminNote:'Kod yazmadan yerel kelime ekle.',addWord:'Kelime Ekle',footer:'Önce offline • Henüz giriş yok • Firebase/Supabase için hazır',levelWord:'Seviye',open:'Aç',target:'Hedef',native:'Dil',attempts:'Deneme',mistakes:'Yanlış',noWrongSession:'Bu derste yanlış yok.',noWrong:'Yanlış yok.',completed:'Ders tamamlandı. Harika.',repeat:'Lütfen bu dersi tekrar et.',mastery:'İyi. Ustalaşmak için yanlışları tekrar et.'}
+en:{main:'Main Page',map:'Teaching Map',continue:'Continue Today',review:'Review Mistakes',progress:'Progress',admin:'Admin Panel',correct:'Correct',wrong:'Wrong',listen:'Listen',next:'Next',finish:'Finish',previous:'Previous',onboarding:'Onboarding',userLang:'User native language',age:'Age group',goal:'Daily goal',level:'Level test',start:'Start Learning Turkish',chooseMeaning:'Choose the correct meaning',chooseReply:'Choose the correct reply',listenDialog:'Listen to the dialogue',buildWord:'Build the word',showHint:'Show Hint',tapAnswer:'Tap the answer.',bestReply:'Choose the best reply.',letterPrompt:'Listen and read the Turkish letter',listenLetter:'Listen Letter',listenWord:'Listen Word',iKnow:'I Know This',needPractice:'Need Practice',chooseResult:'Listen. Read. Choose your result.',ending:'Choose the ending.',hiddenList:'Answer list is hidden. Use hint only if needed.',dailyLesson:'Daily Lesson',selectOne:'Select one answer.',progressSummary:'Progress Summary',words:'Words',total:'Total',alphabet:'Alphabet',lessonResult:'Lesson Result',success:'Success',progressDashboard:'Progress Dashboard',reset:'Reset Progress',adminNote:'Add local words without coding.',addWord:'Add Word',footer:'Offline first • No login yet • Ready for Firebase/Supabase later',levelWord:'Level',open:'Open',native:'Native',target:'Target',attempts:'Attempts',mistakes:'Mistakes',noWrongSession:'No wrong items in this lesson.',noWrong:'No wrong items.',completed:'Lesson completed. Great job.',repeat:'Please repeat this lesson.',mastery:'Good. Repeat mistakes for mastery.',hearts:'Hearts',speak:'Speak',listenSpeak:'Listen & Speak',micType:'Type here if microphone does not work',typedCheck:'Check Typed Pronunciation',score:'Score',heard:'Heard',coach:'Smart Coach',coachHome:'Continue today. Short practice is better than long breaks.',locked:'Locked',current:'Current',done:'Done'},
+id:{main:'Halaman Utama',map:'Peta Belajar',continue:'Lanjut Hari Ini',review:'Ulangi Kesalahan',progress:'Progres',admin:'Panel Admin',correct:'Benar',wrong:'Salah',listen:'Dengar',next:'Berikutnya',finish:'Selesai',previous:'Sebelumnya',onboarding:'Awal',userLang:'Bahasa pengguna',age:'Kelompok usia',goal:'Target harian',level:'Tes level',start:'Mulai Belajar Bahasa Turki',chooseMeaning:'Pilih arti yang benar',chooseReply:'Pilih jawaban yang benar',listenDialog:'Dengarkan dialog',buildWord:'Susun kata',showHint:'Tampilkan petunjuk',tapAnswer:'Tekan jawaban.',bestReply:'Pilih jawaban terbaik.',letterPrompt:'Dengar dan baca huruf Turki',listenLetter:'Dengar Huruf',listenWord:'Dengar Kata',iKnow:'Saya tahu',needPractice:'Perlu latihan',chooseResult:'Dengar. Baca. Pilih hasilmu.',ending:'Pilih akhiran.',hiddenList:'Daftar jawaban disembunyikan. Gunakan petunjuk jika perlu.',dailyLesson:'Pelajaran Harian',selectOne:'Pilih satu jawaban.',progressSummary:'Ringkasan Progres',words:'Kata',total:'Total',alphabet:'Alfabet',lessonResult:'Hasil Pelajaran',success:'Keberhasilan',progressDashboard:'Dasbor Progres',reset:'Hapus Progres',adminNote:'Tambahkan kata lokal tanpa coding.',addWord:'Tambah Kata',footer:'Offline dahulu • Belum ada login • Siap untuk Firebase/Supabase nanti',levelWord:'Level',open:'Buka',native:'Bahasa',target:'Target',attempts:'Percobaan',mistakes:'Kesalahan',noWrongSession:'Tidak ada kesalahan di pelajaran ini.',noWrong:'Tidak ada kesalahan.',completed:'Pelajaran selesai. Bagus sekali.',repeat:'Ulangi pelajaran ini.',mastery:'Bagus. Ulangi kesalahan agar mahir.',hearts:'Nyawa',speak:'Bicara',listenSpeak:'Dengar & Bicara',micType:'Tulis di sini jika mikrofon tidak bekerja',typedCheck:'Periksa Pengucapan Tertulis',score:'Skor',heard:'Terdengar',coach:'Pelatih Pintar',coachHome:'Lanjut hari ini. Latihan singkat lebih baik daripada berhenti lama.',locked:'Terkunci',current:'Saat ini',done:'Selesai'},
+ar:{main:'الصفحة الرئيسية',map:'خريطة التعلم',continue:'تابع اليوم',review:'راجع الأخطاء',progress:'التقدم',admin:'لوحة الإدارة',correct:'صحيح',wrong:'خطأ',listen:'استمع',next:'التالي',finish:'إنهاء',previous:'السابق',onboarding:'البداية',userLang:'لغة المستخدم',age:'الفئة العمرية',goal:'الهدف اليومي',level:'اختبار المستوى',start:'ابدأ تعلم التركية',chooseMeaning:'اختر المعنى الصحيح',chooseReply:'اختر الرد الصحيح',listenDialog:'استمع إلى الحوار',buildWord:'كوّن الكلمة',showHint:'إظهار تلميح',tapAnswer:'اضغط الإجابة.',bestReply:'اختر أفضل رد.',letterPrompt:'استمع واقرأ الحرف التركي',listenLetter:'استمع للحرف',listenWord:'استمع للكلمة',iKnow:'أعرف هذا',needPractice:'أحتاج تدريب',chooseResult:'استمع. اقرأ. اختر نتيجتك.',ending:'اختر اللاحقة.',hiddenList:'قائمة الإجابات مخفية. استخدم التلميح عند الحاجة.',dailyLesson:'درس اليوم',selectOne:'اختر إجابة واحدة.',progressSummary:'ملخص التقدم',words:'كلمات',total:'المجموع',alphabet:'الأبجدية',lessonResult:'نتيجة الدرس',success:'النجاح',progressDashboard:'لوحة التقدم',reset:'إعادة ضبط التقدم',adminNote:'أضف كلمات محلية بدون برمجة.',addWord:'أضف كلمة',footer:'يعمل بدون اتصال • لا يوجد تسجيل دخول بعد • جاهز لاحقًا لـ Firebase/Supabase',levelWord:'المستوى',open:'افتح',native:'اللغة',target:'الهدف',attempts:'محاولات',mistakes:'أخطاء',noWrongSession:'لا توجد أخطاء في هذا الدرس.',noWrong:'لا توجد أخطاء.',completed:'اكتمل الدرس. عمل رائع.',repeat:'يرجى إعادة هذا الدرس.',mastery:'جيد. راجع الأخطاء للإتقان.',hearts:'قلوب',speak:'تحدث',listenSpeak:'استمع وتحدث',micType:'اكتب هنا إذا لم يعمل الميكروفون',typedCheck:'افحص النطق المكتوب',score:'النتيجة',heard:'سمعت',coach:'المدرب الذكي',coachHome:'تابع اليوم. تدريب قصير أفضل من الانقطاع.',locked:'مغلق',current:'الحالي',done:'مكتمل'},
+tr:{main:'Ana Sayfa',map:'Öğretim Haritası',continue:'Bugün Devam Et',review:'Yanlışları Tekrar Et',progress:'İlerleme',admin:'Admin Panel',correct:'Doğru',wrong:'Yanlış',listen:'Dinle',next:'Sonraki',finish:'Bitir',previous:'Önceki',onboarding:'Başlangıç',userLang:'Kullanıcı dili',age:'Yaş grubu',goal:'Günlük hedef',level:'Seviye testi',start:'Türkçe Öğrenmeye Başla',chooseMeaning:'Doğru anlamı seç',chooseReply:'Doğru cevabı seç',listenDialog:'Diyaloğu dinle',buildWord:'Kelimeyi oluştur',showHint:'İpucu göster',tapAnswer:'Cevaba dokun.',bestReply:'En doğru cevabı seç.',letterPrompt:'Türkçe harfi dinle ve oku',listenLetter:'Harfi dinle',listenWord:'Kelimeyi dinle',iKnow:'Bunu biliyorum',needPractice:'Pratik gerekli',chooseResult:'Dinle. Oku. Sonucunu seç.',ending:'Eki seç.',hiddenList:'Cevap listesi gizlidir. Gerekirse ipucu kullan.',dailyLesson:'Günlük Ders',selectOne:'Bir cevap seç.',progressSummary:'İlerleme Özeti',words:'Kelimeler',total:'Toplam',alphabet:'Alfabe',lessonResult:'Ders Sonucu',success:'Başarı',progressDashboard:'İlerleme Paneli',reset:'İlerlemeyi Sıfırla',adminNote:'Kod yazmadan yerel kelime ekle.',addWord:'Kelime Ekle',footer:'Önce offline • Henüz giriş yok • Firebase/Supabase için hazır',levelWord:'Seviye',open:'Aç',native:'Dil',target:'Hedef',attempts:'Deneme',mistakes:'Yanlış',noWrongSession:'Bu derste yanlış yok.',noWrong:'Yanlış yok.',completed:'Ders tamamlandı. Harika.',repeat:'Lütfen bu dersi tekrar et.',mastery:'İyi. Ustalaşmak için yanlışları tekrar et.',hearts:'Can',speak:'Konuş',listenSpeak:'Dinle & Konuş',micType:'Mikrofon çalışmazsa buraya yaz',typedCheck:'Yazılı Telaffuzu Kontrol Et',score:'Skor',heard:'Duyulan',coach:'Akıllı Koç',coachHome:'Bugün devam et. Kısa pratik uzun aradan daha iyidir.',locked:'Kilitli',current:'Sıradaki',done:'Tamamlandı'}
 };
-const LEVELS=[['alphabet',1,{en:'Turkish Sounds and Letters',id:'Bunyi dan Huruf Turki',ar:'الأصوات والحروف التركية',tr:'Türkçe Sesler ve Harfler'},'a, e, ı, i, o, ö, u, ü, ç, ş, ğ'],['words',2,{en:'First Words',id:'Kata Pertama',ar:'الكلمات الأولى',tr:'İlk Kelimeler'},'Greetings, family, numbers, colors, food, objects'],['sentences',3,{en:'Simple Sentences',id:'Kalimat Sederhana',ar:'جمل بسيطة',tr:'Basit Cümleler'},'Ben, Sen, Bu, O'],['grammar',4,{en:'Mini Grammar',id:'Tata Bahasa Mini',ar:'قواعد صغيرة',tr:'Mini Dilbilgisi'},'evim, arabam, gözüm'],['dialogues',5,{en:'Dialogues',id:'Dialog',ar:'حوارات',tr:'Diyaloglar'},'Meeting, home, market'],['listening',6,{en:'Speaking and Listening',id:'Berbicara dan Mendengar',ar:'التحدث والاستماع',tr:'Konuşma ve Dinleme'},'Listen, repeat, voice']];
-const ALPHABET=[{letter:'a',word:'araba',en:'car',id:'mobil',ar:'سيارة',tr:'araba',note:{en:'a like father',id:'a seperti pada kata ayah',ar:'صوت a مفتوح',tr:'a sesi açık okunur'}},{letter:'e',word:'ev',en:'house',id:'rumah',ar:'بيت',tr:'ev',note:{en:'e like bed',id:'e seperti enak',ar:'صوت e قصير',tr:'e sesi kısa okunur'}},{letter:'ı',word:'ılık',en:'warm',id:'hangat',ar:'دافئ',tr:'ılık',note:{en:'dotless ı, soft uh sound',id:'huruf ı tanpa titik, mirip e pepet',ar:'حرف ı بدون نقطة',tr:'noktasız ı sesi'}},{letter:'i',word:'iki',en:'two',id:'dua',ar:'اثنان',tr:'iki',note:{en:'i like ee',id:'i seperti bunyi i',ar:'صوت i',tr:'i sesi'}},{letter:'o',word:'okul',en:'school',id:'sekolah',ar:'مدرسة',tr:'okul',note:{en:'o sound',id:'bunyi o',ar:'صوت o',tr:'o sesi'}},{letter:'ö',word:'göz',en:'eye',id:'mata',ar:'عين',tr:'göz',note:{en:'round lips',id:'bibir bulat',ar:'دوّر الشفاه',tr:'dudakları yuvarla'}},{letter:'u',word:'su',en:'water',id:'air',ar:'ماء',tr:'su',note:{en:'u like oo',id:'bunyi u',ar:'صوت u',tr:'u sesi'}},{letter:'ü',word:'gül',en:'rose',id:'mawar',ar:'وردة',tr:'gül',note:{en:'round lips, say ee',id:'bibir bulat, bunyi ü',ar:'دوّر الشفاه وقل ü',tr:'dudakları yuvarla, ü de'}},{letter:'ç',word:'çay',en:'tea',id:'teh',ar:'شاي',tr:'çay',note:{en:'ch sound',id:'bunyi c seperti cacing',ar:'صوت ch',tr:'ç sesi'}},{letter:'ş',word:'şapka',en:'hat',id:'topi',ar:'قبعة',tr:'şapka',note:{en:'sh sound',id:'bunyi sy',ar:'صوت sh',tr:'ş sesi'}},{letter:'ğ',word:'dağ',en:'mountain',id:'gunung',ar:'جبل',tr:'dağ',note:{en:'soft letter, no Turkish word starts with ğ',id:'huruf lembut, tidak ada kata Turki dimulai dengan ğ',ar:'حرف لين، لا تبدأ كلمة تركية به',tr:'yumuşak harf, Türkçede kelime ğ ile başlamaz'}}];
-const WORDS=[{word:'merhaba',en:'hello',id:'halo',ar:'مرحبا',tr:'merhaba',cat:'greeting'},{word:'anne',en:'mother',id:'ibu',ar:'أم',tr:'anne',cat:'family'},{word:'baba',en:'father',id:'ayah',ar:'أب',tr:'baba',cat:'family'},{word:'bir',en:'one',id:'satu',ar:'واحد',tr:'bir',cat:'numbers'},{word:'kırmızı',en:'red',id:'merah',ar:'أحمر',tr:'kırmızı',cat:'colors'},{word:'elma',en:'apple',id:'apel',ar:'تفاحة',tr:'elma',cat:'food'},{word:'kitap',en:'book',id:'buku',ar:'كتاب',tr:'kitap',cat:'school'},{word:'kedi',en:'cat',id:'kucing',ar:'قطة',tr:'kedi',cat:'animals'},{word:'ev',en:'house',id:'rumah',ar:'بيت',tr:'ev',cat:'home'},{word:'araba',en:'car',id:'mobil',ar:'سيارة',tr:'araba',cat:'object'},{word:'evim',en:'my house',id:'rumah saya',ar:'بيتي',tr:'evim',cat:'grammar'},{word:'arabam',en:'my car',id:'mobil saya',ar:'سيارتي',tr:'arabam',cat:'grammar'},{word:'gözüm',en:'my eye',id:'mata saya',ar:'عيني',tr:'gözüm',cat:'grammar'},{word:'suyum',en:'my water',id:'air saya',ar:'مائي',tr:'suyum',cat:'grammar'}];
-const SENTENCES=[{word:'Ben Bella.',en:'I am Bella.',id:'Saya Bella.',ar:'أنا بيلا.',tr:'Ben Bella.'},{word:'Bu bir ev.',en:'This is a house.',id:'Ini sebuah rumah.',ar:'هذا بيت.',tr:'Bu bir ev.'},{word:'Ben elma seviyorum.',en:'I like apple.',id:'Saya suka apel.',ar:'أنا أحب التفاح.',tr:'Ben elma seviyorum.'}];
-const DIALOGUES=[{scene:'meeting',emoji:'👧👦',lines:[{speaker:'A',tr:'Merhaba.',en:'Hello.',id:'Halo.',ar:'مرحبا.'},{speaker:'B',tr:'Merhaba.',en:'Hello.',id:'Halo.',ar:'مرحبا.'},{speaker:'A',tr:'Nasılsın?',en:'How are you?',id:'Apa kabar?',ar:'كيف حالك؟'},{speaker:'B',tr:'İyiyim, sen nasılsın?',en:'I am fine, and you?',id:'Saya baik, kamu?',ar:'أنا بخير، وأنت؟'},{speaker:'A',tr:'Ben de iyiyim.',en:'I am also fine.',id:'Saya juga baik.',ar:'أنا أيضًا بخير.'}],question:'İyiyim, sen nasılsın?',options:['İyiyim, sen nasılsın?','Ben elma.','Bu ev.','Kaç?']},{scene:'home',emoji:'🏠👧',lines:[{speaker:'A',tr:'Bu ne?',en:'What is this?',id:'Ini apa?',ar:'ما هذا؟'},{speaker:'B',tr:'Bu bir ev.',en:'This is a house.',id:'Ini sebuah rumah.',ar:'هذا بيت.'},{speaker:'A',tr:'Ev güzel.',en:'The house is nice.',id:'Rumahnya bagus.',ar:'البيت جميل.'}],question:'Bu bir ev.',options:['Bu bir ev.','Ben gidiyor.','Şapka su.','Nerede kırmızı?']},{scene:'market',emoji:'🍎🛒',lines:[{speaker:'A',tr:'Elma istiyorum.',en:'I want an apple.',id:'Saya mau apel.',ar:'أريد تفاحة.'},{speaker:'B',tr:'Buyurun.',en:'Here you are.',id:'Silakan.',ar:'تفضل.'},{speaker:'A',tr:'Teşekkür ederim.',en:'Thank you.',id:'Terima kasih.',ar:'شكرا.'}],question:'Teşekkür ederim.',options:['Teşekkür ederim.','Benim suyum.','Bu kaç?','Kedi okul.']}];
-let profile=load('profile',null),prog=load('progress',{xp:0,streak:0,last:'',done:{alphabet:[],words:[],sentences:[],grammar:[],dialogues:[],listening:[]},mistakes:[],correct:0,attempts:0,adminWords:[]});let lessonType='alphabet',idx=0,session={correct:0,wrong:0,wrongItems:[]},showHint=false,lessonQueue=[];
-function $(id){return document.getElementById(id)}function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}function save(k,v){localStorage.setItem(k,JSON.stringify(v))}function lang(){return profile?profile.nativeLanguage:($('nativeLang')?$('nativeLang').value:'en')}function T(k){return (L[lang()]||L.en)[k]||L.en[k]||k}function text(o){return o?((typeof o[lang()]==='string'?o[lang()]:null)||o.en||o.tr||''):''}function noteText(o){return o&&o.note?((typeof o.note[lang()]==='string'?o.note[lang()]:null)||o.note.en||''):''}function show(id){['onboarding','home','lesson','result','progress','admin'].forEach(p=>$(p).classList.add('hidden'));$(id).classList.remove('hidden');document.body.classList.toggle('rtl',lang()==='ar')}function pct(a,b){return Math.min(100,Math.round((a/b)*100)||0)}function shuffle(a){return[...a].sort(()=>Math.random()-.5)}
-function start(){profile={nativeLanguage:$('nativeLang').value,targetLanguage:'tr',ageGroup:$('ageGroup').value,dailyGoal:$('dailyGoal').value,levelTest:$('levelTest').value};save('profile',profile);home()}function localizeOnboarding(){const selected=$('nativeLang').value;const pack=L[selected]||L.en;$('onboardingTitle').textContent=pack.onboarding;$('nativeLangLabel').textContent=pack.userLang;$('ageGroupLabel').textContent=pack.age;$('dailyGoalLabel').textContent=pack.goal;$('levelTestLabel').textContent=pack.level;$('startBtn').textContent=pack.start;document.documentElement.lang=selected;document.body.classList.toggle('rtl',selected==='ar')}function updateStaticLabels(){
+
+const LEVELS=[
+['alphabet',1,{en:'Turkish Sounds and Letters',id:'Bunyi dan Huruf Turki',ar:'الأصوات والحروف التركية',tr:'Türkçe Sesler ve Harfler'},'a, e, ı, i, o, ö, u, ü, ç, ş, ğ'],
+['words',2,{en:'First Words',id:'Kata Pertama',ar:'الكلمات الأولى',tr:'İlk Kelimeler'},'Greetings, family, numbers, colors, food, objects'],
+['sentences',3,{en:'Simple Sentences',id:'Kalimat Sederhana',ar:'جمل بسيطة',tr:'Basit Cümleler'},'Ben, Sen, Bu, O'],
+['grammar',4,{en:'Mini Grammar',id:'Tata Bahasa Mini',ar:'قواعد صغيرة',tr:'Mini Dilbilgisi'},'evim, arabam, gözüm'],
+['dialogues',5,{en:'Dialogues',id:'Dialog',ar:'حوارات',tr:'Diyaloglar'},'Meeting, home, market'],
+['listening',6,{en:'Speaking and Listening',id:'Berbicara dan Mendengar',ar:'التحدث والاستماع',tr:'Konuşma ve Dinleme'},'Listen, repeat, voice']
+];
+
+const ALPHABET=[
+{letter:'a',word:'araba',en:'car',id:'mobil',ar:'سيارة',tr:'araba',note:{en:'a like father',id:'a seperti ayah',ar:'صوت a مفتوح',tr:'a sesi'}},
+{letter:'e',word:'ev',en:'house',id:'rumah',ar:'بيت',tr:'ev',note:{en:'e like bed',id:'e seperti enak',ar:'صوت e',tr:'e sesi'}},
+{letter:'ı',word:'ılık',en:'warm',id:'hangat',ar:'دافئ',tr:'ılık',note:{en:'dotless ı, soft uh sound',id:'ı tanpa titik, mirip e pepet',ar:'حرف ı بدون نقطة',tr:'noktasız ı'}},
+{letter:'i',word:'iki',en:'two',id:'dua',ar:'اثنان',tr:'iki',note:{en:'i like ee',id:'bunyi i',ar:'صوت i',tr:'i sesi'}},
+{letter:'o',word:'okul',en:'school',id:'sekolah',ar:'مدرسة',tr:'okul',note:{en:'o sound',id:'bunyi o',ar:'صوت o',tr:'o sesi'}},
+{letter:'ö',word:'göz',en:'eye',id:'mata',ar:'عين',tr:'göz',note:{en:'round lips',id:'bibir bulat',ar:'دوّر الشفاه',tr:'dudakları yuvarla'}},
+{letter:'u',word:'su',en:'water',id:'air',ar:'ماء',tr:'su',note:{en:'u like oo',id:'bunyi u',ar:'صوت u',tr:'u sesi'}},
+{letter:'ü',word:'gül',en:'rose',id:'mawar',ar:'وردة',tr:'gül',note:{en:'round lips, say ee',id:'bibir bulat',ar:'دوّر الشفاه',tr:'ü sesi'}},
+{letter:'ç',word:'çay',en:'tea',id:'teh',ar:'شاي',tr:'çay',note:{en:'ch sound',id:'bunyi c',ar:'صوت ch',tr:'ç sesi'}},
+{letter:'ş',word:'şapka',en:'hat',id:'topi',ar:'قبعة',tr:'şapka',note:{en:'sh sound, not ç',id:'bunyi sy, bukan ç',ar:'صوت sh',tr:'ş sesi, ç değil'}},
+{letter:'ğ',word:'dağ',en:'mountain',id:'gunung',ar:'جبل',tr:'dağ',note:{en:'soft letter. No Turkish word starts with ğ.',id:'huruf lembut. Tidak ada kata Turki dimulai dengan ğ.',ar:'حرف لين، لا تبدأ كلمة تركية به',tr:'yumuşak harf. Türkçede kelime ğ ile başlamaz'}}
+];
+
+const WORDS=[
+{word:'merhaba',en:'hello',id:'halo',ar:'مرحبا',tr:'merhaba',cat:'greeting'},
+{word:'anne',en:'mother',id:'ibu',ar:'أم',tr:'anne',cat:'family'},
+{word:'baba',en:'father',id:'ayah',ar:'أب',tr:'baba',cat:'family'},
+{word:'bir',en:'one',id:'satu',ar:'واحد',tr:'bir',cat:'numbers'},
+{word:'kırmızı',en:'red',id:'merah',ar:'أحمر',tr:'kırmızı',cat:'colors'},
+{word:'elma',en:'apple',id:'apel',ar:'تفاحة',tr:'elma',cat:'food'},
+{word:'kitap',en:'book',id:'buku',ar:'كتاب',tr:'kitap',cat:'school'},
+{word:'kedi',en:'cat',id:'kucing',ar:'قطة',tr:'kedi',cat:'animals'},
+{word:'ev',en:'house',id:'rumah',ar:'بيت',tr:'ev',cat:'home'},
+{word:'araba',en:'car',id:'mobil',ar:'سيارة',tr:'araba',cat:'object'},
+{word:'evim',en:'my house',id:'rumah saya',ar:'بيتي',tr:'evim',cat:'grammar'},
+{word:'arabam',en:'my car',id:'mobil saya',ar:'سيارتي',tr:'arabam',cat:'grammar'},
+{word:'gözüm',en:'my eye',id:'mata saya',ar:'عيني',tr:'gözüm',cat:'grammar'},
+{word:'suyum',en:'my water',id:'air saya',ar:'مائي',tr:'suyum',cat:'grammar'}
+];
+
+const SENTENCES=[
+{word:'Ben Bella.',en:'I am Bella.',id:'Saya Bella.',ar:'أنا بيلا.',tr:'Ben Bella.'},
+{word:'Bu bir ev.',en:'This is a house.',id:'Ini sebuah rumah.',ar:'هذا بيت.',tr:'Bu bir ev.'},
+{word:'Ben elma seviyorum.',en:'I like apple.',id:'Saya suka apel.',ar:'أنا أحب التفاح.',tr:'Ben elma seviyorum.'}
+];
+
+const DIALOGUES=[
+{emoji:'👧👦',lines:[{speaker:'A',tr:'Merhaba.',en:'Hello.',id:'Halo.',ar:'مرحبا.'},{speaker:'B',tr:'Merhaba.',en:'Hello.',id:'Halo.',ar:'مرحبا.'},{speaker:'A',tr:'Nasılsın?',en:'How are you?',id:'Apa kabar?',ar:'كيف حالك؟'},{speaker:'B',tr:'İyiyim, sen nasılsın?',en:'I am fine, and you?',id:'Saya baik, kamu?',ar:'أنا بخير، وأنت؟'},{speaker:'A',tr:'Ben de iyiyim.',en:'I am also fine.',id:'Saya juga baik.',ar:'أنا أيضًا بخير.'}],question:'İyiyim, sen nasılsın?',options:['İyiyim, sen nasılsın?','Ben de iyiyim.','Merhaba.','Teşekkür ederim.']},
+{emoji:'🏠👧',lines:[{speaker:'A',tr:'Bu ne?',en:'What is this?',id:'Ini apa?',ar:'ما هذا؟'},{speaker:'B',tr:'Bu bir ev.',en:'This is a house.',id:'Ini sebuah rumah.',ar:'هذا بيت.'},{speaker:'A',tr:'Ev güzel.',en:'The house is nice.',id:'Rumahnya bagus.',ar:'البيت جميل.'}],question:'Bu bir ev.',options:['Bu bir ev.','Bu bir araba.','Merhaba.','Nasılsın?']},
+{emoji:'🍎🛒',lines:[{speaker:'A',tr:'Elma istiyorum.',en:'I want an apple.',id:'Saya mau apel.',ar:'أريد تفاحة.'},{speaker:'B',tr:'Buyurun.',en:'Here you are.',id:'Silakan.',ar:'تفضل.'},{speaker:'A',tr:'Teşekkür ederim.',en:'Thank you.',id:'Terima kasih.',ar:'شكرا.'}],question:'Teşekkür ederim.',options:['Teşekkür ederim.','Merhaba.','Bu ne?','Ben de iyiyim.']}
+];
+
+let profile=load('profile',null);
+let prog=load('progress',{xp:0,streak:0,done:{alphabet:[],words:[],sentences:[],grammar:[],dialogues:[],listening:[]},mistakes:[],correct:0,attempts:0,adminWords:[]});
+let lessonType='alphabet',idx=0,session={correct:0,wrong:0,wrongItems:[]},showHint=false,lessonQueue=[];
+
+function $(id){return document.getElementById(id)}
+function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function lang(){return profile?profile.nativeLanguage:($('nativeLang')?$('nativeLang').value:'en')}
+function T(k){return (L[lang()]||L.en)[k]||L.en[k]||k}
+function text(o){return o?((typeof o[lang()]==='string'?o[lang()]:null)||o.en||o.tr||''):''}
+function noteText(o){return o&&o.note?((typeof o.note[lang()]==='string'?o.note[lang()]:null)||o.note.en||''):''}
+function show(id){['onboarding','home','lesson','result','progress','admin'].forEach(p=>$(p).classList.add('hidden'));$(id).classList.remove('hidden');document.body.classList.toggle('rtl',lang()==='ar')}
+function pct(a,b){return Math.min(100,Math.max(0,Math.round((a/Math.max(1,b))*100)))}
+function shuffle(a){return[...a].sort(()=>Math.random()-.5)}
+function clean(arr){return arr.filter(Boolean)}
+
+function start(){
+  profile={nativeLanguage:$('nativeLang').value,targetLanguage:'tr',ageGroup:$('ageGroup').value,dailyGoal:$('dailyGoal').value,levelTest:$('levelTest').value};
+  save('profile',profile);
+  home();
+}
+
+function localizeOnboarding(){
+  const p=L[$('nativeLang').value]||L.en;
+  $('onboardingTitle').textContent=p.onboarding;
+  $('nativeLangLabel').textContent=p.userLang;
+  $('ageGroupLabel').textContent=p.age;
+  $('dailyGoalLabel').textContent=p.goal;
+  $('levelTestLabel').textContent=p.level;
+  $('startBtn').textContent=p.start;
+  document.documentElement.lang=$('nativeLang').value;
+}
+
+function updateStatic(){
   document.documentElement.lang=lang();
   document.body.classList.toggle('rtl',lang()==='ar');
-
-  $('subtitle').textContent=T('dailyLesson');
-  $('homeTitle').textContent=T('main');
+  $('subtitle').textContent=lang()==='en'?'Learn Turkish step by step':lang()==='id'?'Belajar bahasa Turki langkah demi langkah':lang()==='ar'?'تعلّم التركية خطوة بخطوة':'Türkçeyi adım adım öğren';
+  ['homeTitle','lessonHomeBtn','progressHomeBtn','adminHomeBtn','resultHome'].forEach(id=>{if($(id))$(id).textContent=T('main')});
   $('mapTitle').textContent=T('map');
   $('continueLesson').textContent=T('continue');
   $('reviewMistakes').textContent=T('review');
   $('adminOpen').textContent=T('admin');
-
   $('progressSummaryTitle').textContent=T('progressSummary');
   $('pAlphabetLabel').textContent=T('alphabet');
   $('pWordsLabel').textContent=T('words');
   $('pTotalLabel').textContent=T('total');
-
-  $('lessonHomeBtn').textContent=T('main');
   $('lessonProgressBtn').textContent=T('progress');
-
   $('resultTitle').textContent=T('lessonResult');
   $('rCorrectLabel').textContent=T('correct');
   $('rWrongLabel').textContent=T('wrong');
   $('rSuccessLabel').textContent=T('success');
-
   $('resultRetry').textContent=T('review');
-  $('resultHome').textContent=T('main');
-
-  $('progressHomeBtn').textContent=T('main');
   $('resetBtn').textContent=T('reset');
   $('progressTitle').textContent=T('progressDashboard');
-
-  $('adminHomeBtn').textContent=T('main');
   $('adminTitle').textContent=T('admin');
   $('adminNote').textContent=T('adminNote');
   $('addWord').textContent=T('addWord');
-
-  $('modalRetry').textContent=T('review');
-  $('modalHome').textContent=T('main');
-
   $('footerNote').textContent=T('footer');
-}function home(){updateStaticLabels();renderMap();renderSummary();show('home')}function renderMap(){let box=$('levelMap');box.innerHTML='';LEVELS.forEach(l=>{let d=document.createElement('div');d.className='card';d.innerHTML='<strong>'+T('levelWord')+' '+l[1]+' — '+text(l[2])+'</strong><br><span class="small">'+l[3]+'</span><button class="primary" style="width:100%;margin-top:10px">'+T('open')+'</button>';d.querySelector('button').onclick=()=>openLesson(l[0]);box.appendChild(d)});$('xp').textContent=prog.xp;$('streak').textContent=prog.streak;$('goal').textContent=profile.dailyGoal+'m';$('badges').innerHTML='<span class="badge">'+T('native')+': '+profile.nativeLanguage+'</span><span class="badge">Age: '+profile.ageGroup+'</span><span class="badge">Goal: '+profile.dailyGoal+'m</span><span class="badge">'+T('target')+': Turkish</span>'}
-function allWords(){return WORDS.concat(prog.adminWords||[])}function items(){if(lessonType==='alphabet')return ALPHABET;if(lessonType==='words')return allWords();if(lessonType==='sentences')return SENTENCES;if(lessonType==='dialogues')return DIALOGUES;if(lessonType==='grammar')return allWords().filter(x=>['evim','arabam','gözüm','suyum'].includes(x.word));if(lessonType==='listening')return allWords().slice(0,8);if(lessonType==='daily'||lessonType==='review_session'||lessonType==='review_bank')return lessonQueue;return allWords().slice(0,5)}function renderSummary(){let ap=pct(prog.done.alphabet.length,ALPHABET.length),wp=pct(prog.done.words.length,allWords().length),tp=pct(prog.done.alphabet.length+prog.done.words.length,ALPHABET.length+allWords().length);$('pAlphabet').textContent=ap+'%';$('pWords').textContent=wp+'%';$('pTotal').textContent=tp+'%';$('pBar').style.width=tp+'%'}
-function buildDailyLesson(){let q=[];ALPHABET.slice(0,5).forEach(x=>q.push({kind:'letter',item:x}));allWords().slice(0,5).forEach(x=>q.push({kind:'word',item:x}));allWords().filter(x=>['evim','arabam','gözüm','suyum'].includes(x.word)).forEach(x=>q.push({kind:'build',item:x}));return shuffle(q).slice(0,12)}function openLesson(t){lessonType=t;idx=0;showHint=false;session={correct:0,wrong:0,wrongItems:[]};if(t==='daily')lessonQueue=buildDailyLesson();show('lesson');updateStaticLabels();renderLesson()}function renderLesson(){let a=items();$('lessonBar').style.width=pct(idx+1,a.length)+'%';if(lessonType==='daily'||lessonType==='review_session'||lessonType==='review_bank')renderDaily();else if(lessonType==='alphabet')renderAlphabet();else if(lessonType==='grammar')renderGrammar();else if(lessonType==='dialogues')renderDialogue();else if(lessonType==='listening')renderSpeakingPractice();else renderCard()}function topBtns(){return '<div class="row"><button class="ghost" onclick="home()">'+T('main')+'</button><button class="purple" onclick="showProgress()">'+T('progress')+'</button></div>'}
-function makeUniqueOptions(correct,pool,count=4){const clean=[];[correct,...shuffle(pool)].forEach(v=>{if(v&&!clean.includes(v)&&clean.length<count)clean.push(v)});return shuffle(clean)}function makeMeaningOptions(correctItem){const correct=text(correctItem);const pool=allWords().concat(ALPHABET).concat(SENTENCES).map(x=>text(x)).filter(x=>x&&x!==correct);return makeUniqueOptions(correct,pool,4)}
-function renderAlphabet(){let it=items()[idx];$('lessonTitle').textContent=text(LEVELS[0][2]);$('activity').innerHTML=topBtns()+'<div class="prompt">'+T('letterPrompt')+'</div><div class="big">'+it.letter+'</div><div class="meaning">'+it.word+' = '+text(it)+'</div><div class="small">'+noteText(it)+'</div>'+(it.letter==='ğ'?'<div class="feedback">'+noteText(it)+'<br><b>dağ → daa</b></div>':'')+'<div class="row"><button class="primary" onclick="speakLetter(\''+it.letter+'\')">'+T('listenLetter')+'</button><button class="primary" onclick="speak(\''+it.word+'\')">'+T('listenWord')+'</button></div><div class="row"><button class="success" onclick="answer(event,true,\''+it.word+'\')">'+T('iKnow')+'</button><button class="danger" onclick="answer(event,false,\''+it.word+'\')">'+T('needPractice')+'</button></div><div class="row"><button class="ghost" onclick="prev()">'+T('previous')+'</button><button class="ghost" onclick="next()">'+(idx===items().length-1?T('finish'):T('next'))+'</button></div><div id="fb" class="feedback">'+T('chooseResult')+'</div>'}
-function renderCard(){let it=items()[idx];$('lessonTitle').textContent=text((LEVELS.find(x=>x[0]===lessonType)||LEVELS[1])[2]);let opts=makeMeaningOptions(it);$('activity').innerHTML=topBtns()+'<div class="prompt">'+T('chooseMeaning')+'</div><div class="big">'+(it.word||it.tr)+'</div><div class="grid2">'+opts.map(o=>'<button onclick="answer(event,'+(o===text(it))+',\''+(it.word||it.tr)+'\')">'+o+'</button>').join('')+'</div><div class="row"><button class="primary" onclick="speak(\''+(it.word||it.tr)+'\')">'+T('listen')+'</button><button class="ghost" onclick="next()">'+T('next')+'</button></div><div id="fb" class="feedback">'+T('tapAnswer')+'</div>'}
-function renderGrammar(){let it=items()[idx],root=it.word==='evim'?'ev':it.word==='arabam'?'araba':it.word==='gözüm'?'göz':'su',suf=it.word.replace(root,''),opts=makeUniqueOptions(suf,['im','m','üm','yum','in','un','ı'],4);$('lessonTitle').textContent=text(LEVELS[3][2]);let hint=showHint?'<div class="feedback"><b>Hint:</b><br>ev + im = evim<br>araba + m = arabam<br>göz + üm = gözüm<br>su + yum = suyum</div>':'';$('activity').innerHTML=topBtns()+'<div class="prompt">'+T('buildWord')+'</div><div class="small" style="text-align:center">'+T('hiddenList')+'</div><div class="build-line"><span class="root">'+root+'</span> + <span class="suffix">?</span></div><div class="meaning">'+text(it)+'</div><div class="grid2">'+opts.map(o=>'<button onclick="answer(event,'+(o===suf)+',\''+it.word+'\')">'+o+'</button>').join('')+'</div><div class="row"><button class="primary" onclick="speak(\''+it.word+'\')">'+T('listen')+'</button><button class="warning" onclick="showGrammarHint()">'+T('showHint')+'</button></div>'+hint+'<div class="row"><button class="ghost" onclick="prev()">'+T('previous')+'</button><button class="ghost" onclick="next()">'+(idx===items().length-1?T('finish'):T('next'))+'</button></div><div id="fb" class="feedback">'+T('ending')+'</div>'}function showGrammarHint(){showHint=true;renderGrammar()}
-function renderDialogue(){let d=items()[idx];$('lessonTitle').textContent=text(LEVELS[4][2]);let bubbles=d.lines.map((l,i)=>'<div class="bubble '+(i%2===0?'left':'right')+'"><div class="speaker">'+(l.speaker==='A'?'Speaker A':'Speaker B')+'</div><div>'+l.tr+'</div></div>').join('');let opts=makeUniqueOptions(d.question,d.options,4);$('activity').innerHTML=topBtns()+'<div class="dialogue-scene">'+d.emoji+'</div><div class="prompt">'+T('listenDialog')+'</div><div class="chatbox">'+bubbles+'</div><div class="row"><button class="primary" onclick="speakDialogue()">'+T('listenDialog')+'</button><button class="ghost" onclick="next()">'+(idx===items().length-1?T('finish'):T('next'))+'</button></div><div class="prompt">'+T('chooseReply')+'</div><div class="small" style="text-align:center;margin-top:-8px;margin-bottom:10px">'+trDialogueQuestion(d)+'</div><div class="grid2">'+opts.map(o=>'<button onclick="answer(event,'+(o===d.question)+',\''+d.question+'\')">'+o+'</button>').join('')+'</div><div id="fb" class="feedback">'+T('bestReply')+'</div>'}function trDialogueQuestion(d){const correct=d.lines.find(l=>l.tr===d.question);if(!correct)return '';return correct[lang()]||correct.en||''}function speakDialogue(){let d=items()[idx];if('speechSynthesis'in window)speechSynthesis.cancel();let i=0;function playNext(){if(i>=d.lines.length)return;let line=d.lines[i].tr;i++;speak(line);setTimeout(playNext,2200)}playNext()}
-function renderSpeakingPractice(){let it=items()[idx];$('lessonTitle').textContent=text(LEVELS[5][2]);$('activity').innerHTML=topBtns()+'<div class="prompt">'+T('listen')+' & Speak</div><div class="big">'+it.word+'</div><div class="meaning">'+text(it)+'</div><div class="small" style="text-align:center">Listen first. Then read the Turkish word aloud.</div><div class="row"><button class="primary" onclick="speak(\''+it.word+'\')">'+T('listen')+'</button><button class="success" onclick="startPronunciationCheck(\''+it.word+'\')">Speak</button></div><div class="row"><button class="ghost" onclick="prev()">'+T('previous')+'</button><button class="ghost" onclick="next()">'+(idx===items().length-1?T('finish'):T('next'))+'</button></div><div id="fb" class="feedback">Press Speak and read aloud.</div><input id="manualPronInput" placeholder="Type here if microphone does not work"><button class="warning" style="width:100%;margin-top:10px" onclick="manualPronunciationCheck(\''+it.word+'\')">Check Typed Pronunciation</button>'}
+  $('heartsLabel').textContent=T('hearts');
+}
+
+function home(){
+  updateStatic();
+  renderMap();
+  renderSummary();
+  show('home');
+}
+
+function allWords(){return WORDS.concat(prog.adminWords||[])}
+function levelItems(type){
+  if(type==='alphabet')return ALPHABET;
+  if(type==='words')return allWords();
+  if(type==='sentences')return SENTENCES;
+  if(type==='grammar')return allWords().filter(x=>['evim','arabam','gözüm','suyum'].includes(x.word));
+  if(type==='dialogues')return DIALOGUES;
+  if(type==='listening')return allWords().slice(0,8);
+  return [];
+}
+function completion(type){return pct((prog.done[type]||[]).length,levelItems(type).length)}
+
+function renderMap(){
+  const box=$('levelMap');
+  box.innerHTML='<div class="coach">'+T('coach')+': '+T('coachHome')+'</div>';
+  LEVELS.forEach((l,i)=>{
+    const c=completion(l[0]);
+    const prev=i===0?100:completion(LEVELS[i-1][0]);
+    const state=c===100?'done':prev>=60?'current':'locked';
+    const d=document.createElement('div');
+    d.className='pathCard '+state;
+    d.innerHTML=
+      '<div class="pathTitle">'+T('levelWord')+' '+l[1]+' — '+text(l[2])+'</div>'+
+      '<div class="pathMeta">'+l[3]+'</div>'+
+      '<span class="pill">'+T(state)+'</span><span class="pill">'+c+'%</span>'+
+      '<div class="progress"><div class="bar" style="width:'+c+'%"></div></div>'+
+      '<button class="primary" style="width:100%;margin-top:10px" '+(state==='locked'?'disabled':'')+'>'+T('open')+'</button>';
+    d.querySelector('button').onclick=()=>{if(state!=='locked')openLesson(l[0])};
+    box.appendChild(d);
+  });
+  $('xp').textContent='⚡ '+prog.xp;
+  $('streak').textContent='🔥 '+prog.streak;
+  $('badges').innerHTML='<span class="badge">'+T('native')+': '+profile.nativeLanguage+'</span><span class="badge">'+T('target')+': Turkish</span><span class="badge">'+T('goal')+': '+profile.dailyGoal+'m</span>';
+}
+
+function renderSummary(){
+  const ap=completion('alphabet'),wp=completion('words');
+  const tp=pct((prog.done.alphabet.length+prog.done.words.length),(ALPHABET.length+allWords().length));
+  $('pAlphabet').textContent=ap+'%';
+  $('pWords').textContent=wp+'%';
+  $('pTotal').textContent=tp+'%';
+  $('pBar').style.width=tp+'%';
+}
+
+function buildQueue(type){
+  if(type==='daily'){
+    let q=[];
+    ALPHABET.slice(0,4).forEach(x=>q.push({kind:'letter',item:x}));
+    allWords().slice(0,4).forEach(x=>q.push({kind:'word',item:x}));
+    levelItems('grammar').slice(0,3).forEach(x=>q.push({kind:'build',item:x}));
+    return shuffle(q);
+  }
+  if(type==='alphabet')return ALPHABET.map(x=>({kind:'letter',item:x}));
+  if(type==='words')return allWords().map(x=>({kind:'word',item:x}));
+  if(type==='sentences')return SENTENCES.map(x=>({kind:'word',item:x}));
+  if(type==='grammar')return levelItems('grammar').map(x=>({kind:'build',item:x}));
+  if(type==='dialogues')return DIALOGUES.map(x=>({kind:'dialogue',item:x}));
+  if(type==='listening')return levelItems('listening').map(x=>({kind:'speak',item:x}));
+  return [];
+}
+
+function openLesson(type){
+  lessonType=type;
+  idx=0;
+  showHint=false;
+  session={correct:0,wrong:0,wrongItems:[]};
+  lessonQueue=buildQueue(type);
+  show('lesson');
+  updateStatic();
+  renderLesson();
+}
+
+function renderLesson(){
+  lessonQueue=clean(lessonQueue);
+  if(!lessonQueue.length){finish();return}
+  if(idx<0)idx=0;
+  if(idx>=lessonQueue.length)idx=lessonQueue.length-1;
+  $('lessonBar').style.width=pct(idx+1,lessonQueue.length)+'%';
+  const ex=lessonQueue[idx];
+  if(!ex||!ex.item){next();return}
+  if(ex.kind==='letter')return renderAlphabet(ex.item);
+  if(ex.kind==='word')return renderCard(ex.item);
+  if(ex.kind==='build')return renderGrammar(ex.item);
+  if(ex.kind==='dialogue')return renderDialogue(ex.item);
+  if(ex.kind==='speak')return renderSpeakingPractice(ex.item);
+}
+
+function topBtns(){
+  return '<div class="row"><button class="ghost" onclick="home()">'+T('main')+'</button><button class="purple" onclick="showProgress()">'+T('progress')+'</button></div>';
+}
+
+function makeUniqueOptions(correct,pool,count=4){
+  const seen=[];
+  [correct,...shuffle(pool)].forEach(v=>{
+    if(v===undefined||v===null)return;
+    v=String(v).trim();
+    if(!v)return;
+    if(!seen.includes(v)&&seen.length<count)seen.push(v);
+  });
+  return shuffle(seen);
+}
+
+function makeMeaningOptions(item){
+  const correct=text(item);
+  const pool=allWords().concat(ALPHABET).concat(SENTENCES).map(x=>text(x)).filter(x=>x&&x!==correct);
+  return makeUniqueOptions(correct,pool,4);
+}
+
+function renderAlphabet(it){
+  if(!it||!it.letter||!it.word){next();return}
+  $('lessonTitle').textContent=text(LEVELS[0][2]);
+  $('activity').innerHTML=
+    topBtns()+
+    '<div class="prompt">'+T('letterPrompt')+'</div>'+
+    '<div class="huge">'+it.letter+'</div>'+
+    '<div class="meaning">'+it.word+' = '+text(it)+'</div>'+
+    '<div class="small">'+noteText(it)+'</div>'+
+    (it.letter==='ğ'?'<div class="feedback">'+noteText(it)+'<br><b>dağ → daa</b></div>':'')+
+    '<div class="row"><button class="primary" onclick="speakLetter(\''+it.letter+'\')">'+T('listenLetter')+'</button><button class="primary" onclick="speak(\''+it.word+'\')">'+T('listenWord')+'</button></div>'+
+    '<div class="row"><button class="success" onclick="answer(event,true,\''+it.word+'\')">'+T('iKnow')+'</button><button class="danger" onclick="answer(event,false,\''+it.word+'\')">'+T('needPractice')+'</button></div>'+
+    '<div class="row"><button class="ghost" onclick="prev()">'+T('previous')+'</button><button class="ghost" onclick="next()">'+(idx===lessonQueue.length-1?T('finish'):T('next'))+'</button></div>'+
+    '<div id="fb" class="feedback">'+T('chooseResult')+'</div>';
+}
+
+function renderCard(it){
+  if(!it){next();return}
+  const opts=makeMeaningOptions(it);
+  $('lessonTitle').textContent=lessonType==='sentences'?text(LEVELS[2][2]):text(LEVELS[1][2]);
+  $('activity').innerHTML=
+    topBtns()+
+    '<div class="prompt">'+T('chooseMeaning')+'</div>'+
+    '<div class="big">'+(it.word||it.tr)+'</div>'+
+    '<div class="grid2">'+opts.map(o=>'<button onclick="answer(event,'+(o===text(it))+',\''+(it.word||it.tr)+'\')">'+o+'</button>').join('')+'</div>'+
+    '<div class="row"><button class="primary" onclick="speak(\''+(it.word||it.tr)+'\')">'+T('listen')+'</button><button class="ghost" onclick="next()">'+(idx===lessonQueue.length-1?T('finish'):T('next'))+'</button></div>'+
+    '<div id="fb" class="feedback">'+T('tapAnswer')+'</div>';
+}
+
+function renderGrammar(it){
+  if(!it||!it.word){next();return}
+  const root=it.word==='evim'?'ev':it.word==='arabam'?'araba':it.word==='gözüm'?'göz':'su';
+  const suf=it.word.replace(root,'');
+  const opts=makeUniqueOptions(suf,['im','m','üm','yum','in','un','ı'],4);
+  $('lessonTitle').textContent=text(LEVELS[3][2]);
+  const hint=showHint?'<div class="feedback">ev + im = evim<br>araba + m = arabam<br>göz + üm = gözüm<br>su + yum = suyum</div>':'';
+  $('activity').innerHTML=
+    topBtns()+
+    '<div class="prompt">'+T('buildWord')+'</div>'+
+    '<div class="small" style="text-align:center">'+T('hiddenList')+'</div>'+
+    '<div class="build-line"><span class="root">'+root+'</span> + <span class="suffix">?</span></div>'+
+    '<div class="meaning">'+text(it)+'</div>'+
+    '<div class="grid2">'+opts.map(o=>'<button onclick="answer(event,'+(o===suf)+',\''+it.word+'\')">'+o+'</button>').join('')+'</div>'+
+    '<div class="row"><button class="primary" onclick="speak(\''+it.word+'\')">'+T('listen')+'</button><button class="warning" onclick="showHint=true;renderLesson()">'+T('showHint')+'</button></div>'+
+    hint+
+    '<div class="row"><button class="ghost" onclick="prev()">'+T('previous')+'</button><button class="ghost" onclick="next()">'+(idx===lessonQueue.length-1?T('finish'):T('next'))+'</button></div>'+
+    '<div id="fb" class="feedback">'+T('ending')+'</div>';
+}
+
+function renderDialogue(d){
+  if(!d){next();return}
+  $('lessonTitle').textContent=text(LEVELS[4][2]);
+  const bubbles=d.lines.map((l,i)=>'<div class="bubble '+(i%2?'right':'left')+'"><div class="speaker">Speaker '+l.speaker+'</div>'+l.tr+'</div>').join('');
+  const opts=makeUniqueOptions(d.question,d.options,4);
+  const tr=(d.lines.find(l=>l.tr===d.question)||{})[lang()]||'';
+  $('activity').innerHTML=
+    topBtns()+
+    '<div class="huge">'+d.emoji+'</div>'+
+    '<div class="prompt">'+T('listenDialog')+'</div>'+
+    '<div class="chatbox">'+bubbles+'</div>'+
+    '<div class="row"><button class="primary" onclick="speakDialogue()">'+T('listenDialog')+'</button><button class="ghost" onclick="next()">'+(idx===lessonQueue.length-1?T('finish'):T('next'))+'</button></div>'+
+    '<div class="prompt">'+T('chooseReply')+'</div>'+
+    '<div class="small" style="text-align:center">'+tr+'</div>'+
+    '<div class="grid2">'+opts.map(o=>'<button onclick="answer(event,'+(o===d.question)+',\''+d.question+'\')">'+o+'</button>').join('')+'</div>'+
+    '<div id="fb" class="feedback">'+T('bestReply')+'</div>';
+}
+
+function renderSpeakingPractice(it){
+  if(!it||!it.word){next();return}
+  $('lessonTitle').textContent=text(LEVELS[5][2]);
+  $('activity').innerHTML=
+    topBtns()+
+    '<div class="prompt">'+T('listenSpeak')+'</div>'+
+    '<div class="big">'+it.word+'</div>'+
+    '<div class="meaning">'+text(it)+'</div>'+
+    '<div class="row"><button class="primary" onclick="speak(\''+it.word+'\')">'+T('listen')+'</button><button class="success" onclick="startPronunciationCheck(\''+it.word+'\')">'+T('speak')+'</button></div>'+
+    '<div class="row"><button class="ghost" onclick="prev()">'+T('previous')+'</button><button class="ghost" onclick="next()">'+(idx===lessonQueue.length-1?T('finish'):T('next'))+'</button></div>'+
+    '<div id="fb" class="feedback">'+T('chooseResult')+'</div>'+
+    '<input id="manualPronInput" placeholder="'+T('micType')+'">'+
+    '<button class="warning" style="width:100%;margin-top:10px" onclick="manualPronunciationCheck(\''+it.word+'\')">'+T('typedCheck')+'</button>';
+}
+
+function answer(e,ok,id){
+  const btn=e&&e.currentTarget;
+  prog.attempts++;
+  if(ok){
+    session.correct++;
+    prog.correct++;
+    prog.xp+=10;
+    markDone(id);
+    markMistakeMastered(id);
+    setFb(T('correct'),true);
+    if(btn)celebrateButton(btn);
+  }else{
+    session.wrong++;
+    if(!session.wrongItems.includes(id))session.wrongItems.push(id);
+    addMistake(id);
+    setFb(T('wrong'),false);
+    playWrongSound();
+    if(btn){btn.classList.add('wrongtap');setTimeout(()=>btn.classList.remove('wrongtap'),350)}
+  }
+  save('progress',prog);
+}
+
+function setFb(m,g){
+  const f=$('fb');
+  if(f){f.textContent=m;f.style.background=g?'#dcfce7':'#fee2e2';f.style.color=g?'#166534':'#991b1b'}
+}
+
+function markDone(id){
+  const key=['daily','review_session','review_bank'].includes(lessonType)?'words':lessonType;
+  const arr=prog.done[key]||[];
+  if(!arr.includes(id))arr.push(id);
+  prog.done[key]=arr;
+}
+
+function addMistake(id){
+  const m=prog.mistakes.find(x=>x.id===id);
+  if(m){m.repeat++;m.mastered=false}else prog.mistakes.push({id,repeat:1,mastered:false});
+}
+
+function markMistakeMastered(id){prog.mistakes.forEach(m=>{if(m.id===id)m.mastered=true})}
+
+function next(){
+  if(idx>=lessonQueue.length-1){finish();return}
+  idx++;
+  showHint=false;
+  renderLesson();
+}
+
+function prev(){
+  idx=Math.max(0,idx-1);
+  showHint=false;
+  renderLesson();
+}
+
+function finish(){
+  const total=session.correct+session.wrong;
+  const success=pct(session.correct,total||1);
+  $('rCorrect').textContent=session.correct;
+  $('rWrong').textContent=session.wrong;
+  $('rSuccess').textContent=success+'%';
+  $('advice').innerHTML=(success>=80?'🏆🦋<br>'+T('completed'):success<60?'💪<br>'+T('repeat'):'👍<br>'+T('mastery'));
+  show('result');
+  updateStatic();
+}
+
+function retrySessionWrong(){
+  if(!session.wrongItems.length){alert(T('noWrongSession'));return}
+  lessonType='review_session';
+  lessonQueue=session.wrongItems.map(id=>({kind:'word',item:findAnyItem(id)})).filter(x=>x.item);
+  idx=0;
+  session={correct:0,wrong:0,wrongItems:[]};
+  show('lesson');
+  renderLesson();
+}
+
+function retryWrong(){
+  const list=prog.mistakes.filter(x=>!x.mastered);
+  if(!list.length){alert(T('noWrong'));return}
+  lessonType='review_bank';
+  lessonQueue=list.map(x=>({kind:'word',item:findAnyItem(x.id)})).filter(x=>x.item);
+  idx=0;
+  session={correct:0,wrong:0,wrongItems:[]};
+  show('lesson');
+  renderLesson();
+}
+
+function findAnyItem(id){
+  return ALPHABET.find(x=>x.word===id)||allWords().find(x=>x.word===id)||SENTENCES.find(x=>x.word===id);
+}
+
+function showProgress(){
+  updateStatic();
+  const t=$('progressTable');
+  t.innerHTML='';
+  [['XP',prog.xp],['Streak',prog.streak],[T('attempts'),prog.attempts],[T('correct'),prog.correct],[T('mistakes'),prog.mistakes.filter(x=>!x.mastered).length]].forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td>';
+    t.appendChild(tr);
+  });
+  show('progress');
+}
+
+function reset(){localStorage.removeItem('progress');location.reload()}
+
+function admin(){
+  updateStatic();
+  renderAdmin();
+  show('admin');
+}
+
+function renderAdmin(){
+  const list=$('adminList');
+  list.innerHTML='<table class="table">'+(prog.adminWords||[]).map(w=>'<tr><td>'+w.word+'</td><td>'+text(w)+'</td></tr>').join('')+'</table>';
+}
+
+function addWord(){
+  const w={word:$('newTr').value,en:$('newEn').value,id:$('newId').value,ar:$('newAr').value,tr:$('newTr').value,cat:'admin'};
+  if(!w.word)return;
+  prog.adminWords=prog.adminWords||[];
+  prog.adminWords.push(w);
+  save('progress',prog);
+  renderAdmin();
+}
+
+function speak(t){
+  if(!('speechSynthesis'in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t==='çay'?'chai':t);
+  u.lang=t==='çay'?'en-US':'tr-TR';
+  u.rate=.75;
+  speechSynthesis.speak(u);
+}
+
+function speakLetter(l){
+  if(l==='ş')return speakWith('sheh','en-US');
+  if(l==='ç')return speakWith('cheh','en-US');
+  if(l==='ğ')return speak('yumuşak ge');
+  speak(l);
+}
+
+function speakWith(t,lc){
+  if(!('speechSynthesis'in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);
+  u.lang=lc;
+  u.rate=.75;
+  speechSynthesis.speak(u);
+}
+
+function speakDialogue(){
+  const ex=lessonQueue[idx];
+  const d=ex&&ex.item;
+  if(!d||!d.lines)return;
+  let i=0;
+  function p(){
+    if(i>=d.lines.length)return;
+    speak(d.lines[i++].tr);
+    setTimeout(p,1800);
+  }
+  p();
+}
+
 function normalizeSpeech(s){return String(s||'').toLocaleLowerCase('tr-TR').replace(/[.,!?]/g,'').trim()}
-function pronunciationScore(target,said){target=normalizeSpeech(target);said=normalizeSpeech(said);if(!said)return 0;if(said===target)return 100;if(said.includes(target)||target.includes(said))return 75;let same=0;for(let i=0;i<Math.min(target.length,said.length);i++){if(target[i]===said[i])same++}return Math.max(0,Math.round((same/target.length)*100))}
-function showPronScore(target,said){let score=pronunciationScore(target,said);let ok=score>=70;setFb('Heard: '+(said||'-')+' | Score: '+score+'%',ok);if(ok){markDone(target);markMistakeMastered(target);session.correct++;prog.correct++;prog.xp+=10}else{session.wrong++;if(!session.wrongItems.includes(target))session.wrongItems.push(target);addMistake(target)}prog.attempts++;save('progress',prog)}
-function startPronunciationCheck(target){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setFb('Microphone not supported here. Type the word below.',false);return}const rec=new SR();rec.lang='tr-TR';rec.interimResults=false;rec.maxAlternatives=1;setFb('Listening...',true);rec.start();rec.onresult=e=>{let said=e.results[0][0].transcript;showPronScore(target,said)};rec.onerror=()=>setFb('Microphone blocked or unavailable. Type the word below.',false)}
-function manualPronunciationCheck(target){let v=$('manualPronInput')?$('manualPronInput').value:'';showPronScore(target,v)}
-function renderDaily(){let ex=lessonQueue[idx];if(!ex){finish();return}let it=ex.item;$('lessonTitle').textContent=T('dailyLesson')+' • '+(idx+1)+' / '+lessonQueue.length;if(ex.kind==='letter'){renderAlphabet();return}if(ex.kind==='build'){let old=lessonType;lessonType='grammar';renderGrammar();lessonType=old;return}let opts=makeMeaningOptions(it);$('activity').innerHTML=topBtns()+'<div class="prompt">'+T('chooseMeaning')+'</div><div class="big">'+it.word+'</div><div class="grid2">'+opts.map(o=>'<button onclick="answerDaily(event,'+(o===text(it))+',\''+it.word+'\')">'+o+'</button>').join('')+'</div><div class="row"><button class="primary" onclick="speak(\''+it.word+'\')">'+T('listen')+'</button><button class="ghost" onclick="next()">'+T('next')+'</button></div><div id="fb" class="feedback">'+T('selectOne')+'</div>'}
-function answer(e,ok,id){let btn=e&&e.currentTarget?e.currentTarget:null;prog.attempts++;if(ok){session.correct++;prog.correct++;prog.xp+=10;markDone(id);markMistakeMastered(id);setFb(T('correct'),true);if(btn)celebrateButton(btn)}else{session.wrong++;if(!session.wrongItems.includes(id))session.wrongItems.push(id);addMistake(id);setFb(T('wrong'),false);playWrongSound();if(btn){btn.classList.add('wrongtap');setTimeout(()=>btn.classList.remove('wrongtap'),350)}}save('progress',prog)}function answerDaily(e,ok,id){answer(e,ok,id);setTimeout(()=>next(),750)}
-function celebrateButton(btn){btn.classList.add('celebrate');const icons=['🦋','🦋','🦋','🌸','🌼'];for(let i=0;i<14;i++){let s=document.createElement('span');s.className='sparkle';s.textContent=icons[i%icons.length];s.style.left=(35+Math.random()*30)+'%';s.style.top='35%';s.style.setProperty('--x',(Math.random()*160-80)+'px');s.style.setProperty('--y',(-60-Math.random()*100)+'px');btn.appendChild(s);setTimeout(()=>s.remove(),1500)}setTimeout(()=>btn.classList.remove('celebrate'),1400)}function playWrongSound(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;let ctx=new AC(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='square';osc.frequency.setValueAtTime(190,ctx.currentTime);osc.frequency.exponentialRampToValueAtTime(90,ctx.currentTime+.18);gain.gain.setValueAtTime(.12,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.22);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+.23)}
-function setFb(m,g){let f=$('fb');if(!f)return;f.textContent=m;f.style.background=g?'#dcfce7':'#fee2e2';f.style.color=g?'#166534':'#991b1b'}function markMistakeMastered(id){prog.mistakes.forEach(m=>{if(m.id===id&&m.lessonType===lessonType)m.mastered=true})}function markDone(id){let arr=prog.done[lessonType]||[];if(!arr.includes(id))arr.push(id);prog.done[lessonType]=arr}function addMistake(id){let m=prog.mistakes.find(x=>x.id===id&&x.lessonType===lessonType);if(m){m.repeat++;m.mastered=false}else prog.mistakes.push({id,lessonType,repeat:1,mastered:false,last:new Date().toISOString()})}function next(){if(idx>=items().length-1){finish();return}idx++;showHint=false;renderLesson()}function prev(){idx=Math.max(0,idx-1);showHint=false;renderLesson()}function finish(){let total=session.correct+session.wrong,success=pct(session.correct,total||1);$('rCorrect').textContent=session.correct;$('rWrong').textContent=session.wrong;$('rSuccess').textContent=success+'%';$('advice').textContent=success>=80?T('completed'):success<60?T('repeat'):T('mastery');show('result');updateStaticLabels()}
-function retrySessionWrong(){if(!session.wrongItems.length){alert(T('noWrongSession'));return}lessonType='review_session';lessonQueue=session.wrongItems.map(id=>({kind:'word',item:findAnyItem(id)})).filter(x=>x.item);idx=0;session={correct:0,wrong:0,wrongItems:[]};show('lesson');renderLesson()}function findAnyItem(id){return ALPHABET.find(x=>x.word===id)||allWords().find(x=>x.word===id)||SENTENCES.find(x=>x.word===id)||null}function retryWrong(){let list=prog.mistakes.filter(x=>!x.mastered);if(!list.length){alert(T('noWrong'));return}lessonType='review_bank';lessonQueue=list.map(x=>({kind:'word',item:findAnyItem(x.id)})).filter(x=>x.item);idx=0;session={correct:0,wrong:0,wrongItems:[]};show('lesson');updateStaticLabels();renderLesson()}function showProgress(){updateStaticLabels();let t=$('progressTable');t.innerHTML='';[["XP",prog.xp],["Streak",prog.streak],[T('attempts'),prog.attempts],[T('correct'),prog.correct],[T('mistakes'),prog.mistakes.length]].forEach(r=>{let tr=document.createElement('tr');tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td>';t.appendChild(tr)});show('progress')}function reset(){prog={xp:0,streak:0,last:'',done:{alphabet:[],words:[],sentences:[],grammar:[],dialogues:[],listening:[]},mistakes:[],correct:0,attempts:0,adminWords:[]};save('progress',prog);home()}function admin(){updateStaticLabels();renderAdmin();show('admin')}function renderAdmin(){let list=$('adminList');list.innerHTML='<table class="table">'+(prog.adminWords||[]).map(w=>'<tr><td>'+w.word+'</td><td>'+text(w)+'</td></tr>').join('')+'</table>'}function addWord(){let w={word:$('newTr').value,en:$('newEn').value,id:$('newId').value,ar:$('newAr').value,tr:$('newTr').value,cat:'admin'};if(!w.word)return;prog.adminWords=prog.adminWords||[];prog.adminWords.push(w);save('progress',prog);renderAdmin()}
-function speakWithLang(text,langCode){if(!('speechSynthesis'in window))return;let u=new SpeechSynthesisUtterance(text);u.lang=langCode;u.rate=.75;speechSynthesis.cancel();speechSynthesis.speak(u)}function speak(textValue){if(textValue==='çay'){speakWithLang('chai','en-US');return}if(!('speechSynthesis'in window))return;let u=new SpeechSynthesisUtterance(textValue);u.lang='tr-TR';u.rate=.75;speechSynthesis.cancel();speechSynthesis.speak(u)}function speakLetter(l){if(l==='ş'){speakWithLang('sheh','en-US');return}if(l==='ç'){speakWithLang('cheh','en-US');return}if(l==='ğ'){speak('yumuşak ge');return}speak(l)}
-$('startBtn').onclick=start;$('nativeLang').onchange=localizeOnboarding;$('changeProfile').onclick=()=>{show('onboarding');localizeOnboarding()};$('continueLesson').onclick=()=>openLesson('daily');$('reviewMistakes').onclick=retryWrong;$('adminOpen').onclick=admin;$('resetBtn').onclick=reset;$('resultRetry').onclick=retrySessionWrong;$('resultHome').onclick=home;$('modalRetry').onclick=()=>{$('modal').classList.add('hidden');retryWrong()};$('modalHome').onclick=()=>{$('modal').classList.add('hidden');home()};$('addWord').onclick=addWord;
-const UX={
-  en:{appSubtitle:'Learn Turkish step by step',age:'Age',goal:'Goal',target:'Target',locked:'Locked',done:'Done',current:'Current',coach:'Smart Coach',coachHome:'Continue today. Short practice is better than long breaks.',excellent:'Excellent work. You are ready for the next lesson.',good:'Good progress. Repeat mistakes once for mastery.',repeat:'Repeat this lesson before moving forward.',hearts:'Hearts',speak:'Speak',listenSpeak:'Listen & Speak',speakTip:'Listen first. Then read the Turkish word aloud.',speakReady:'Press Speak and read aloud.',typedCheck:'Check Typed Pronunciation',micType:'Type here if microphone does not work',heard:'Heard',score:'Score'},
-  id:{appSubtitle:'Belajar bahasa Turki langkah demi langkah',age:'Usia',goal:'Target',target:'Target',locked:'Terkunci',done:'Selesai',current:'Saat ini',coach:'Pelatih Pintar',coachHome:'Lanjut hari ini. Latihan singkat lebih baik daripada berhenti lama.',excellent:'Bagus sekali. Kamu siap ke pelajaran berikutnya.',good:'Progres bagus. Ulangi kesalahan sekali lagi.',repeat:'Ulangi pelajaran ini sebelum lanjut.',hearts:'Nyawa',speak:'Bicara',listenSpeak:'Dengar & Bicara',speakTip:'Dengar dulu. Lalu baca kata Turki dengan suara.',speakReady:'Tekan Bicara lalu baca dengan suara.',typedCheck:'Periksa Pengucapan Tertulis',micType:'Tulis di sini jika mikrofon tidak bekerja',heard:'Terdengar',score:'Skor'},
-  ar:{appSubtitle:'تعلّم التركية خطوة بخطوة',age:'العمر',goal:'الهدف',target:'الهدف',locked:'مغلق',done:'مكتمل',current:'الحالي',coach:'المدرب الذكي',coachHome:'تابع اليوم. تدريب قصير أفضل من الانقطاع.',excellent:'عمل ممتاز. أنت جاهز للدرس التالي.',good:'تقدم جيد. راجع الأخطاء مرة واحدة.',repeat:'أعد هذا الدرس قبل المتابعة.',hearts:'قلوب',speak:'تحدث',listenSpeak:'استمع وتحدث',speakTip:'استمع أولاً. ثم اقرأ الكلمة التركية بصوت عالٍ.',speakReady:'اضغط تحدث واقرأ بصوت عالٍ.',typedCheck:'افحص النطق المكتوب',micType:'اكتب هنا إذا لم يعمل الميكروفون',heard:'سمعت',score:'النتيجة'},
-  tr:{appSubtitle:'Türkçeyi adım adım öğren',age:'Yaş',goal:'Hedef',target:'Hedef',locked:'Kilitli',done:'Tamamlandı',current:'Sıradaki',coach:'Akıllı Koç',coachHome:'Bugün devam et. Kısa pratik uzun aradan daha iyidir.',excellent:'Harika. Bir sonraki derse hazırsın.',good:'İyi ilerleme. Ustalaşmak için yanlışları bir kez tekrar et.',repeat:'Devam etmeden önce bu dersi tekrar et.',hearts:'Can',speak:'Konuş',listenSpeak:'Dinle & Konuş',speakTip:'Önce dinle. Sonra Türkçe kelimeyi sesli oku.',speakReady:'Konuş butonuna bas ve sesli oku.',typedCheck:'Yazılı Telaffuzu Kontrol Et',micType:'Mikrofon çalışmazsa buraya yaz',heard:'Duyulan',score:'Skor'}
-};
-function U(k){return (UX[lang()]||UX.en)[k]||UX.en[k]||k}
-function levelDesc(l){const map={alphabet:{en:'Sounds, letters and first reading',id:'Bunyi, huruf, dan membaca awal',ar:'الأصوات والحروف والقراءة الأولى',tr:'Sesler, harfler ve ilk okuma'},words:{en:'Greetings, family, numbers, colors, food, objects',id:'Salam, keluarga, angka, warna, makanan, benda',ar:'تحيات، عائلة، أرقام، ألوان، طعام، أشياء',tr:'Selamlaşma, aile, sayılar, renkler, yiyecekler, objeler'},sentences:{en:'Simple sentence patterns',id:'Pola kalimat sederhana',ar:'أنماط جمل بسيطة',tr:'Basit cümle kalıpları'},grammar:{en:'Mini grammar: my house, my car, my eye',id:'Tata bahasa mini: rumah saya, mobil saya, mata saya',ar:'قواعد صغيرة: بيتي، سيارتي، عيني',tr:'Mini dilbilgisi: evim, arabam, gözüm'},dialogues:{en:'Real-life short conversations',id:'Dialog pendek kehidupan sehari-hari',ar:'حوارات قصيرة من الحياة اليومية',tr:'Günlük hayattan kısa diyaloglar'},listening:{en:'Listen, speak and pronunciation score',id:'Dengar, bicara, dan skor pengucapan',ar:'استماع وتحدث وتقييم النطق',tr:'Dinleme, konuşma ve telaffuz skoru'}};return (map[l[0]]&&map[l[0]][lang()])||map[l[0]].en}
-function itemsForType(t){if(t==='grammar')return allWords().filter(x=>['evim','arabam','gözüm','suyum'].includes(x.word));return []}
-function completionFor(type){const total=type==='alphabet'?ALPHABET.length:type==='words'?allWords().length:type==='sentences'?SENTENCES.length:type==='grammar'?itemsForType('grammar').length:type==='dialogues'?DIALOGUES.length:type==='listening'?allWords().slice(0,8).length:1;const done=(prog.done[type]||[]).length;return pct(done,total)}
-function updateStaticLabels(){document.documentElement.lang=lang();document.body.classList.toggle('rtl',lang()==='ar');$('subtitle').textContent=U('appSubtitle');$('homeTitle').textContent=T('main');$('mapTitle').textContent=T('map');$('continueLesson').textContent=T('continue');$('reviewMistakes').textContent=T('review');$('adminOpen').textContent=T('admin');$('progressSummaryTitle').textContent=T('progressSummary');$('pAlphabetLabel').textContent=T('alphabet');$('pWordsLabel').textContent=T('words');$('pTotalLabel').textContent=T('total');$('lessonHomeBtn').textContent=T('main');$('lessonProgressBtn').textContent=T('progress');$('resultTitle').textContent=T('lessonResult');$('rCorrectLabel').textContent=T('correct');$('rWrongLabel').textContent=T('wrong');$('rSuccessLabel').textContent=T('success');$('resultRetry').textContent=T('review');$('resultHome').textContent=T('main');$('progressHomeBtn').textContent=T('main');$('resetBtn').textContent=T('reset');$('progressTitle').textContent=T('progressDashboard');$('adminHomeBtn').textContent=T('main');$('adminTitle').textContent=T('admin');$('adminNote').textContent=T('adminNote');$('addWord').textContent=T('addWord');$('modalRetry').textContent=T('review');$('modalHome').textContent=T('main');$('footerNote').textContent=T('footer')}
-function renderMap(){let box=$('levelMap');box.innerHTML='<div class="coach">'+U('coach')+': '+U('coachHome')+'</div>';LEVELS.forEach((l,i)=>{let c=completionFor(l[0]);let state=c===100?'done':(i===0||completionFor(LEVELS[i-1][0])>=60?'current':'locked');let d=document.createElement('div');d.className='pathCard '+state;d.innerHTML='<div class="pathTitle">'+T('levelWord')+' '+l[1]+' — '+text(l[2])+'</div><div class="pathMeta">'+levelDesc(l)+'</div><div><span class="pill">'+(state==='done'?U('done'):state==='locked'?U('locked'):U('current'))+'</span><span class="pill">'+c+'%</span></div><div class="progress"><div class="bar" style="width:'+c+'%"></div></div><button class="primary" style="width:100%;margin-top:10px" '+(state==='locked'?'disabled':'')+'>'+T('open')+'</button>';d.querySelector('button').onclick=()=>{if(state!=='locked')openLesson(l[0])};box.appendChild(d)});$('xp').textContent=prog.xp;$('streak').textContent=prog.streak;$('goal').textContent=profile.dailyGoal+'m';$('badges').innerHTML='<div class="topStats"><div class="topStat"><b>❤️ 5</b><small>'+U('hearts')+'</small></div><div class="topStat"><b>⚡ '+prog.xp+'</b><small>XP</small></div><div class="topStat"><b>🔥 '+prog.streak+'</b><small>Streak</small></div></div><span class="badge">'+T('native')+': '+profile.nativeLanguage+'</span><span class="badge">'+U('age')+': '+profile.ageGroup+'</span><span class="badge">'+U('goal')+': '+profile.dailyGoal+'m</span><span class="badge">'+U('target')+': Turkish</span>'}
-function renderSpeakingPractice(){let it=items()[idx];$('lessonTitle').textContent=text(LEVELS[5][2]);$('activity').innerHTML=topBtns()+'<div class="prompt">'+U('listenSpeak')+'</div><div class="big">'+it.word+'</div><div class="meaning">'+text(it)+'</div><div class="small" style="text-align:center">'+U('speakTip')+'</div><div class="row"><button class="primary" onclick="speak(\''+it.word+'\')">'+T('listen')+'</button><button class="success" onclick="startPronunciationCheck(\''+it.word+'\')">'+U('speak')+'</button></div><div class="row"><button class="ghost" onclick="prev()">'+T('previous')+'</button><button class="ghost" onclick="next()">'+(idx===items().length-1?T('finish'):T('next'))+'</button></div><div id="fb" class="feedback">'+U('speakReady')+'</div><input id="manualPronInput" placeholder="'+U('micType')+'"><button class="warning" style="width:100%;margin-top:10px" onclick="manualPronunciationCheck(\''+it.word+'\')">'+U('typedCheck')+'</button>'}
-function showPronScore(target,said){let score=pronunciationScore(target,said);let ok=score>=70;setFb(U('heard')+': '+(said||'-')+' | '+U('score')+': '+score+'%',ok);if(ok){markDone(target);markMistakeMastered(target);session.correct++;prog.correct++;prog.xp+=10}else{session.wrong++;if(!session.wrongItems.includes(target))session.wrongItems.push(target);addMistake(target)}prog.attempts++;save('progress',prog)}
-function finish(){let total=session.correct+session.wrong,success=pct(session.correct,total||1);$('rCorrect').textContent=session.correct;$('rWrong').textContent=session.wrong;$('rSuccess').textContent=success+'%';let msg=success>=80?U('excellent'):success<60?U('repeat'):U('good');$('advice').innerHTML='<div class="reward">'+(success>=80?'🏆🦋':'💪')+'</div><div class="scoreRing" style="--score:'+success+'%"><span>'+success+'%</span></div><div class="coach">'+U('coach')+': '+msg+'</div>';show('result');updateStaticLabels()}
-function tests(){let f=[];if(!L.en||!L.id||!L.ar||!L.tr)f.push('multilingual labels missing');if(!UX.en||!UX.id||!UX.ar||!UX.tr)f.push('UX labels missing');if(!ALPHABET.find(x=>x.letter==='ı'))f.push('missing ı');if(!WORDS.find(x=>x.word==='evim'))f.push('missing evim');if(SENTENCES.find(x=>x.word==='Ben elma seviyorum.')?.en!=='I like apple.')f.push('apple translation wrong');if(makeMeaningOptions(WORDS[0]).some(x=>String(x).includes('wrong')))f.push('placeholder visible');if(new Set(makeUniqueOptions('m',['im','m','üm','m'],4)).size!==makeUniqueOptions('m',['im','m','üm','m'],4).length)f.push('duplicate options visible');if(typeof renderMap!=='function')f.push('path renderer missing');if(typeof renderSpeakingPractice!=='function')f.push('speaking practice missing');$('tests').textContent=f.length?'Self-test warning: '+f.join(', '):'Self-test passed'}
-$('startBtn').onclick=start;$('nativeLang').onchange=localizeOnboarding;$('changeProfile').onclick=()=>{show('onboarding');localizeOnboarding()};$('continueLesson').onclick=()=>openLesson('daily');$('reviewMistakes').onclick=retryWrong;$('adminOpen').onclick=admin;$('resetBtn').onclick=reset;$('resultRetry').onclick=retrySessionWrong;$('resultHome').onclick=home;$('modalRetry').onclick=()=>{$('modal').classList.add('hidden');retryWrong()};$('modalHome').onclick=()=>{$('modal').classList.add('hidden');home()};$('addWord').onclick=addWord;
-localizeOnboarding();tests();if(profile)home();else show('onboarding');
+function pronunciationScore(t,s){
+  t=normalizeSpeech(t);s=normalizeSpeech(s);
+  if(!s)return 0;
+  if(s===t)return 100;
+  if(s.includes(t)||t.includes(s))return 75;
+  let same=0;
+  for(let i=0;i<Math.min(t.length,s.length);i++)if(t[i]===s[i])same++;
+  return Math.round((same/Math.max(1,t.length))*100);
+}
+function showPronScore(t,s){
+  const sc=pronunciationScore(t,s),ok=sc>=70;
+  setFb(T('heard')+': '+(s||'-')+' | '+T('score')+': '+sc+'%',ok);
+  answer(null,ok,t);
+}
+function startPronunciationCheck(t){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){setFb('Microphone unavailable. '+T('micType'),false);return}
+  const r=new SR();
+  r.lang='tr-TR';
+  r.onresult=e=>showPronScore(t,e.results[0][0].transcript);
+  r.onerror=()=>setFb('Microphone blocked. '+T('micType'),false);
+  setFb('Listening...',true);
+  r.start();
+}
+function manualPronunciationCheck(t){showPronScore(t,$('manualPronInput').value)}
+
+function celebrateButton(btn){
+  btn.classList.add('celebrate');
+  ['🦋','🌸','🦋','🌼','🦋'].forEach((x,i)=>{
+    const s=document.createElement('span');
+    s.className='sparkle';
+    s.textContent=x;
+    s.style.left=(30+i*10)+'%';
+    s.style.top='35%';
+    s.style.setProperty('--x',(Math.random()*140-70)+'px');
+    s.style.setProperty('--y',(-70-Math.random()*100)+'px');
+    btn.appendChild(s);
+    setTimeout(()=>s.remove(),1600);
+  });
+  setTimeout(()=>btn.classList.remove('celebrate'),1400);
+}
+
+function playWrongSound(){
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return;
+  const c=new AC(),o=c.createOscillator(),g=c.createGain();
+  o.type='square';o.frequency.value=150;g.gain.value=.08;
+  o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.18);
+}
+
+function tests(){
+  const f=[];
+  if(ALPHABET.some(x=>!x.letter||!x.word))f.push('alphabet item error');
+  if(makeUniqueOptions('m',['m','m','im','üm']).length!==3)f.push('duplicate option error');
+  if(SENTENCES.find(x=>x.word==='Ben elma seviyorum.').en!=='I like apple.')f.push('apple translation error');
+  $('tests').textContent=f.length?'Self-test warning: '+f.join(', '):'Self-test passed';
+}
+
+$('startBtn').onclick=start;
+$('nativeLang').onchange=localizeOnboarding;
+$('changeProfile').onclick=()=>{profile=null;localStorage.removeItem('profile');show('onboarding');localizeOnboarding()};
+$('continueLesson').onclick=()=>openLesson('daily');
+$('reviewMistakes').onclick=retryWrong;
+$('adminOpen').onclick=admin;
+$('resetBtn').onclick=reset;
+$('resultRetry').onclick=retrySessionWrong;
+$('resultHome').onclick=home;
+$('addWord').onclick=addWord;
+
+localizeOnboarding();
+tests();
+if(profile)home();else show('onboarding');
 </script>
 </body>
 </html>
