@@ -2,7 +2,7 @@ export const TOPICS = [
   { id:'alphabet', type:'alphabet', title:{en:'Alphabet Pro', id:'Alfabet Turki'}, sub:{en:'Sounds and contrasts', id:'Bunyi dan perbandingan'} },
   { id:'root_words', type:'root', title:{en:'Root Words', id:'Kata Dasar'}, sub:{en:'Concrete starter words', id:'Kata awal yang nyata'} },
   { id:'meaning_builder', type:'builder', title:{en:'Meaning Builder', id:'Penyusun Makna'}, sub:{en:'Root + meaning blocks', id:'Kata dasar + blok makna'} },
-  { id:'plural_builder', type:'builder', title:{en:'Plural Builder', id:'Bentuk Jamak'}, sub:{en:'-lar / -ler', id:'-lar / -ler'} },
+  { id:'plural_builder', type:'builder', title:{en:'More Than One Builder', id:'Pembuat Lebih Dari Satu'}, sub:{en:'ev → evler, kitap → kitaplar', id:'ev → evler, kitap → kitaplar'} },
   { id:'accusative_builder', type:'builder', title:{en:'Object Builder', id:'Pembuat Objek'}, sub:{en:'Build the object form', id:'Susun bentuk objek'} }
 ];
 
@@ -48,11 +48,11 @@ export const MEANING_BUILDER = [
 ];
 
 export const PLURAL_BUILDER = [
-  {id:'plural_evler',prompt:{en:'houses',id:'rumah-rumah'},answerParts:['ev','ler'],options:['ev','ler','lar'],finalWord:'evler',audio:'audio/pronunciation_tr_evler.mp3',image:'images/ev.png',revealAfterCorrect:'ev + ler = evler',explanationKey:'plural_basic'},
-  {id:'plural_kitaplar',prompt:{en:'books',id:'buku-buku'},answerParts:['kitap','lar'],options:['kitap','lar','ler'],finalWord:'kitaplar',audio:'audio/pronunciation_tr_kitaplar.mp3',image:'images/kitap.png',revealAfterCorrect:'kitap + lar = kitaplar',explanationKey:'plural_basic'},
-  {id:'plural_kopekler',prompt:{en:'dogs',id:'anjing-anjing'},answerParts:['köpek','ler'],options:['köpek','ler','lar'],finalWord:'köpekler',audio:'audio/pronunciation_tr_kopekler.mp3',image:'images/kopek.png',revealAfterCorrect:'köpek + ler = köpekler',explanationKey:'plural_basic'},
-  {id:'plural_okullar',prompt:{en:'schools',id:'sekolah-sekolah'},answerParts:['okul','lar'],options:['okul','lar','ler'],finalWord:'okullar',audio:'audio/pronunciation_tr_okullar.mp3',image:'images/okul.png',revealAfterCorrect:'okul + lar = okullar',explanationKey:'plural_basic'},
-  {id:'plural_arabalar',prompt:{en:'cars',id:'mobil-mobil'},answerParts:['araba','lar'],options:['araba','lar','ler'],finalWord:'arabalar',audio:'audio/pronunciation_tr_arabalar.mp3',image:'images/araba.png',revealAfterCorrect:'araba + lar = arabalar',explanationKey:'plural_basic'}
+  {id:'plural_evler',prompt:{en:'houses',id:'rumah-rumah'},answerParts:['ev','ler'],options:['ev','ler','lar'],finalWord:'evler',audio:'audio/pronunciation_tr_evler.mp3',image:'images/ev.png',revealAfterCorrect:'One house is ev. More than one is evler.',explanationKey:'plural_evler_story'},
+  {id:'plural_kitaplar',prompt:{en:'books',id:'buku-buku'},answerParts:['kitap','lar'],options:['kitap','lar','ler'],finalWord:'kitaplar',audio:'audio/pronunciation_tr_kitaplar.mp3',image:'images/kitap.png',revealAfterCorrect:'One book is kitap. More than one is kitaplar.',explanationKey:'plural_kitaplar_story'},
+  {id:'plural_kopekler',prompt:{en:'dogs',id:'anjing-anjing'},answerParts:['köpek','ler'],options:['köpek','ler','lar'],finalWord:'köpekler',audio:'audio/pronunciation_tr_kopekler.mp3',image:'images/kopek.png',revealAfterCorrect:'One dog is köpek. More than one is köpekler.',explanationKey:'plural_kopekler_story'},
+  {id:'plural_okullar',prompt:{en:'schools',id:'sekolah-sekolah'},answerParts:['okul','lar'],options:['okul','lar','ler'],finalWord:'okullar',audio:'audio/pronunciation_tr_okullar.mp3',image:'images/okul.png',revealAfterCorrect:'One school is okul. More than one is okullar.',explanationKey:'plural_okullar_story'},
+  {id:'plural_arabalar',prompt:{en:'cars',id:'mobil-mobil'},answerParts:['araba','lar'],options:['araba','lar','ler'],finalWord:'arabalar',audio:'audio/pronunciation_tr_arabalar.mp3',image:'images/araba.png',revealAfterCorrect:'One car is araba. More than one is arabalar.',explanationKey:'plural_arabalar_story'}
 ];
 
 export const ACCUSATIVE_BUILDER = [
@@ -125,10 +125,50 @@ export const EXPLANATIONS = {
   locative_suffix_basic:{main:{en:'This place block means in, on, or at. Choose the word first, then the place block.',id:'Blok tempat ini berarti di, pada, atau dalam. Pilih kata dulu, lalu blok tempat.'}},
   safe_builder_order:{main:{en:'Build from left to right: word first, then meaning blocks. The final answer appears only after you solve it.',id:'Susun dari kiri ke kanan: kata dulu, lalu blok makna. Jawaban akhir muncul hanya setelah kamu menyelesaikannya.'}},
   safe_sound_match:{main:{en:'Some blocks change sound to fit the word. Trust the sound and choose the block that matches.',id:'Beberapa blok berubah bunyi agar cocok dengan kata. Dengarkan bunyinya dan pilih blok yang cocok.'}},
-  softened_book_builder:{main:{en:'Here, kitap is shown as kitab before the next block. Build the spoken/written result as kitabımda.',id:'Di sini, kitap ditampilkan sebagai kitab sebelum blok berikutnya. Susun hasilnya menjadi kitabımda.'}},
-  softened_k_builder:{main:{en:'Here, köpek is shown as köpeğ before the next block. Build the spoken/written result as köpeği.',id:'Di sini, köpek ditampilkan sebagai köpeğ sebelum blok berikutnya. Susun hasilnya menjadi köpeği.'}},
+  softened_book_builder:{
+    main:{en:'Here, kitap is shown as kitab before the next block. Build the spoken/written result as kitabımda.',id:'Di sini, kitap ditampilkan sebagai kitab sebelum blok berikutnya. Susun hasilnya menjadi kitabımda.'},
+    hear:{en:'Listen for the softer ending: kitap → kitabı, kitabımda.',id:'Dengarkan bunyi akhirnya yang melembut: kitap → kitabı, kitabımda.'},
+    mistake:{en:'Do not build kitapımda. Use kitab + ım + da.',id:'Jangan susun kitapımda. Gunakan kitab + ım + da.'},
+    practice:{en:['Look at kitap.','When the next block starts with a vowel sound, use kitab.','Build: kitab + ım + da.'],id:['Lihat kitap.','Saat blok berikutnya mulai dengan bunyi vokal, gunakan kitab.','Susun: kitab + ım + da.']}
+  },
+  softened_k_builder:{
+    main:{en:'Here, köpek is shown as köpeğ before the next block. Build the spoken/written result as köpeği.',id:'Di sini, köpek ditampilkan sebagai köpeğ sebelum blok berikutnya. Susun hasilnya menjadi köpeği.'},
+    hear:{en:'Listen for the soft flow: köpek → köpeği.',id:'Dengarkan aliran bunyinya: köpek → köpeği.'},
+    mistake:{en:'Do not build köpeki. Use köpeğ + i.',id:'Jangan susun köpeki. Gunakan köpeğ + i.'},
+    practice:{en:['Look at köpek.','When the next block starts with i, use köpeğ.','Build: köpeğ + i.'],id:['Lihat köpek.','Saat blok berikutnya mulai dengan i, gunakan köpeğ.','Susun: köpeğ + i.']}
+  },
   y_glide_accusative:{main:{en:'When a word ends with a vowel, Turkish may add y before the next sound.',id:'Jika kata berakhir dengan vokal, bahasa Turki dapat menambahkan y sebelum bunyi berikutnya.'}},
-  plural_basic:{main:{en:'Turkish uses -lar or -ler for more than one. Choose by the sound of the word.',id:'Bahasa Turki memakai -lar atau -ler untuk lebih dari satu. Pilih sesuai bunyi kata.'}}
+  plural_evler_story:{
+    main:{en:'One house is ev. When there is more than one, Turkish says evler. Build ev + ler.',id:'Satu rumah adalah ev. Jika lebih dari satu, bahasa Turki mengatakan evler. Susun ev + ler.'},
+    hear:{en:'Listen: ev, evler. The small block is ler.',id:'Dengarkan: ev, evler. Blok kecilnya ler.'},
+    mistake:{en:'Do not choose lar here. evler sounds natural.',id:'Jangan pilih lar di sini. evler terdengar alami.'},
+    practice:{en:['Say ev.','Now imagine many houses.','Tap ev + ler.'],id:['Ucapkan ev.','Sekarang bayangkan banyak rumah.','Ketuk ev + ler.']}
+  },
+  plural_kitaplar_story:{
+    main:{en:'One book is kitap. When there is more than one, Turkish says kitaplar. Build kitap + lar.',id:'Satu buku adalah kitap. Jika lebih dari satu, bahasa Turki mengatakan kitaplar. Susun kitap + lar.'},
+    hear:{en:'Listen: kitap, kitaplar. The small block is lar.',id:'Dengarkan: kitap, kitaplar. Blok kecilnya lar.'},
+    mistake:{en:'Do not choose ler here. kitaplar sounds natural.',id:'Jangan pilih ler di sini. kitaplar terdengar alami.'},
+    practice:{en:['Say kitap.','Now imagine many books.','Tap kitap + lar.'],id:['Ucapkan kitap.','Sekarang bayangkan banyak buku.','Ketuk kitap + lar.']}
+  },
+  plural_kopekler_story:{
+    main:{en:'One dog is köpek. When there is more than one, Turkish says köpekler. Build köpek + ler.',id:'Satu anjing adalah köpek. Jika lebih dari satu, bahasa Turki mengatakan köpekler. Susun köpek + ler.'},
+    hear:{en:'Listen: köpek, köpekler. The small block is ler.',id:'Dengarkan: köpek, köpekler. Blok kecilnya ler.'},
+    mistake:{en:'Do not choose lar here. köpekler sounds natural.',id:'Jangan pilih lar di sini. köpekler terdengar alami.'},
+    practice:{en:['Say köpek.','Now imagine many dogs.','Tap köpek + ler.'],id:['Ucapkan köpek.','Sekarang bayangkan banyak anjing.','Ketuk köpek + ler.']}
+  },
+  plural_okullar_story:{
+    main:{en:'One school is okul. When there is more than one, Turkish says okullar. Build okul + lar.',id:'Satu sekolah adalah okul. Jika lebih dari satu, bahasa Turki mengatakan okullar. Susun okul + lar.'},
+    hear:{en:'Listen: okul, okullar. The small block is lar.',id:'Dengarkan: okul, okullar. Blok kecilnya lar.'},
+    mistake:{en:'Do not choose ler here. okullar sounds natural.',id:'Jangan pilih ler di sini. okullar terdengar alami.'},
+    practice:{en:['Say okul.','Now imagine many schools.','Tap okul + lar.'],id:['Ucapkan okul.','Sekarang bayangkan banyak sekolah.','Ketuk okul + lar.']}
+  },
+  plural_arabalar_story:{
+    main:{en:'One car is araba. When there is more than one, Turkish says arabalar. Build araba + lar.',id:'Satu mobil adalah araba. Jika lebih dari satu, bahasa Turki mengatakan arabalar. Susun araba + lar.'},
+    hear:{en:'Listen: araba, arabalar. The small block is lar.',id:'Dengarkan: araba, arabalar. Blok kecilnya lar.'},
+    mistake:{en:'Do not choose ler here. arabalar sounds natural.',id:'Jangan pilih ler di sini. arabalar terdengar alami.'},
+    practice:{en:['Say araba.','Now imagine many cars.','Tap araba + lar.'],id:['Ucapkan araba.','Sekarang bayangkan banyak mobil.','Ketuk araba + lar.']}
+  },
+  plural_basic:{main:{en:'For more than one, Turkish adds a small block after the word. Listen and choose the block that sounds natural.',id:'Untuk lebih dari satu, bahasa Turki menambahkan blok kecil setelah kata. Dengarkan dan pilih blok yang terdengar alami.'}}
 };
 
 export function datasetFor(topicId){
