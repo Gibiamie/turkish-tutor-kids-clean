@@ -2,7 +2,6 @@ import { t, localized, LANGS } from './i18n.js';
 import { PROFILES, getProfile, defaultProfile } from './profiles.js';
 import { TOPICS, datasetFor, topicById } from './lessonData.js';
 import { ProgressManager } from './progressStore.js';
-import { primaryAudioFor } from './audioRegistry.js';
 import { esc, progressBar, visual, explanationCard, explanationSheet, pct } from './uiComponents.js';
 import { renderQA } from './qaPanel.js';
 
@@ -10,7 +9,7 @@ const app=document.getElementById('app');
 const sheetRoot=document.getElementById('sheet-root');
 const isQA=new URLSearchParams(location.search).get('qa')==='1';
 let audio=null;
-let state={ screen:'profile', profile:null, language:'en', mode:'kids', topicId:null, index:0, selected:[], answered:false, progress:null };
+let state={ screen:'profile', profile:null, language:'en', mode:'kids', topicId:null, index:0, selected:[], answered:false, progress:null, practiceActions:{} };
 
 function setProfile(profileId){
   const profile=getProfile(profileId) || defaultProfile();
@@ -18,15 +17,25 @@ function setProfile(profileId){
   state.language=profile.language;
   state.mode=profile.mode;
   state.progress=new ProgressManager({profileId:profile.id, language:state.language, mode:state.mode});
-  state.screen='home'; state.topicId=null; state.index=0; state.selected=[]; state.answered=false;
+  state.screen='home'; state.topicId=null; state.index=0; state.selected=[]; state.answered=false; state.practiceActions={};
   render();
 }
-function updateScope(){ state.progress=new ProgressManager({profileId:state.profile.id, language:state.language, mode:state.mode}); }
+function updateScope(){ state.progress=new ProgressManager({profileId:state.profile.id, language:state.language, mode:state.mode}); state.practiceActions={}; }
 function render(){
   if(!state.profile || state.screen==='profile') return renderProfilePicker();
   if(state.screen==='home') return renderHome();
   if(state.screen==='lesson') return renderLesson();
 }
+function itemKey(){ const item=currentItem(); return state.topicId && item ? `${state.topicId}::${item.id}` : ''; }
+function hasPracticeAction(){ return !!state.practiceActions[itemKey()]; }
+function markPracticeAction(){ const key=itemKey(); if(key) state.practiceActions[key]=true; }
+function isCurrentComplete(){ const item=currentItem(); return !!(item && state.progress?.isComplete(state.topicId,item.id)); }
+function lessonRequiresCompletion(){ const topic=topicById(state.topicId); return topic && topic.type!=='builder'; }
+function canMoveForward(){
+  if(!lessonRequiresCompletion()) return state.answered || isCurrentComplete();
+  return isCurrentComplete();
+}
+function warnPracticeFirst(){ alert(t(state.language,'practiceBeforeNext')); }
 function topbar(title, sub){
   const lang=state.language;
   return `<header class="topbar"><div class="brand-row"><div class="brand-mark">TR</div><div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div></div>
@@ -57,17 +66,21 @@ function renderLesson(){
   let body=''; if(topic.type==='alphabet') body=renderAlphabet(item); if(topic.type==='root') body=renderRoot(item); if(topic.type==='builder') body=renderBuilder(item);
   app.innerHTML=`${topbar(localized(topic.title,lang), `${t(lang,'item')} ${state.index+1} ${t(lang,'of')} ${ds.length} · ${state.profile.name}`)}<main class="page lesson"><div class="lesson-meta">${progressBar(p)}</div>${body}<nav class="lesson-nav"><button class="btn secondary" data-action="prev" ${state.index===0?'disabled':''}>${esc(t(lang,'previous'))}</button><button class="btn secondary" data-action="home">${esc(t(lang,'mainPage'))}</button>${endButton}</nav></main>`;
 }
+function practiceActions(){
+  const lang=state.language;
+  return `<div class="button-row learning-actions"><button class="btn success" data-action="practice-done">${esc(t(lang,'practiceDone'))}</button><button class="btn secondary" data-action="already-know">${esc(t(lang,'alreadyKnow'))}</button><button class="btn secondary" data-action="needs-more">${esc(t(lang,'needsMorePractice'))}</button></div><p class="status">${esc(t(lang,'practiceRule'))}</p>`;
+}
 function renderAlphabet(item){
   const lang=state.language; const buttons=[];
   if(item.mainAudio) buttons.push(`<button class="btn secondary" data-action="play" data-path="${esc(item.mainAudio)}">${esc(t(lang,'mainSound'))}</button>`);
   if(item.exampleAudio) buttons.push(`<button class="btn secondary" data-action="play" data-path="${esc(item.exampleAudio)}">${esc(t(lang,'exampleWord'))}</button>`);
   if(item.contrastAudio) buttons.push(`<button class="btn secondary" data-action="play" data-path="${esc(item.contrastAudio)}">${esc(t(lang,'contrastSound'))}</button>`);
   if(item.extraExamples) item.extraExamples.forEach(x=>buttons.push(`<button class="btn secondary" data-action="play" data-path="${esc(x.audio)}">${esc(t(lang,'extraExample'))}: ${esc(x.word)}</button>`));
-  return `<section class="card lesson-card center">${explanationCard(lang,item.explanationKey)}<div class="letter">${esc(item.letter)}</div><p class="target">${esc(localized(item.target,lang))}</p><div class="button-row">${buttons.join('')}</div><div class="word-large">${esc(item.exampleWord||'')}</div><p id="audio-status" class="status"></p><button class="btn success full" data-action="known">${esc(t(lang,'know'))}</button></section>`;
+  return `<section class="card lesson-card center">${explanationCard(lang,item.explanationKey)}<div class="letter">${esc(item.letter)}</div><p class="target">${esc(localized(item.target,lang))}</p><div class="button-row">${buttons.join('')}</div><div class="word-large">${esc(item.exampleWord||'')}</div><p id="audio-status" class="status"></p>${practiceActions()}</section>`;
 }
 function renderRoot(item){
   const lang=state.language;
-  return `<section class="card lesson-card center">${visual(item)}<div class="word-large">${esc(item.word)}</div><p class="target">${esc(localized(item.meaning,lang))}</p><button class="btn secondary" data-action="play" data-path="${esc(item.audio)}">${esc(t(lang,'listen'))}</button><p id="audio-status" class="status"></p><button class="btn success full" data-action="known">${esc(t(lang,'know'))}</button></section>`;
+  return `<section class="card lesson-card center">${visual(item)}<div class="word-large">${esc(item.word)}</div><p class="target">${esc(localized(item.meaning,lang))}</p><button class="btn secondary" data-action="play" data-path="${esc(item.audio)}">${esc(t(lang,'listen'))}</button><p id="audio-status" class="status"></p>${practiceActions()}</section>`;
 }
 function renderBuilder(item){
   const lang=state.language; const selected=state.selected.length ? state.selected.map((x,i)=>`<button class="chip selected" data-action="remove-part" data-index="${i}">${esc(x)}</button>`).join('') : `<span>${esc(t(lang,'answerHere'))}</span>`;
@@ -84,6 +97,7 @@ function renderSettings(){
 function play(path){
   const lang=state.language; const status=document.getElementById('audio-status');
   if(!path){ if(status) status.textContent=t(lang,'audioMissing'); return; }
+  markPracticeAction();
   if(audio){ audio.pause(); audio=null; }
   audio=new Audio(path); if(status) status.textContent=t(lang,'audioLoading');
   audio.addEventListener('playing',()=>{ if(status) status.textContent=t(lang,'audioPlaying'); });
@@ -96,8 +110,21 @@ function checkAnswer(){
   if(ok){ state.answered=true; state.progress.markComplete(state.topicId,item.id); renderLesson(); }
   else { const slot=document.getElementById('feedback-slot'); if(slot) slot.innerHTML=`<div class="feedback bad">${esc(t(state.language,'wrong'))}</div>`; }
 }
+function completeAfterPractice(statusText){
+  if(!hasPracticeAction()){ alert(t(state.language,'practiceFirstWarning')); return; }
+  const item=currentItem(); state.progress.markComplete(state.topicId,item.id); renderLesson();
+  setTimeout(()=>{ const status=document.getElementById('audio-status'); if(status) status.textContent=statusText || t(state.language,'practiceSaved'); },0);
+}
+function markNeedsMorePractice(){
+  if(!hasPracticeAction()){ alert(t(state.language,'practiceFirstWarning')); return; }
+  const item=currentItem(); state.progress.recordAttempt(state.topicId,item.id,false,'Needs more practice');
+  alert(t(state.language,'needsMoreSaved'));
+}
 function openTopic(topicId,index=0){ state.screen='lesson'; state.topicId=topicId; state.index=index; state.selected=[]; state.answered=false; render(); }
-function go(delta){ const len=datasetFor(state.topicId).length; const next=Math.max(0,Math.min(len-1,state.index+delta)); if(next!==state.index) openTopic(state.topicId,next); }
+function go(delta){
+  if(delta>0 && !canMoveForward()){ warnPracticeFirst(); return; }
+  const len=datasetFor(state.topicId).length; const next=Math.max(0,Math.min(len-1,state.index+delta)); if(next!==state.index) openTopic(state.topicId,next);
+}
 function reset(){ if(confirm(state.language==='id'?'Hapus progres profil ini?':'Delete this profile progress?')){ state.progress.clear(); render(); } }
 
 document.addEventListener('click', e=>{
@@ -113,11 +140,16 @@ document.addEventListener('click', e=>{
   if(action==='set-mode'){ state.mode=el.dataset.mode; updateScope(); sheetRoot.innerHTML=''; return render(); }
   if(action==='open-topic') return openTopic(el.dataset.topic,0);
   if(action==='home'){ state.screen='home'; state.topicId=null; state.selected=[]; state.answered=false; return render(); }
-  if(action==='finish-topic'){ state.screen='home'; state.topicId=null; state.selected=[]; state.answered=false; return render(); }
+  if(action==='finish-topic'){
+    if(!canMoveForward()){ warnPracticeFirst(); return; }
+    state.screen='home'; state.topicId=null; state.selected=[]; state.answered=false; return render();
+  }
   if(action==='prev') return go(-1);
   if(action==='next') return go(1);
   if(action==='play') return play(el.dataset.path);
-  if(action==='known'){ const item=currentItem(); state.progress.markComplete(state.topicId,item.id); return renderLesson(); }
+  if(action==='practice-done') return completeAfterPractice(t(state.language,'practiceSaved'));
+  if(action==='already-know') return completeAfterPractice(t(state.language,'alreadyKnowSaved'));
+  if(action==='needs-more') return markNeedsMorePractice();
   if(action==='pick-part'){ if(!state.answered){ state.selected.push(el.dataset.part); renderLesson(); } return; }
   if(action==='remove-part'){ if(!state.answered){ state.selected.splice(Number(el.dataset.index),1); renderLesson(); } return; }
   if(action==='clear'){ state.selected=[]; state.answered=false; return renderLesson(); }
