@@ -135,6 +135,19 @@
     }
     .sheet h3{margin:0 0 8px;font-size:20px}.sheet p{color:#334155;line-height:1.48}
     .sheet .mini-rule{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:12px;margin:10px 0}
+
+    .explain-detail{display:grid;gap:12px;margin:10px 0 14px;color:#0f172a}
+    .sound-card{background:#f8fbff;border:1px solid #dbeafe;border-radius:18px;padding:12px}
+    .sound-card h4{margin:0 0 6px;font-size:14px;color:#1e40af}
+    .sound-card p{margin:0;color:#334155;line-height:1.45;font-size:15px}
+    .practice-box{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:18px;padding:12px}
+    .practice-box h4{margin:0 0 6px;font-size:14px;color:#166534}
+    .practice-box ol{margin:0;padding-left:20px;color:#334155;line-height:1.5}
+    .mistake-box{background:#fff7ed;border:1px solid #fed7aa;border-radius:18px;padding:12px;color:#334155;line-height:1.45}
+    .mini-contrast{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+    .mini-contrast div{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px;text-align:center;font-weight:850}
+    .mini-contrast small{display:block;color:#64748b;font-weight:700;margin-top:4px}
+    @media(max-width:560px){.mini-contrast{grid-template-columns:1fr}.sheet{border-radius:20px 20px 0 0;padding:16px}}
     .completion{display:none}.completion.show{display:block}
     .mode-note{font-size:12px;color:#64748b}
     .qa-panel{background:#0f172a;color:#e2e8f0;border-radius:18px;padding:14px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;font-size:12px;white-space:pre-wrap;overflow:auto}
@@ -168,7 +181,7 @@
         <div class="brand-mark">TR</div>
         <div>
           <h1>Turkish Meaning Builder</h1>
-          <p>v1 Release Candidate 3</p>
+          <p>v1 Release Candidate 4</p>
         </div>
       </div>
       <button class="btn ghost small" id="homeBtn">Home</button>
@@ -206,7 +219,7 @@
    CONFIG
 ========================= */
 const CONFIG = {
-  version: "v1-rc3",
+  version: "v1-rc4",
   layaPath: "assets/laya_dolphin_3d_transparent.png",
   qaMode: new URLSearchParams(location.search).get("qa") === "1",
   storageKey: "tmb_v1_rc_progress"
@@ -338,14 +351,28 @@ const ACCUSATIVE_BUILDER = [
 ];
 
 const EXPLANATION_MAP = {
-  e_i_contrast:{main:"Turkish e and i are different sounds.", kids_en:"Listen carefully: e is not i.", adult_en:"In English, e may sound like /i/ in words like he or me. Turkish e is separate from i.", id:"Dalam bahasa Turki, e dan i adalah bunyi yang berbeda."},
-  i_ı_contrast:{main:"Turkish i and ı are different sounds.", kids_en:"One has a dot. One has no dot. Listen first.", adult_en:"Dotted i and dotless ı are two different Turkish vowels.", id:"Huruf i dan ı dalam bahasa Turki berbeda."},
-  o_ö_contrast:{main:"Turkish o and ö are different sounds.", kids_en:"Listen to the round sound difference.", adult_en:"ö is a separate Turkish vowel and should not be read as o.", id:"Huruf o dan ö berbeda dalam bahasa Turki."},
-  u_ü_contrast:{main:"Turkish u and ü are different sounds.", kids_en:"Listen to the difference before you repeat.", adult_en:"ü is a separate Turkish vowel and should not be read as u.", id:"Huruf u dan ü berbeda dalam bahasa Turki."},
-  c_ç_contrast:{main:"Turkish c and ç are different letters.", kids_en:"c and ç are not the same in Turkish.", adult_en:"English c can sound like k or s. Turkish c has one sound, while ç is a different letter.", id:"Dalam bahasa Indonesia, c biasanya mirip bunyi ç Turki. Dalam bahasa Turki, c dan ç berbeda."},
-  ş_ç_contrast:{main:"Turkish ş and ç are different sounds.", kids_en:"ş and ç are two different sounds. Listen and compare.", adult_en:"ş and ç are separate Turkish consonants and should not be confused.", id:"Huruf ş dan ç adalah bunyi yang berbeda."},
-  safe_ğ_explanation:{main:"ğ is not a hard g. Listen inside real Turkish words.", kids_en:"ğ does not start Turkish words. It usually makes the sound before it softer or longer.", adult_en:"ğ is not read like a hard g. It does not begin Turkish words. Learn it through real words like dağ, ağaç, and soğuk.", id:"Huruf ğ tidak dibaca seperti g keras. Huruf ini tidak muncul di awal kata Turki."},
-  possessive_suffix_basic:{main:"A suffix can add the meaning “my” to a root word.", kids_en:"Turkish words are built like blocks. First the word, then the meaning block.", adult_en:"The possessive suffix adds ownership to the root. The suffix form changes by sound harmony.", id:"Akhiran bisa menambahkan arti “milik saya” pada kata dasar."},
+  e_i_contrast:{
+    main:"e = clear short e sound. i = thin dotted i sound. They are not interchangeable.",
+    kids_en:`<div class="explain-detail">
+      <div class="sound-card"><h4>What should I hear?</h4><p><b>e</b> is the sound in <b>ev</b>. Keep your mouth relaxed and open a little. Do not turn it into <b>i</b>.</p><div class="mini-contrast"><div>ev<small>house — starts with e</small></div><div>iki<small>two — starts with i</small></div></div></div>
+      <div class="mistake-box"><b>Common mistake:</b> Reading <b>ev</b> like “iv”. That changes the Turkish sound. Listen to <b>ev</b>, then listen to <b>iki</b>; the first vowel must feel different.</div>
+      <div class="practice-box"><h4>Mini practice</h4><ol><li>Tap <b>Main sound</b>.</li><li>Tap <b>Example word</b> and say <b>ev</b>.</li><li>Tap <b>Contrast sound</b> and say <b>i</b>.</li><li>Say: <b>e — ev</b>, then <b>i — iki</b>.</li></ol></div>
+    </div>`,
+    adult_en:`<div class="explain-detail"><div class="sound-card"><h4>Rule</h4><p>Turkish spelling is sound-based. The letter <b>e</b> and the letter <b>i</b> represent two separate vowels. Do not use English reading habits such as making e sound like /i/.</p></div><div class="mini-contrast"><div>e → ev<small>house</small></div><div>i → iki<small>two</small></div></div></div>`,
+    id:`<div class="explain-detail"><div class="sound-card"><h4>Apa bedanya?</h4><p><b>e</b> adalah bunyi pada <b>ev</b>. <b>i</b> adalah bunyi pada <b>iki</b>. Jangan membaca <b>ev</b> seperti “iv”.</p></div><div class="practice-box"><h4>Latihan</h4><ol><li>Dengarkan Main sound.</li><li>Dengarkan Example word: <b>ev</b>.</li><li>Dengarkan Contrast sound: <b>i</b>.</li></ol></div></div>`
+  },
+  i_ı_contrast:{
+    main:"Dotted i and dotless ı are two different Turkish vowels.",
+    kids_en:`<div class="explain-detail"><div class="sound-card"><h4>Look first</h4><p><b>i</b> has a dot. <b>ı</b> has no dot. In Turkish, the dot is not decoration; it changes the sound.</p><div class="mini-contrast"><div>i<small>dotted: iki</small></div><div>ı<small>dotless: altı</small></div></div></div><div class="mistake-box"><b>Common mistake:</b> Saying dotless <b>ı</b> like normal <b>i</b>. Always listen before repeating.</div><div class="practice-box"><h4>Mini practice</h4><ol><li>Listen to <b>i</b>.</li><li>Listen to <b>ı</b>.</li><li>Say slowly: <b>i — iki</b>, <b>ı — altı</b>.</li></ol></div></div>`,
+    adult_en:`<div class="explain-detail"><div class="sound-card"><h4>Rule</h4><p>Turkish has two separate letters: dotted <b>i</b> and dotless <b>ı</b>. They are different phonemes and must not be merged.</p></div></div>`,
+    id:`<div class="explain-detail"><div class="sound-card"><h4>Perhatikan titik</h4><p><b>i</b> bertitik, <b>ı</b> tidak bertitik. Dalam bahasa Turki, ini dua bunyi berbeda.</p></div></div>`
+  },
+  o_ö_contrast:{main:"o and ö are separate Turkish vowels. ö is not just o.", kids_en:`<div class="explain-detail"><div class="sound-card"><h4>Round sound difference</h4><p><b>o</b> is the sound in <b>on</b>. <b>ö</b> is the sound in <b>öğretmen</b>. Keep them separate.</p><div class="mini-contrast"><div>o → on<small>ten</small></div><div>ö → öğretmen<small>teacher</small></div></div></div><div class="practice-box"><h4>Mini practice</h4><ol><li>Listen to o.</li><li>Listen to ö.</li><li>Say: <b>o — on</b>, then <b>ö — öğretmen</b>.</li></ol></div></div>`, adult_en:`<div class="explain-detail"><div class="sound-card"><h4>Rule</h4><p><b>ö</b> is an independent Turkish vowel. It should not be pronounced as plain <b>o</b>.</p></div></div>`, id:`<div class="explain-detail"><div class="sound-card"><h4>Perbedaan</h4><p><b>o</b> dan <b>ö</b> adalah dua bunyi berbeda dalam bahasa Turki.</p></div></div>`},
+  u_ü_contrast:{main:"u and ü are separate Turkish vowels. ü is not just u.", kids_en:`<div class="explain-detail"><div class="sound-card"><h4>Listen to the difference</h4><p><b>u</b> is the sound in <b>su</b>. <b>ü</b> is the sound in <b>üzgünüm</b>. Do not replace ü with u.</p><div class="mini-contrast"><div>u → su<small>water</small></div><div>ü → üzgünüm<small>sorry</small></div></div></div><div class="practice-box"><h4>Mini practice</h4><ol><li>Listen to u.</li><li>Listen to ü.</li><li>Say: <b>u — su</b>, then <b>ü — üzgünüm</b>.</li></ol></div></div>`, adult_en:`<div class="explain-detail"><div class="sound-card"><h4>Rule</h4><p><b>ü</b> is an independent Turkish vowel and must not be read as plain <b>u</b>.</p></div></div>`, id:`<div class="explain-detail"><div class="sound-card"><h4>Perbedaan</h4><p><b>u</b> dan <b>ü</b> adalah dua bunyi berbeda.</p></div></div>`},
+  c_ç_contrast:{main:"Turkish c and ç are different letters and different sounds.", kids_en:`<div class="explain-detail"><div class="sound-card"><h4>Important</h4><p>In Turkish, <b>c</b> is not English c. <b>ç</b> is a different Turkish letter. Listen before copying the sound.</p><div class="mini-contrast"><div>c<small>Turkish c</small></div><div>ç<small>as in çok / ağaç</small></div></div></div><div class="mistake-box"><b>For Indonesian speakers:</b> Indonesian <b>c</b> is usually closer to Turkish <b>ç</b>, not Turkish <b>c</b>.</div></div>`, adult_en:`<div class="explain-detail"><div class="sound-card"><h4>Rule</h4><p>Turkish <b>c</b> and <b>ç</b> are separate consonants. Do not apply English or Indonesian spelling rules automatically.</p></div></div>`, id:`<div class="explain-detail"><div class="sound-card"><h4>Penting</h4><p><b>c</b> Turki dan <b>ç</b> Turki berbeda. Bunyi <b>c</b> Indonesia biasanya lebih dekat ke <b>ç</b> Turki.</p></div></div>`},
+  ş_ç_contrast:{main:"ş and ç are separate Turkish consonants.", kids_en:`<div class="explain-detail"><div class="sound-card"><h4>Do not mix them</h4><p><b>ş</b> and <b>ç</b> are two different sounds. Listen, then repeat only after you hear the difference.</p><div class="mini-contrast"><div>ş → şeker<small>sugar</small></div><div>ç → ağaç<small>tree</small></div></div></div></div>`, adult_en:`<div class="explain-detail"><div class="sound-card"><h4>Rule</h4><p><b>ş</b> and <b>ç</b> are distinct consonants in Turkish and cannot be substituted for each other.</p></div></div>`, id:`<div class="explain-detail"><div class="sound-card"><h4>Perbedaan</h4><p><b>ş</b> dan <b>ç</b> adalah dua bunyi berbeda.</p></div></div>`},
+  safe_ğ_explanation:{main:"ğ is not a hard g. It is learned safely inside real words.", kids_en:`<div class="explain-detail"><div class="sound-card"><h4>Safe rule</h4><p><b>ğ</b> does not start Turkish words. Do not say it like a hard <b>g</b>. Learn it inside real words.</p><div class="mini-contrast"><div>dağ<small>mountain</small></div><div>ağaç / soğuk<small>real examples</small></div></div></div><div class="practice-box"><h4>Mini practice</h4><ol><li>Listen to <b>dağ</b>.</li><li>Listen to <b>ağaç</b>.</li><li>Listen to <b>soğuk</b>.</li><li>Do not force a hard g sound.</li></ol></div></div>`, adult_en:`<div class="explain-detail"><div class="sound-card"><h4>Rule</h4><p><b>ğ</b> is not pronounced like a hard g and does not begin Turkish words. In v1, learn it through verified audio examples only.</p></div></div>`, id:`<div class="explain-detail"><div class="sound-card"><h4>Aturan aman</h4><p><b>ğ</b> tidak dibaca seperti g keras dan tidak muncul di awal kata Turki.</p></div></div>`},
+  possessive_suffix_basic:{main:"A suffix can add the meaning ‘my’ to a root word.", kids_en:"Turkish words are built like blocks. First the word, then the meaning block.", adult_en:"The possessive suffix adds ownership to the root. The suffix form changes by sound harmony.", id:"Akhiran bisa menambahkan arti ‘milik saya’ pada kata dasar."},
   possessive_after_vowel:{main:"After a vowel, Turkish can add a shorter possessive suffix.", kids_en:"When the word ends softly, the next block can be shorter.", adult_en:"After vowel-final stems, possessive forms can attach without an initial vowel.", id:"Setelah vokal, akhiran bisa menjadi lebih pendek."},
   locative_suffix_basic:{main:"The place suffix adds the meaning in, on, or at.", kids_en:"This suffix tells where something is.", adult_en:"The locative suffix -de/-da/-te/-ta marks location: in, on, or at.", id:"Akhiran tempat berarti di, pada, atau dalam."},
   possessive_plus_locative:{main:"Build from left to right: root first, suffixes after.", kids_en:"First choose the main word. Then add the meaning blocks in order.", adult_en:"Turkish meaning is built through ordered suffixes: root + possessive + location.", id:"Bangun kata dari kiri ke kanan: kata dasar dulu, lalu akhiran."},
@@ -462,7 +489,7 @@ function renderExplain(key, fallback){
     <div style="flex:1">
       <h3>${STATE.mode==="kids"?"Laya guide":"Topic explanation"}</h3>
       <p>${ex.main || fallback || ""}</p>
-      <div class="learn-row"><span>${STATE.mode==="kids"?"Short help. Details only if needed.":"Short rule. Details are optional."}</span>${explanationButton(key)}</div>
+      <div class="learn-row"><span>${STATE.mode==="kids"?"Tap Laya for hearing tips and practice steps.":"Tap for the rule, examples, and common mistake."}</span>${explanationButton(key)}</div>
     </div>
   </div>`;
 }
@@ -471,7 +498,8 @@ function openExplanation(key){
   if(!ex) return;
   document.getElementById("sheetTitle").textContent = STATE.mode==="kids" ? "Laya explains" : "Learn why";
   const txt = STATE.lang==="id" ? ex.id : (STATE.mode==="adult" ? ex.adult_en : ex.kids_en);
-  document.getElementById("sheetBody").innerHTML = `<p>${txt || ex.main}</p><div class="mini-rule">${ex.main}</div>`;
+  const detail = txt || ex.main || "";
+  document.getElementById("sheetBody").innerHTML = `<div>${detail}</div><div class="mini-rule"><b>Key rule:</b> ${ex.main}</div>`;
   document.getElementById("sheetBackdrop").classList.add("show");
 }
 document.getElementById("sheetClose").onclick=()=>document.getElementById("sheetBackdrop").classList.remove("show");
