@@ -41,7 +41,7 @@ const DICT = {
     homeSub: 'Lima topik awal yang rapi, audio aman, progres terpisah, dan tanpa membocorkan jawaban sebelum selesai.',
     changeProfile: 'Ganti profil', settings: 'Pengaturan', close: 'Tutup', save: 'Simpan', back: 'Kembali', home: 'Beranda',
     start: 'Mulai', continue: 'Lanjutkan', completed: 'Selesai', reset: 'Hapus progres profil ini',
-    item: 'Nomor', of: 'dari', previous: 'Sebelumnya', next: 'Berikutnya', mainPage: 'Halaman utama',
+    item: 'Nomor', of: 'dari', previous: 'Sebelumnya', next: 'Berikutnya', mainPage: 'Beranda',
     listen: 'Dengarkan', mainSound: 'Bunyi utama', exampleWord: 'Contoh kata', contrastSound: 'Bunyi pembanding',
     extraExample: 'Contoh lain', know: 'Saya sudah tahu', answerHere: 'Susun jawaban di sini', clear: 'Hapus', check: 'Periksa',
     correct: 'Benar. Bagus sekali.', wrong: 'Coba lagi. Susun dari kiri ke kanan.',
