@@ -23,7 +23,7 @@ export function explanationSheet(lang,key){
   const ex=EXPLANATIONS[key] || {};
   const list=(ex.practice?.[lang] || ex.practice?.en || []).map(x=>`<li>${esc(x)}</li>`).join('');
   const block=(label,val)=> val ? `<div class="explain-block"><h4>${esc(label)}</h4><p>${esc(val)}</p></div>` : '';
-  return `<div class="sheet-backdrop" data-action="close-sheet"><div class="sheet" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+  return `<div class="sheet-backdrop" data-action="close-sheet"><div class="sheet" role="dialog" aria-modal="true">
     <h2>${esc(t(lang,'learnWhy'))}</h2>
     ${block(t(lang,'keyRule'), localized(ex.main,lang))}
     ${block(t(lang,'whatHear'), localized(ex.hear,lang))}
