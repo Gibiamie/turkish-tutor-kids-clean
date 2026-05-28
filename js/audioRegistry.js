@@ -1,0 +1,27 @@
+import { allLessonItems } from './lessonData.js';
+
+const USER_VERIFIED_AUDIO = new Set([
+  'audio/pronunciation_tr_evler.mp3','audio/pronunciation_tr_kitaplar.mp3','audio/pronunciation_tr_kopekler.mp3','audio/pronunciation_tr_okullar.mp3','audio/pronunciation_tr_arabalar.mp3',
+  'audio/pronunciation_tr_elmayi.mp3','audio/pronunciation_tr_gazeteyi.mp3','audio/pronunciation_tr_kitabi.mp3','audio/pronunciation_tr_kopegi.mp3','audio/pronunciation_tr_arabayi.mp3'
+]);
+
+function pathsFor(item){
+  const out=[];
+  for(const key of ['audio','mainAudio','exampleAudio','contrastAudio']) if(item[key]) out.push({kind:key,path:item[key]});
+  if(item.extraExamples) item.extraExamples.forEach((x,i)=>out.push({kind:`extraExample${i+1}`,path:x.audio}));
+  return out;
+}
+export function audioAuditRows(){
+  return allLessonItems().flatMap(item => {
+    const paths = pathsFor(item);
+    if(item.noIsolatedAudio && !item.mainAudio){
+      return [{ itemId:item.id, topicId:item.topicId, path:'', kind:'mainAudio', intentionalNoAudio:true, expectedInRepo:false, pronunciationVerified:false }].concat(paths.map(p=>row(item,p)));
+    }
+    return paths.map(p=>row(item,p));
+  });
+}
+function row(item,p){
+  return { itemId:item.id, topicId:item.topicId, path:p.path, kind:p.kind, intentionalNoAudio:false, expectedInRepo:true, pronunciationVerified:USER_VERIFIED_AUDIO.has(p.path) };
+}
+export function primaryAudioFor(item){ return item.audio || item.mainAudio || item.exampleAudio || ''; }
+export function isPronunciationVerified(path){ return USER_VERIFIED_AUDIO.has(path); }
