@@ -22,6 +22,7 @@ function setProfile(profileId){
 }
 function updateScope(){ state.progress=new ProgressManager({profileId:state.profile.id, language:state.language, mode:state.mode}); state.practiceActions={}; }
 function render(){
+  ensureCelebrationStyles();
   if(!state.profile || state.screen==='profile') return renderProfilePicker();
   if(state.screen==='home') return renderHome();
   if(state.screen==='lesson') return renderLesson();
@@ -36,6 +37,26 @@ function canMoveForward(){
   return isCurrentComplete();
 }
 function warnPracticeFirst(){ alert(t(state.language,'practiceBeforeNext')); }
+function ensureCelebrationStyles(){
+  if(document.getElementById('butterfly-celebration-styles')) return;
+  const style=document.createElement('style');
+  style.id='butterfly-celebration-styles';
+  style.textContent=`
+    .button-row.celebration-anchor{position:relative;overflow:visible;}
+    .butterfly-burst{position:absolute;left:50%;top:6px;transform:translateX(-50%);width:1px;height:1px;pointer-events:none;z-index:4;}
+    .butterfly-burst span{position:absolute;font-size:25px;line-height:1;filter:drop-shadow(0 6px 8px rgba(15,23,42,.18));opacity:0;animation:butterflyFly 1.6s ease-out forwards;}
+    .butterfly-burst span:nth-child(1){--x:-92px;--y:-112px;animation-delay:.02s;}
+    .butterfly-burst span:nth-child(2){--x:-46px;--y:-136px;animation-delay:.10s;}
+    .butterfly-burst span:nth-child(3){--x:0px;--y:-154px;animation-delay:.05s;}
+    .butterfly-burst span:nth-child(4){--x:48px;--y:-132px;animation-delay:.14s;}
+    .butterfly-burst span:nth-child(5){--x:92px;--y:-112px;animation-delay:.08s;}
+    .butterfly-burst span:nth-child(6){--x:24px;--y:-92px;animation-delay:.20s;}
+    @keyframes butterflyFly{0%{opacity:0;transform:translate(-50%,0) scale(.55) rotate(0deg);}15%{opacity:1;}65%{opacity:1;transform:translate(calc(-50% + var(--x)),var(--y)) scale(1.08) rotate(16deg);}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(var(--y) - 34px)) scale(.72) rotate(-18deg);}}
+    @media (prefers-reduced-motion: reduce){.butterfly-burst span{animation:none;opacity:0;}}
+  `;
+  document.head.appendChild(style);
+}
+function butterflyBurst(){ return `<div class="butterfly-burst" aria-hidden="true"><span>🦋</span><span>🦋</span><span>🦋</span><span>🦋</span><span>🦋</span><span>🦋</span></div>`; }
 function topbar(title, sub){
   const lang=state.language;
   return `<header class="topbar"><div class="brand-row"><div class="brand-mark">TR</div><div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div></div>
@@ -85,8 +106,9 @@ function renderRoot(item){
 function renderBuilder(item){
   const lang=state.language; const selected=state.selected.length ? state.selected.map((x,i)=>`<button class="chip selected" data-action="remove-part" data-index="${i}">${esc(x)}</button>`).join('') : `<span>${esc(t(lang,'answerHere'))}</span>`;
   const options=item.options.map(part=>`<button class="chip" data-action="pick-part" data-part="${esc(part)}">${esc(part)}</button>`).join('');
+  const celebration=state.answered?butterflyBurst():'';
   const fb=state.answered?`<div class="feedback ok"><b>${esc(t(lang,'correct'))}</b><p>${esc(item.revealAfterCorrect)}</p><button class="btn secondary" data-action="play" data-path="${esc(item.audio)}">${esc(t(lang,'listen'))}</button></div>`:'';
-  return `<section class="card lesson-card">${explanationCard(lang,item.explanationKey)}<h2 class="prompt">${esc(localized(item.prompt,lang))}</h2><p class="target center">${esc(t(lang,'noFinalAnswer'))}</p>${item.image?visual({image:item.image,fallback:''}):''}<div class="answer-zone ${state.selected.length?'':'empty'}">${selected}</div><div class="chip-grid">${options}</div><div class="button-row"><button class="btn secondary" data-action="clear">${esc(t(lang,'clear'))}</button><button class="btn primary" data-action="check">${esc(t(lang,'check'))}</button></div><div id="feedback-slot">${fb}</div><p id="audio-status" class="status">${state.answered?'':esc(t(lang,'audioLocked'))}</p></section>`;
+  return `<section class="card lesson-card">${explanationCard(lang,item.explanationKey)}<h2 class="prompt">${esc(localized(item.prompt,lang))}</h2><p class="target center">${esc(t(lang,'noFinalAnswer'))}</p>${item.image?visual({image:item.image,fallback:''}):''}<div class="answer-zone ${state.selected.length?'':'empty'}">${selected}</div><div class="chip-grid">${options}</div><div class="button-row celebration-anchor"><button class="btn secondary" data-action="clear">${esc(t(lang,'clear'))}</button><button class="btn primary" data-action="check">${esc(t(lang,'check'))}</button>${celebration}</div><div id="feedback-slot">${fb}</div><p id="audio-status" class="status">${state.answered?'':esc(t(lang,'audioLocked'))}</p></section>`;
 }
 function renderSettings(){
   const lang=state.language;
