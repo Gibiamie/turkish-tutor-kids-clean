@@ -75,10 +75,6 @@ function bottomNav(active='home'){
     <button data-action="settings"><span>☺</span><b>Profile</b></button>
   </nav>`;
 }
-function topbar(title, sub){
-  const lang=state.language;
-  return `<header class="lesson-topbar"><button class="round-btn" data-action="home" aria-label="Home">${state.screen==='home'?'TR':'×'}</button><div><h1>${esc(title)}</h1><p>${esc(sub||'')}</p></div>${state.screen!=='home'?`<span class="streak-pill">🔥 7</span>`:`<button class="lang-pill" data-action="settings">🌐 ${esc(lang.toUpperCase())}</button>`}</header>`;
-}
 function renderProfilePicker(){
   const lang=state.language || 'en';
   const cards=PROFILES.map(p=>`<button class="profile-card" data-action="select-profile" data-profile="${esc(p.id)}"><span>${esc(p.icon)}</span><div><strong>${esc(t(p.language, 'profile'+p.id.charAt(0).toUpperCase()+p.id.slice(1)) || p.name)}</strong><p>${esc(t(p.language,p.descriptionKey))}</p></div></button>`).join('');
@@ -142,9 +138,12 @@ function renderBuilder(item,p,topic,total){
 }
 function renderSettings(){
   const lang=state.language;
-  const langBtns=Object.values(LANGS).map(l=>`<button class="seg ${state.language===l.code?'active':''}" data-action="set-lang" data-lang="${l.code}">${esc(lang==='id' ? (l.code==='en'?'Bahasa Inggris':'Bahasa Indonesia') : l.native)}</button>`).join('');
+  const lockedLabel=LANGS[lang]?.native || (lang==='id'?'Bahasa Indonesia':'English');
+  const lockedNote=lang==='id'
+    ? 'Jalur bahasa dikunci oleh profil Ayza. Untuk bahasa Inggris, kembali dan pilih profil Bella.'
+    : 'Language path is locked by the selected profile. To use Indonesian, go back and choose Ayza.';
   const modes=['kids','family','adult'].map(m=>`<button class="seg ${state.mode===m?'active':''}" data-action="set-mode" data-mode="${m}">${esc(t(lang,m))}</button>`).join('');
-  sheetRoot.innerHTML=`<div class="sheet-backdrop" data-action="close-sheet"><div class="sheet" role="dialog" aria-modal="true"><h2>${esc(t(lang,'settings'))}</h2><label>${esc(t(lang,'language'))}</label><div class="seg-row">${langBtns}</div><label>${esc(t(lang,'learnerMode'))}</label><div class="seg-row">${modes}</div><button class="btn primary full" data-action="close-sheet">${esc(t(lang,'close'))}</button></div></div>`;
+  sheetRoot.innerHTML=`<div class="sheet-backdrop" data-action="close-sheet"><div class="sheet" role="dialog" aria-modal="true"><h2>${esc(t(lang,'settings'))}</h2><label>${esc(t(lang,'language'))}</label><div class="seg-row"><span class="seg active">${esc(lockedLabel)}</span></div><p class="status">${esc(lockedNote)}</p><button class="btn secondary full" data-action="profile-screen">${esc(t(lang,'changeProfile'))}</button><label>${esc(t(lang,'learnerMode'))}</label><div class="seg-row">${modes}</div><button class="btn primary full" data-action="close-sheet">${esc(t(lang,'close'))}</button></div></div>`;
 }
 function play(path){
   const lang=state.language; const status=document.getElementById('audio-status');
@@ -182,13 +181,12 @@ function reset(){ if(confirm(state.language==='id'?'Hapus progres profil ini?':'
 document.addEventListener('click', e=>{
   const el=e.target.closest('[data-action]'); if(!el) return; const action=el.dataset.action;
   if(action==='select-profile') return setProfile(el.dataset.profile);
-  if(action==='profile-screen'){ state.screen='profile'; return render(); }
+  if(action==='profile-screen'){ sheetRoot.innerHTML=''; state.screen='profile'; return render(); }
   if(action==='settings') return renderSettings();
   if(action==='close-sheet'){
     if(el.classList.contains('sheet-backdrop') && e.target!==el) return;
     sheetRoot.innerHTML=''; return;
   }
-  if(action==='set-lang'){ state.language=el.dataset.lang; updateScope(); sheetRoot.innerHTML=''; return render(); }
   if(action==='set-mode'){ state.mode=el.dataset.mode; updateScope(); sheetRoot.innerHTML=''; return render(); }
   if(action==='open-topic') return openTopic(el.dataset.topic,0);
   if(action==='home'){ state.screen='home'; state.topicId=null; state.selected=[]; state.answered=false; return render(); }
