@@ -2,6 +2,7 @@ export const TOPICS = [
   { id:'alphabet', type:'alphabet', title:{en:'Alphabet Pro', id:'Alfabet Turki'}, sub:{en:'Sounds and contrasts', id:'Bunyi dan perbandingan'} },
   { id:'root_words', type:'root', title:{en:'Root Words', id:'Kata Dasar'}, sub:{en:'Concrete starter words', id:'Kata awal yang nyata'} },
   { id:'meaning_builder', type:'builder', title:{en:'Meaning Builder', id:'Penyusun Makna'}, sub:{en:'Root + meaning blocks', id:'Kata dasar + blok makna'} },
+  { id:'whose_builder', type:'builder', title:{en:'Whose? Builder', id:'Punya Siapa? Builder'}, sub:{en:'my, your, his/her, our, their', id:'punya saya, kamu, dia, kita, mereka'} },
   { id:'plural_builder', type:'builder', title:{en:'More Than One Builder', id:'Pembuat Lebih Dari Satu'}, sub:{en:'ev → evler, kitap → kitaplar', id:'ev → evler, kitap → kitaplar'} },
   { id:'accusative_builder', type:'builder', title:{en:'Object Builder', id:'Pembuat Objek'}, sub:{en:'Build the object form', id:'Susun bentuk objek'} }
 ];
@@ -47,6 +48,21 @@ export const MEANING_BUILDER = [
   {id:'meaning_kitabimda',prompt:{en:'in my book',id:'di buku saya'},answerParts:['kitab','ım','da'],options:['kitab','ım','da','im','ta'],finalWord:'kitabımda',audio:'audio/pronunciation_tr_kitabimda.mp3',image:'images/kitap.png',revealAfterCorrect:'kitap changes to kitab here: kitab + ım + da = kitabımda',explanationKey:'softened_book_builder'}
 ];
 
+export const WHOSE_BUILDER = [
+  {id:'whose_benim',prompt:{en:'mine / my',id:'punya saya'},answerParts:['ben','im'],options:['ben','im','in','nun'],finalWord:'benim',audio:'audio/pronunciation_tr_benim.mp3',image:null,revealAfterCorrect:'ben + im = benim',explanationKey:'whose_benim_story'},
+  {id:'whose_senin',prompt:{en:'yours / your',id:'punya kamu'},answerParts:['sen','in'],options:['sen','in','im','nun'],finalWord:'senin',audio:'audio/pronunciation_tr_senin.mp3',image:null,revealAfterCorrect:'sen + in = senin',explanationKey:'whose_senin_story'},
+  {id:'whose_onun',prompt:{en:'his / her / its',id:'punya dia'},answerParts:['o','nun'],options:['o','nun','im','in'],finalWord:'onun',audio:'audio/pronunciation_tr_onun.mp3',image:null,revealAfterCorrect:'o + nun = onun',explanationKey:'whose_onun_story'},
+  {id:'whose_bizim',prompt:{en:'ours / our',id:'punya kami / kita'},answerParts:['biz','im'],options:['biz','im','in','nun'],finalWord:'bizim',audio:'audio/pronunciation_tr_bizim.mp3',image:null,revealAfterCorrect:'biz + im = bizim',explanationKey:'whose_bizim_story'},
+  {id:'whose_sizin',prompt:{en:'yours / your',id:'punya kalian / Anda'},answerParts:['siz','in'],options:['siz','in','im','nun'],finalWord:'sizin',audio:'audio/pronunciation_tr_sizin.mp3',image:null,revealAfterCorrect:'siz + in = sizin',explanationKey:'whose_sizin_story'},
+  {id:'whose_onlarin',prompt:{en:'theirs / their',id:'punya mereka'},answerParts:['onlar','ın'],options:['onlar','ın','in','im'],finalWord:'onların',audio:'audio/pronunciation_tr_onlarin.mp3',image:null,revealAfterCorrect:'onlar + ın = onların',explanationKey:'whose_onlarin_story'},
+  {id:'whose_arabam',prompt:{en:'my car',id:'mobil saya'},answerParts:['araba','m'],options:['araba','m','n','sı'],finalWord:'arabam',audio:'audio/pronunciation_tr_arabam.mp3',image:'images/araba.png',revealAfterCorrect:'araba + m = arabam',explanationKey:'whose_arabam_story'},
+  {id:'whose_araban',prompt:{en:'your car',id:'mobil kamu'},answerParts:['araba','n'],options:['araba','n','m','sı'],finalWord:'araban',audio:'audio/pronunciation_tr_araban.mp3',image:'images/araba.png',revealAfterCorrect:'araba + n = araban',explanationKey:'whose_araban_story'},
+  {id:'whose_arabasi',prompt:{en:'his / her car',id:'mobil dia'},answerParts:['araba','sı'],options:['araba','sı','m','n'],finalWord:'arabası',audio:'audio/pronunciation_tr_arabasi.mp3',image:'images/araba.png',revealAfterCorrect:'araba + sı = arabası',explanationKey:'whose_arabasi_story'},
+  {id:'whose_arabamiz',prompt:{en:'our car',id:'mobil kami / kita'},answerParts:['araba','mız'],options:['araba','mız','nız','ları'],finalWord:'arabamız',audio:'audio/pronunciation_tr_arabamiz.mp3',image:'images/araba.png',revealAfterCorrect:'araba + mız = arabamız',explanationKey:'whose_arabamiz_story'},
+  {id:'whose_arabaniz',prompt:{en:'your car',id:'mobil kalian / Anda'},answerParts:['araba','nız'],options:['araba','nız','mız','ları'],finalWord:'arabanız',audio:'audio/pronunciation_tr_arabaniz.mp3',image:'images/araba.png',revealAfterCorrect:'araba + nız = arabanız',explanationKey:'whose_arabaniz_story'},
+  {id:'whose_arabalari',prompt:{en:'their car',id:'mobil mereka'},answerParts:['araba','ları'],options:['araba','ları','mız','nız'],finalWord:'arabaları',audio:'audio/pronunciation_tr_arabalari.mp3',image:'images/araba.png',revealAfterCorrect:'araba + ları = arabaları',explanationKey:'whose_arabalari_story'}
+];
+
 export const PLURAL_BUILDER = [
   {id:'plural_evler',prompt:{en:'houses',id:'rumah-rumah'},answerParts:['ev','ler'],options:['ev','ler','lar'],finalWord:'evler',audio:'audio/pronunciation_tr_evler.mp3',image:'images/ev.png',revealAfterCorrect:'One house is ev. More than one is evler.',explanationKey:'plural_evler_story'},
   {id:'plural_kitaplar',prompt:{en:'books',id:'buku-buku'},answerParts:['kitap','lar'],options:['kitap','lar','ler'],finalWord:'kitaplar',audio:'audio/pronunciation_tr_kitaplar.mp3',image:'images/kitap.png',revealAfterCorrect:'One book is kitap. More than one is kitaplar.',explanationKey:'plural_kitaplar_story'},
@@ -62,6 +78,27 @@ export const ACCUSATIVE_BUILDER = [
   {id:'acc_kopegi',prompt:{en:'the dog',id:'anjing itu'},answerParts:['köpeğ','i'],options:['köpeğ','i','ı','yi'],finalWord:'köpeği',audio:'audio/pronunciation_tr_kopegi.mp3',image:'images/kopek.png',revealAfterCorrect:'köpek changes to köpeğ here: köpeğ + i = köpeği',explanationKey:'softened_k_builder'},
   {id:'acc_arabayi',prompt:{en:'the car',id:'mobil itu'},answerParts:['araba','yı'],options:['araba','yı','yi','ı'],finalWord:'arabayı',audio:'audio/pronunciation_tr_arabayi.mp3',image:'images/araba.png',revealAfterCorrect:'araba + yı = arabayı',explanationKey:'y_glide_accusative'}
 ];
+
+const whosePeople = {
+  benim:{base:'ben',block:'im',en:'Start with ben. When it means mine or my, Turkish says benim.',id:'Mulai dari ben. Saat artinya punya saya, bahasa Turki mengatakan benim.',hearEn:'ben is I. benim is my or mine.',hearId:'ben berarti saya. benim berarti punya saya.',mistakeEn:'Do not choose in or nun here. The small sound is im.',mistakeId:'Jangan pilih in atau nun di sini. Bunyi kecilnya im.'},
+  senin:{base:'sen',block:'in',en:'Start with sen. When it means yours or your, Turkish says senin.',id:'Mulai dari sen. Saat artinya punya kamu, bahasa Turki mengatakan senin.',hearEn:'sen is you. senin is your or yours.',hearId:'sen berarti kamu. senin berarti punya kamu.',mistakeEn:'Do not choose im here. The small sound is in.',mistakeId:'Jangan pilih im di sini. Bunyi kecilnya in.'},
+  onun:{base:'o',block:'nun',en:'Start with o. When it means his, her, or its, Turkish says onun.',id:'Mulai dari o. Saat artinya punya dia, bahasa Turki mengatakan onun.',hearEn:'o is he, she, or it. onun is his, her, or its.',hearId:'o berarti dia. onun berarti punya dia.',mistakeEn:'Do not drop the small nun sound.',mistakeId:'Jangan hilangkan bunyi kecil nun.'},
+  bizim:{base:'biz',block:'im',en:'Start with biz. When it means our or ours, Turkish says bizim.',id:'Mulai dari biz. Saat artinya punya kami atau kita, bahasa Turki mengatakan bizim.',hearEn:'biz is we. bizim is our or ours.',hearId:'biz berarti kami atau kita. bizim berarti punya kami atau kita.',mistakeEn:'Do not use sen or siz when the meaning is our.',mistakeId:'Jangan gunakan sen atau siz saat artinya punya kami atau kita.'},
+  sizin:{base:'siz',block:'in',en:'Start with siz. When it means your or yours for you all or polite you, Turkish says sizin.',id:'Mulai dari siz. Saat artinya punya kalian atau Anda, bahasa Turki mengatakan sizin.',hearEn:'siz is you all or polite you. sizin is your or yours.',hearId:'siz berarti kalian atau Anda. sizin berarti punya kalian atau Anda.',mistakeEn:'Do not use bizim when the meaning is your.',mistakeId:'Jangan gunakan bizim saat artinya punya kalian atau Anda.'},
+  onlarin:{base:'onlar',block:'ın',en:'Start with onlar. When it means their or theirs, Turkish says onların.',id:'Mulai dari onlar. Saat artinya punya mereka, bahasa Turki mengatakan onların.',hearEn:'onlar is they. onların is their or theirs.',hearId:'onlar berarti mereka. onların berarti punya mereka.',mistakeEn:'Use the Turkish dotless ı sound in ın.',mistakeId:'Gunakan bunyi ı Turki dalam ın.'}
+};
+
+const whoseCars = {
+  arabam:{block:'m',en:'Start with araba. To say my car, add the small m sound.',id:'Mulai dari araba. Untuk mengatakan mobil saya, tambahkan bunyi kecil m.',hearEn:'araba means car. arabam means my car.',hearId:'araba berarti mobil. arabam berarti mobil saya.',mistakeEn:'Do not add a full extra word. Build the meaning inside the word.',mistakeId:'Jangan tambahkan kata panjang baru. Susun makna di dalam kata.'},
+  araban:{block:'n',en:'Start with araba. To say your car, add the small n sound.',id:'Mulai dari araba. Untuk mengatakan mobil kamu, tambahkan bunyi kecil n.',hearEn:'araba means car. araban means your car.',hearId:'araba berarti mobil. araban berarti mobil kamu.',mistakeEn:'Do not choose m when the meaning is your car.',mistakeId:'Jangan pilih m saat artinya mobil kamu.'},
+  arabasi:{block:'sı',en:'Start with araba. To say his or her car, add the small sı sound.',id:'Mulai dari araba. Untuk mengatakan mobil dia, tambahkan bunyi kecil sı.',hearEn:'araba means car. arabası means his or her car.',hearId:'araba berarti mobil. arabası berarti mobil dia.',mistakeEn:'Write and choose sı, not si.',mistakeId:'Tulis dan pilih sı, bukan si.'},
+  arabamiz:{block:'mız',en:'Start with araba. To say our car, add the small mız sound.',id:'Mulai dari araba. Untuk mengatakan mobil kami atau kita, tambahkan bunyi kecil mız.',hearEn:'araba means car. arabamız means our car.',hearId:'araba berarti mobil. arabamız berarti mobil kami atau kita.',mistakeEn:'Write and choose mız with Turkish ı.',mistakeId:'Tulis dan pilih mız dengan ı Turki.'},
+  arabaniz:{block:'nız',en:'Start with araba. To say your car for you all or polite you, add nız.',id:'Mulai dari araba. Untuk mengatakan mobil kalian atau Anda, tambahkan nız.',hearEn:'araba means car. arabanız means your car.',hearId:'araba berarti mobil. arabanız berarti mobil kalian atau Anda.',mistakeEn:'Write and choose nız with Turkish ı.',mistakeId:'Tulis dan pilih nız dengan ı Turki.'},
+  arabalari:{block:'ları',en:'Start with araba. To say their car, add ları.',id:'Mulai dari araba. Untuk mengatakan mobil mereka, tambahkan ları.',hearEn:'araba means car. arabaları means their car.',hearId:'araba berarti mobil. arabaları berarti mobil mereka.',mistakeEn:'Write and choose ları with Turkish ı.',mistakeId:'Tulis dan pilih ları dengan ı Turki.'}
+};
+
+function peopleStory(x){return {main:{en:x.en,id:x.id},hear:{en:x.hearEn,id:x.hearId},mistake:{en:x.mistakeEn,id:x.mistakeId},practice:{en:[`Say ${x.base}.`,`Add the small ${x.block} sound.`,`Build: ${x.base} + ${x.block}.`],id:[`Ucapkan ${x.base}.`,`Tambahkan bunyi kecil ${x.block}.`,`Susun: ${x.base} + ${x.block}.`]}};}
+function carStory(x){return {main:{en:x.en,id:x.id},hear:{en:x.hearEn,id:x.hearId},mistake:{en:x.mistakeEn,id:x.mistakeId},practice:{en:['Say araba.',`Add the small ${x.block} sound.`,`Build: araba + ${x.block}.`],id:['Ucapkan araba.',`Tambahkan bunyi kecil ${x.block}.`,`Susun: araba + ${x.block}.`]}};}
 
 export const EXPLANATIONS = {
   a_sound:{
@@ -138,6 +175,18 @@ export const EXPLANATIONS = {
     practice:{en:['Look at köpek.','When the next block starts with i, use köpeğ.','Build: köpeğ + i.'],id:['Lihat köpek.','Saat blok berikutnya mulai dengan i, gunakan köpeğ.','Susun: köpeğ + i.']}
   },
   y_glide_accusative:{main:{en:'When a word ends with a vowel, Turkish may add y before the next sound.',id:'Jika kata berakhir dengan vokal, bahasa Turki dapat menambahkan y sebelum bunyi berikutnya.'}},
+  whose_benim_story:peopleStory(whosePeople.benim),
+  whose_senin_story:peopleStory(whosePeople.senin),
+  whose_onun_story:peopleStory(whosePeople.onun),
+  whose_bizim_story:peopleStory(whosePeople.bizim),
+  whose_sizin_story:peopleStory(whosePeople.sizin),
+  whose_onlarin_story:peopleStory(whosePeople.onlarin),
+  whose_arabam_story:carStory(whoseCars.arabam),
+  whose_araban_story:carStory(whoseCars.araban),
+  whose_arabasi_story:carStory(whoseCars.arabasi),
+  whose_arabamiz_story:carStory(whoseCars.arabamiz),
+  whose_arabaniz_story:carStory(whoseCars.arabaniz),
+  whose_arabalari_story:carStory(whoseCars.arabalari),
   plural_evler_story:{
     main:{en:'One house is ev. When there is more than one, Turkish says evler. Build ev + ler.',id:'Satu rumah adalah ev. Jika lebih dari satu, bahasa Turki mengatakan evler. Susun ev + ler.'},
     hear:{en:'Listen: ev, evler. The small block is ler.',id:'Dengarkan: ev, evler. Blok kecilnya ler.'},
@@ -175,6 +224,7 @@ export function datasetFor(topicId){
   if(topicId==='alphabet') return ALPHABET_PRO;
   if(topicId==='root_words') return ROOT_WORDS;
   if(topicId==='meaning_builder') return MEANING_BUILDER;
+  if(topicId==='whose_builder') return WHOSE_BUILDER;
   if(topicId==='plural_builder') return PLURAL_BUILDER;
   if(topicId==='accusative_builder') return ACCUSATIVE_BUILDER;
   return [];
