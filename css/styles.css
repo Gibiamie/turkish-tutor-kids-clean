@@ -97,6 +97,10 @@ button{cursor:pointer}
 .laya-guide{display:grid;grid-template-columns:62px 1fr;gap:12px;align-items:center;background:linear-gradient(135deg,#e0f6ff,#fff);border:1px solid #c9eaff;border-radius:22px;padding:12px;margin-bottom:16px}
 .laya-guide strong{font-size:17px}
 .laya-guide p{margin:4px 0 0;color:#334b6d}
+.laya-guide.tappable{cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .05s}
+.laya-guide.tappable:hover{border-color:var(--primary);box-shadow:0 6px 18px rgba(4,80,140,.12)}
+.laya-guide.tappable:active{transform:scale(.995)}
+.laya-guide.tappable .link-btn{display:inline-block;margin-top:8px}
 .letter-stage{text-align:center;background:linear-gradient(180deg,#fff,#f8fcff);border:1px solid var(--line);border-radius:24px;padding:18px}
 .letter{font-size:82px;line-height:.9;font-weight:950;letter-spacing:-.05em;color:#0863cf}
 .sound-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
