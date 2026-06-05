@@ -11,14 +11,6 @@ export function visual(item){
   }
   return `<div class="visual fallback"><span>${fallback}</span></div>`;
 }
-export function explanationCard(lang,key,compact=false){
-  const ex=EXPLANATIONS[key] || {};
-  const main=localized(ex.main,lang) || '';
-  return `<section class="teach-card">
-    <img src="assets/laya_dolphin_3d_transparent.png" alt="Laya" onerror="this.style.display='none'" />
-    <div><strong>${esc(t(lang,'layaGuide'))}</strong><p>${esc(main)}</p>${compact?'':`<button class="link-btn" data-action="explain" data-key="${esc(key)}">${esc(t(lang,'learnWhy'))}</button>`}</div>
-  </section>`;
-}
 export function explanationSheet(lang,key){
   const ex=EXPLANATIONS[key] || {};
   const list=(ex.practice?.[lang] || ex.practice?.en || []).map(x=>`<li>${esc(x)}</li>`).join('');
