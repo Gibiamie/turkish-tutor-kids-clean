@@ -6,7 +6,9 @@ const USER_VERIFIED_AUDIO = new Set([
   // Dative forms (owner-uploaded)
   'audio/pronunciation_tr_eve.mp3','audio/pronunciation_tr_okula.mp3','audio/pronunciation_tr_kaleme.mp3','audio/pronunciation_tr_arabaya.mp3','audio/pronunciation_tr_suya.mp3','audio/pronunciation_tr_kitaba.mp3','audio/pronunciation_tr_kopege.mp3',
   // Colors added (owner-uploaded)
-  'audio/pronunciation_tr_yesil.mp3','audio/pronunciation_tr_siyah.mp3','audio/pronunciation_tr_kahverengi.mp3','audio/pronunciation_tr_gri.mp3'
+  'audio/pronunciation_tr_yesil.mp3','audio/pronunciation_tr_siyah.mp3','audio/pronunciation_tr_kahverengi.mp3','audio/pronunciation_tr_gri.mp3',
+  // Multi-suffix / journey (owner-uploaded)
+  'audio/pronunciation_tr_gecelerimizde.mp3','audio/pronunciation_tr_yolculukta.mp3'
 ]);
 
 function pathsFor(item){

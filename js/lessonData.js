@@ -50,7 +50,8 @@ export const MEANING_BUILDER = [
   {id:'meaning_parkta',prompt:{en:'at / in the park',id:'di taman'},answerParts:['park','ta'],options:['park','ta','da','de'],finalWord:'parkta',audio:'audio/pronunciation_tr_parkta.mp3',image:null,revealAfterCorrect:'park + ta = parkta',explanationKey:'locative_suffix_basic'},
   {id:'meaning_elimde',prompt:{en:'in my hand',id:'di tangan saya'},answerParts:['el','im','de'],options:['el','im','de','da','in'],finalWord:'elimde',audio:'audio/pronunciation_tr_elimde.mp3',image:null,revealAfterCorrect:'el + im + de = elimde',explanationKey:'safe_builder_order'},
   {id:'meaning_gozumde',prompt:{en:'in my eye',id:'di mata saya'},answerParts:['göz','üm','de'],options:['göz','üm','de','im','da'],finalWord:'gözümde',audio:'audio/pronunciation_tr_gozumde.mp3',image:'images/goz.png',revealAfterCorrect:'göz + üm + de = gözümde',explanationKey:'safe_sound_match'},
-  {id:'meaning_kitabimda',prompt:{en:'in my book',id:'di buku saya'},answerParts:['kitab','ım','da'],options:['kitab','ım','da','im','ta'],finalWord:'kitabımda',audio:'audio/pronunciation_tr_kitabimda.mp3',image:'images/kitap.png',revealAfterCorrect:'kitap changes to kitab here: kitab + ım + da = kitabımda',explanationKey:'softened_book_builder'}
+  {id:'meaning_kitabimda',prompt:{en:'in my book',id:'di buku saya'},answerParts:['kitab','ım','da'],options:['kitab','ım','da','im','ta'],finalWord:'kitabımda',audio:'audio/pronunciation_tr_kitabimda.mp3',image:'images/kitap.png',revealAfterCorrect:'kitap changes to kitab here: kitab + ım + da = kitabımda',explanationKey:'softened_book_builder'},
+  {id:'meaning_yolculukta',prompt:{en:'on the journey',id:'dalam perjalanan'},answerParts:['yolculuk','ta'],options:['yolculuk','ta','da','te'],finalWord:'yolculukta',audio:'audio/pronunciation_tr_yolculukta.mp3',image:null,revealAfterCorrect:'yolculuk + ta = yolculukta',explanationKey:'locative_suffix_basic'}
 ];
 
 export const WHOSE_BUILDER = [
@@ -95,8 +96,8 @@ export const DATIVE_BUILDER = [
   {id:'dat_kopege',prompt:{en:'to the dog',id:'ke anjing'},answerParts:['köpeğ','e'],options:['köpeğ','e','a','ye'],finalWord:'köpeğe',audio:'audio/pronunciation_tr_kopege.mp3',image:'images/kopek.png',revealAfterCorrect:'köpek changes to köpeğ here: köpeğ + e = köpeğe',explanationKey:'dative_softened_kopek'}
 ];
 
-// Multi-suffix stacking (plural + possessive + case). Audio not recorded yet
-// for these long forms, so they ship without audio (text + blocks only).
+// Multi-suffix stacking (plural + possessive + case). Most long forms have no
+// recorded audio yet (text+blocks only); gecelerimizde is owner-voiced.
 export const COMBO_BUILDER = [
   {id:'cmb_evlerim',prompt:{en:'my houses',id:'rumah-rumah saya'},answerParts:['ev','ler','im'],options:['ev','ler','im','lar','ım','de'],finalWord:'evlerim',audio:null,image:'images/ev.png',revealAfterCorrect:'ev + ler + im = evlerim',explanationKey:'multi_suffix_basic'},
   {id:'cmb_arabalarim',prompt:{en:'my cars',id:'mobil-mobil saya'},answerParts:['araba','lar','ım'],options:['araba','lar','ım','ler','im','da'],finalWord:'arabalarım',audio:null,image:'images/araba.png',revealAfterCorrect:'araba + lar + ım = arabalarım',explanationKey:'multi_suffix_basic'},
@@ -104,7 +105,8 @@ export const COMBO_BUILDER = [
   {id:'cmb_evlerimiz',prompt:{en:'our houses',id:'rumah-rumah kami'},answerParts:['ev','ler','imiz'],options:['ev','ler','imiz','lar','ımız','im'],finalWord:'evlerimiz',audio:null,image:'images/ev.png',revealAfterCorrect:'ev + ler + imiz = evlerimiz',explanationKey:'multi_suffix_basic'},
   {id:'cmb_okullarimiz',prompt:{en:'our schools',id:'sekolah-sekolah kami'},answerParts:['okul','lar','ımız'],options:['okul','lar','ımız','ler','imiz','da'],finalWord:'okullarımız',audio:null,image:'images/okul.png',revealAfterCorrect:'okul + lar + ımız = okullarımız',explanationKey:'multi_suffix_basic'},
   {id:'cmb_evlerimizde',prompt:{en:'in our houses',id:'di rumah-rumah kami'},answerParts:['ev','ler','imiz','de'],options:['ev','ler','imiz','de','da','im'],finalWord:'evlerimizde',audio:null,image:'images/ev.png',revealAfterCorrect:'ev + ler + imiz + de = evlerimizde',explanationKey:'multi_suffix_case'},
-  {id:'cmb_arabalarimda',prompt:{en:'in my cars',id:'di mobil-mobil saya'},answerParts:['araba','lar','ım','da'],options:['araba','lar','ım','da','de','ımız'],finalWord:'arabalarımda',audio:null,image:'images/araba.png',revealAfterCorrect:'araba + lar + ım + da = arabalarımda',explanationKey:'multi_suffix_case'}
+  {id:'cmb_arabalarimda',prompt:{en:'in my cars',id:'di mobil-mobil saya'},answerParts:['araba','lar','ım','da'],options:['araba','lar','ım','da','de','ımız'],finalWord:'arabalarımda',audio:null,image:'images/araba.png',revealAfterCorrect:'araba + lar + ım + da = arabalarımda',explanationKey:'multi_suffix_case'},
+  {id:'cmb_gecelerimizde',prompt:{en:'in our nights',id:'di malam-malam kami'},answerParts:['gece','ler','imiz','de'],options:['gece','ler','imiz','de','da','im'],finalWord:'gecelerimizde',audio:'audio/pronunciation_tr_gecelerimizde.mp3',image:null,revealAfterCorrect:'gece + ler + imiz + de = gecelerimizde',explanationKey:'multi_suffix_case'}
 ];
 
 export const GREETINGS = [
