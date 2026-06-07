@@ -71,11 +71,11 @@ export const WHOSE_BUILDER = [
 ];
 
 export const PLURAL_BUILDER = [
-  {id:'plural_evler',prompt:{en:'houses',id:'rumah-rumah'},answerParts:['ev','ler'],options:['ev','ler','lar'],finalWord:'evler',audio:'audio/pronunciation_tr_evler.mp3',image:'images/ev.png',revealAfterCorrect:'One house is ev. More than one is evler.',explanationKey:'plural_evler_story'},
-  {id:'plural_kitaplar',prompt:{en:'books',id:'buku-buku'},answerParts:['kitap','lar'],options:['kitap','lar','ler'],finalWord:'kitaplar',audio:'audio/pronunciation_tr_kitaplar.mp3',image:'images/kitap.png',revealAfterCorrect:'One book is kitap. More than one is kitaplar.',explanationKey:'plural_kitaplar_story'},
-  {id:'plural_kopekler',prompt:{en:'dogs',id:'anjing-anjing'},answerParts:['köpek','ler'],options:['köpek','ler','lar'],finalWord:'köpekler',audio:'audio/pronunciation_tr_kopekler.mp3',image:'images/kopek.png',revealAfterCorrect:'One dog is köpek. More than one is köpekler.',explanationKey:'plural_kopekler_story'},
-  {id:'plural_okullar',prompt:{en:'schools',id:'sekolah-sekolah'},answerParts:['okul','lar'],options:['okul','lar','ler'],finalWord:'okullar',audio:'audio/pronunciation_tr_okullar.mp3',image:'images/okul.png',revealAfterCorrect:'One school is okul. More than one is okullar.',explanationKey:'plural_okullar_story'},
-  {id:'plural_arabalar',prompt:{en:'cars',id:'mobil-mobil'},answerParts:['araba','lar'],options:['araba','lar','ler'],finalWord:'arabalar',audio:'audio/pronunciation_tr_arabalar.mp3',image:'images/araba.png',revealAfterCorrect:'One car is araba. More than one is arabalar.',explanationKey:'plural_arabalar_story'}
+  {id:'plural_evler',prompt:{en:'houses',id:'rumah-rumah'},answerParts:['ev','ler'],options:['ev','ler','lar'],finalWord:'evler',audio:'audio/pronunciation_tr_evler.mp3',image:'images/ev.png',revealAfterCorrect:'ev + ler = evler',explanationKey:'plural_evler_story'},
+  {id:'plural_kitaplar',prompt:{en:'books',id:'buku-buku'},answerParts:['kitap','lar'],options:['kitap','lar','ler'],finalWord:'kitaplar',audio:'audio/pronunciation_tr_kitaplar.mp3',image:'images/kitap.png',revealAfterCorrect:'kitap + lar = kitaplar',explanationKey:'plural_kitaplar_story'},
+  {id:'plural_kopekler',prompt:{en:'dogs',id:'anjing-anjing'},answerParts:['köpek','ler'],options:['köpek','ler','lar'],finalWord:'köpekler',audio:'audio/pronunciation_tr_kopekler.mp3',image:'images/kopek.png',revealAfterCorrect:'köpek + ler = köpekler',explanationKey:'plural_kopekler_story'},
+  {id:'plural_okullar',prompt:{en:'schools',id:'sekolah-sekolah'},answerParts:['okul','lar'],options:['okul','lar','ler'],finalWord:'okullar',audio:'audio/pronunciation_tr_okullar.mp3',image:'images/okul.png',revealAfterCorrect:'okul + lar = okullar',explanationKey:'plural_okullar_story'},
+  {id:'plural_arabalar',prompt:{en:'cars',id:'mobil-mobil'},answerParts:['araba','lar'],options:['araba','lar','ler'],finalWord:'arabalar',audio:'audio/pronunciation_tr_arabalar.mp3',image:'images/araba.png',revealAfterCorrect:'araba + lar = arabalar',explanationKey:'plural_arabalar_story'}
 ];
 
 export const ACCUSATIVE_BUILDER = [
@@ -302,36 +302,36 @@ export const EXPLANATIONS = {
   whose_arabaniz_story:carStory(whoseCars.arabaniz),
   whose_arabalari_story:carStory(whoseCars.arabalari),
   plural_evler_story:{
-    main:{en:'One house is ev. When there is more than one, Turkish says evler. Build ev + ler.',id:'Satu rumah adalah ev. Jika lebih dari satu, bahasa Turki mengatakan evler. Susun ev + ler.'},
-    hear:{en:'Listen: ev, evler. The small block is ler.',id:'Dengarkan: ev, evler. Blok kecilnya ler.'},
-    mistake:{en:'Do not choose lar here. evler sounds natural.',id:'Jangan pilih lar di sini. evler terdengar alami.'},
-    practice:{en:['Say ev.','Now imagine many houses.','Tap ev + ler.'],id:['Ucapkan ev.','Sekarang bayangkan banyak rumah.','Ketuk ev + ler.']}
+    main:{en:'One house is ev. The plural block is -ler or -lar. Look at the last vowel: e → -ler. So ev + ler = evler.',id:'Satu rumah adalah ev. Blok jamak adalah -ler atau -lar. Lihat vokal terakhir: e → -ler. Jadi ev + ler = evler.'},
+    hear:{en:'Rule: a, ı, o, u → -lar; e, i, ö, ü → -ler. ev’s last vowel is e, so -ler. (Works for most words; a few borrowed words differ.)',id:'Aturan: a, ı, o, u → -lar; e, i, ö, ü → -ler. Vokal terakhir ev adalah e, jadi -ler. (Berlaku untuk hampir semua kata; sedikit kata serapan berbeda.)'},
+    mistake:{en:'Not evlar. The last vowel e takes -ler.',id:'Bukan evlar. Vokal terakhir e memakai -ler.'},
+    practice:{en:['Find the last vowel: e.','e → -ler.','Build: ev + ler = evler.'],id:['Cari vokal terakhir: e.','e → -ler.','Susun: ev + ler = evler.']}
   },
   plural_kitaplar_story:{
-    main:{en:'One book is kitap. When there is more than one, Turkish says kitaplar. Build kitap + lar.',id:'Satu buku adalah kitap. Jika lebih dari satu, bahasa Turki mengatakan kitaplar. Susun kitap + lar.'},
-    hear:{en:'Listen: kitap, kitaplar. The small block is lar.',id:'Dengarkan: kitap, kitaplar. Blok kecilnya lar.'},
-    mistake:{en:'Do not choose ler here. kitaplar sounds natural.',id:'Jangan pilih ler di sini. kitaplar terdengar alami.'},
-    practice:{en:['Say kitap.','Now imagine many books.','Tap kitap + lar.'],id:['Ucapkan kitap.','Sekarang bayangkan banyak buku.','Ketuk kitap + lar.']}
+    main:{en:'One book is kitap. Look at the last vowel: a → -lar. So kitap + lar = kitaplar.',id:'Satu buku adalah kitap. Lihat vokal terakhir: a → -lar. Jadi kitap + lar = kitaplar.'},
+    hear:{en:'Rule: a, ı, o, u → -lar; e, i, ö, ü → -ler. kitap’s last vowel is a, so -lar.',id:'Aturan: a, ı, o, u → -lar; e, i, ö, ü → -ler. Vokal terakhir kitap adalah a, jadi -lar.'},
+    mistake:{en:'Not kitapler. The last vowel a takes -lar.',id:'Bukan kitapler. Vokal terakhir a memakai -lar.'},
+    practice:{en:['Find the last vowel: a.','a → -lar.','Build: kitap + lar = kitaplar.'],id:['Cari vokal terakhir: a.','a → -lar.','Susun: kitap + lar = kitaplar.']}
   },
   plural_kopekler_story:{
-    main:{en:'One dog is köpek. When there is more than one, Turkish says köpekler. Build köpek + ler.',id:'Satu anjing adalah köpek. Jika lebih dari satu, bahasa Turki mengatakan köpekler. Susun köpek + ler.'},
-    hear:{en:'Listen: köpek, köpekler. The small block is ler.',id:'Dengarkan: köpek, köpekler. Blok kecilnya ler.'},
-    mistake:{en:'Do not choose lar here. köpekler sounds natural.',id:'Jangan pilih lar di sini. köpekler terdengar alami.'},
-    practice:{en:['Say köpek.','Now imagine many dogs.','Tap köpek + ler.'],id:['Ucapkan köpek.','Sekarang bayangkan banyak anjing.','Ketuk köpek + ler.']}
+    main:{en:'One dog is köpek. Look at the last vowel: e → -ler. So köpek + ler = köpekler.',id:'Satu anjing adalah köpek. Lihat vokal terakhir: e → -ler. Jadi köpek + ler = köpekler.'},
+    hear:{en:'Rule: a, ı, o, u → -lar; e, i, ö, ü → -ler. köpek’s last vowel is e, so -ler.',id:'Aturan: a, ı, o, u → -lar; e, i, ö, ü → -ler. Vokal terakhir köpek adalah e, jadi -ler.'},
+    mistake:{en:'Not köpeklar. The last vowel e takes -ler.',id:'Bukan köpeklar. Vokal terakhir e memakai -ler.'},
+    practice:{en:['Find the last vowel: e.','e → -ler.','Build: köpek + ler = köpekler.'],id:['Cari vokal terakhir: e.','e → -ler.','Susun: köpek + ler = köpekler.']}
   },
   plural_okullar_story:{
-    main:{en:'One school is okul. When there is more than one, Turkish says okullar. Build okul + lar.',id:'Satu sekolah adalah okul. Jika lebih dari satu, bahasa Turki mengatakan okullar. Susun okul + lar.'},
-    hear:{en:'Listen: okul, okullar. The small block is lar.',id:'Dengarkan: okul, okullar. Blok kecilnya lar.'},
-    mistake:{en:'Do not choose ler here. okullar sounds natural.',id:'Jangan pilih ler di sini. okullar terdengar alami.'},
-    practice:{en:['Say okul.','Now imagine many schools.','Tap okul + lar.'],id:['Ucapkan okul.','Sekarang bayangkan banyak sekolah.','Ketuk okul + lar.']}
+    main:{en:'One school is okul. Look at the last vowel: u → -lar. So okul + lar = okullar.',id:'Satu sekolah adalah okul. Lihat vokal terakhir: u → -lar. Jadi okul + lar = okullar.'},
+    hear:{en:'Rule: a, ı, o, u → -lar; e, i, ö, ü → -ler. okul’s last vowel is u, so -lar.',id:'Aturan: a, ı, o, u → -lar; e, i, ö, ü → -ler. Vokal terakhir okul adalah u, jadi -lar.'},
+    mistake:{en:'Not okuller. The last vowel u takes -lar.',id:'Bukan okuller. Vokal terakhir u memakai -lar.'},
+    practice:{en:['Find the last vowel: u.','u → -lar.','Build: okul + lar = okullar.'],id:['Cari vokal terakhir: u.','u → -lar.','Susun: okul + lar = okullar.']}
   },
   plural_arabalar_story:{
-    main:{en:'One car is araba. When there is more than one, Turkish says arabalar. Build araba + lar.',id:'Satu mobil adalah araba. Jika lebih dari satu, bahasa Turki mengatakan arabalar. Susun araba + lar.'},
-    hear:{en:'Listen: araba, arabalar. The small block is lar.',id:'Dengarkan: araba, arabalar. Blok kecilnya lar.'},
-    mistake:{en:'Do not choose ler here. arabalar sounds natural.',id:'Jangan pilih ler di sini. arabalar terdengar alami.'},
-    practice:{en:['Say araba.','Now imagine many cars.','Tap araba + lar.'],id:['Ucapkan araba.','Sekarang bayangkan banyak mobil.','Ketuk araba + lar.']}
+    main:{en:'One car is araba. Look at the last vowel: a → -lar. So araba + lar = arabalar.',id:'Satu mobil adalah araba. Lihat vokal terakhir: a → -lar. Jadi araba + lar = arabalar.'},
+    hear:{en:'Rule: a, ı, o, u → -lar; e, i, ö, ü → -ler. araba’s last vowel is a, so -lar.',id:'Aturan: a, ı, o, u → -lar; e, i, ö, ü → -ler. Vokal terakhir araba adalah a, jadi -lar.'},
+    mistake:{en:'Not arabaler. The last vowel a takes -lar.',id:'Bukan arabaler. Vokal terakhir a memakai -lar.'},
+    practice:{en:['Find the last vowel: a.','a → -lar.','Build: araba + lar = arabalar.'],id:['Cari vokal terakhir: a.','a → -lar.','Susun: araba + lar = arabalar.']}
   },
-  plural_basic:{main:{en:'For more than one, Turkish adds a small block after the word. Listen and choose the block that sounds natural.',id:'Untuk lebih dari satu, bahasa Turki menambahkan blok kecil setelah kata. Dengarkan dan pilih blok yang terdengar alami.'}},
+  plural_basic:{main:{en:'For more than one, add -ler or -lar. Look at the last vowel: a, ı, o, u → -lar; e, i, ö, ü → -ler. This works for most Turkish words; a few borrowed words are exceptions.',id:'Untuk lebih dari satu, tambahkan -ler atau -lar. Lihat vokal terakhir: a, ı, o, u → -lar; e, i, ö, ü → -ler. Berlaku untuk hampir semua kata Turki; sedikit kata serapan adalah pengecualian.'}},
   dative_basic:{
     main:{en:'The “to” block is -e or -a, chosen to match the word’s vowels. ev → eve (to the house), okul → okula (to school).',id:'Blok “ke” adalah -e atau -a, dipilih agar cocok dengan vokal kata. ev → eve (ke rumah), okul → okula (ke sekolah).'},
     hear:{en:'Front-vowel words take -e (eve, kaleme); back-vowel words take -a (okula).',id:'Kata vokal depan memakai -e (eve, kaleme); kata vokal belakang memakai -a (okula).'},

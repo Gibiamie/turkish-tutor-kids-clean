@@ -167,7 +167,9 @@ button{cursor:pointer}
 .chip.selected{background:#e7fffb;border-color:#10c6c6;font-weight:600}
 .button-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .feedback.bad{background:#fee2e2;border:1px solid #fecaca;color:#7f1d1d;padding:14px;border-radius:18px}
-.success-panel{position:relative;margin-top:16px;background:linear-gradient(135deg,#e7fff0,#f7fff9);border:1px solid #9df2bd;border-radius:22px;padding:16px;display:grid;grid-template-columns:58px 1fr 78px;gap:12px;align-items:center;overflow:hidden}
+.success-panel{position:relative;margin-top:16px;background:linear-gradient(135deg,#e7fff0,#f7fff9);border:1px solid #9df2bd;border-radius:22px;padding:16px;display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;overflow:hidden}
+.success-panel .btn{white-space:nowrap;padding:10px 16px}
+@media (max-width:380px){.success-panel{grid-template-columns:52px 1fr}.success-panel .btn{grid-column:1/3;width:100%}}
 .success-check{width:52px;height:52px;border-radius:50%;background:#16b862;color:#fff;display:grid;place-items:center;font-size:30px;font-weight:900}
 .success-panel h2{color:#10a34a;margin:0}
 .success-panel strong{display:block;color:#0b8a43;font-size:23px;font-weight:650}
