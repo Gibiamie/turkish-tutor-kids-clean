@@ -83,16 +83,15 @@ export const ACCUSATIVE_BUILDER = [
   {id:'acc_arabayi',prompt:{en:'the car',id:'mobil itu'},answerParts:['araba','yı'],options:['araba','yı','yi','ı'],finalWord:'arabayı',audio:'audio/pronunciation_tr_arabayi.mp3',image:'images/araba.png',revealAfterCorrect:'araba + yı = arabayı',explanationKey:'y_glide_accusative'}
 ];
 
-// Dative case (“to / toward”). Audio for these forms is not yet recorded;
-// items intentionally ship without audio rather than reuse a wrong root sound.
+// Dative case (“to / toward”). Audio is owner-recorded and verified.
 export const DATIVE_BUILDER = [
-  {id:'dat_eve',prompt:{en:'to the house',id:'ke rumah'},answerParts:['ev','e'],options:['ev','e','a','ye'],finalWord:'eve',audio:null,image:'images/ev.png',revealAfterCorrect:'ev + e = eve',explanationKey:'dative_basic'},
-  {id:'dat_okula',prompt:{en:'to school',id:'ke sekolah'},answerParts:['okul','a'],options:['okul','a','e','ya'],finalWord:'okula',audio:null,image:'images/okul.png',revealAfterCorrect:'okul + a = okula',explanationKey:'dative_basic'},
-  {id:'dat_kaleme',prompt:{en:'to the pencil',id:'ke pensil'},answerParts:['kalem','e'],options:['kalem','e','a','ye'],finalWord:'kaleme',audio:null,image:'images/kalem.png',revealAfterCorrect:'kalem + e = kaleme',explanationKey:'dative_basic'},
-  {id:'dat_arabaya',prompt:{en:'to the car',id:'ke mobil'},answerParts:['araba','ya'],options:['araba','ya','a','e'],finalWord:'arabaya',audio:null,image:'images/araba.png',revealAfterCorrect:'araba + ya = arabaya',explanationKey:'dative_y_glide'},
-  {id:'dat_suya',prompt:{en:'to the water',id:'ke air'},answerParts:['su','ya'],options:['su','ya','a','e'],finalWord:'suya',audio:null,image:'images/su.png',revealAfterCorrect:'su + ya = suya',explanationKey:'dative_y_glide'},
-  {id:'dat_kitaba',prompt:{en:'to the book',id:'ke buku'},answerParts:['kitab','a'],options:['kitab','a','e','ya'],finalWord:'kitaba',audio:null,image:'images/kitap.png',revealAfterCorrect:'kitap changes to kitab here: kitab + a = kitaba',explanationKey:'dative_softened_kitap'},
-  {id:'dat_kopege',prompt:{en:'to the dog',id:'ke anjing'},answerParts:['köpeğ','e'],options:['köpeğ','e','a','ye'],finalWord:'köpeğe',audio:null,image:'images/kopek.png',revealAfterCorrect:'köpek changes to köpeğ here: köpeğ + e = köpeğe',explanationKey:'dative_softened_kopek'}
+  {id:'dat_eve',prompt:{en:'to the house',id:'ke rumah'},answerParts:['ev','e'],options:['ev','e','a','ye'],finalWord:'eve',audio:'audio/pronunciation_tr_eve.mp3',image:'images/ev.png',revealAfterCorrect:'ev + e = eve',explanationKey:'dative_basic'},
+  {id:'dat_okula',prompt:{en:'to school',id:'ke sekolah'},answerParts:['okul','a'],options:['okul','a','e','ya'],finalWord:'okula',audio:'audio/pronunciation_tr_okula.mp3',image:'images/okul.png',revealAfterCorrect:'okul + a = okula',explanationKey:'dative_basic'},
+  {id:'dat_kaleme',prompt:{en:'to the pencil',id:'ke pensil'},answerParts:['kalem','e'],options:['kalem','e','a','ye'],finalWord:'kaleme',audio:'audio/pronunciation_tr_kaleme.mp3',image:'images/kalem.png',revealAfterCorrect:'kalem + e = kaleme',explanationKey:'dative_basic'},
+  {id:'dat_arabaya',prompt:{en:'to the car',id:'ke mobil'},answerParts:['araba','ya'],options:['araba','ya','a','e'],finalWord:'arabaya',audio:'audio/pronunciation_tr_arabaya.mp3',image:'images/araba.png',revealAfterCorrect:'araba + ya = arabaya',explanationKey:'dative_y_glide'},
+  {id:'dat_suya',prompt:{en:'to the water',id:'ke air'},answerParts:['su','ya'],options:['su','ya','a','e'],finalWord:'suya',audio:'audio/pronunciation_tr_suya.mp3',image:'images/su.png',revealAfterCorrect:'su + ya = suya',explanationKey:'dative_y_glide'},
+  {id:'dat_kitaba',prompt:{en:'to the book',id:'ke buku'},answerParts:['kitab','a'],options:['kitab','a','e','ya'],finalWord:'kitaba',audio:'audio/pronunciation_tr_kitaba.mp3',image:'images/kitap.png',revealAfterCorrect:'kitap changes to kitab here: kitab + a = kitaba',explanationKey:'dative_softened_kitap'},
+  {id:'dat_kopege',prompt:{en:'to the dog',id:'ke anjing'},answerParts:['köpeğ','e'],options:['köpeğ','e','a','ye'],finalWord:'köpeğe',audio:'audio/pronunciation_tr_kopege.mp3',image:'images/kopek.png',revealAfterCorrect:'köpek changes to köpeğ here: köpeğ + e = köpeğe',explanationKey:'dative_softened_kopek'}
 ];
 
 export const GREETINGS = [
@@ -110,11 +109,15 @@ export const GREETINGS = [
 
 export const COLORS = [
   {id:'cl_kirmizi',word:'kırmızı',meaning:{en:'red',id:'merah'},audio:'audio/pronunciation_tr_kirmizi.mp3',swatch:'#e23b3b'},
-  {id:'cl_mavi',word:'mavi',meaning:{en:'blue',id:'biru'},audio:'audio/pronunciation_tr_mavi.mp3',swatch:'#2f6fe0'},
+  {id:'cl_turuncu',word:'turuncu',meaning:{en:'orange',id:'oranye'},audio:'audio/pronunciation_tr_turuncu.mp3',swatch:'#ff6a00'},
   {id:'cl_sari',word:'sarı',meaning:{en:'yellow',id:'kuning'},audio:'audio/pronunciation_tr_sari.mp3',swatch:'#ffe000'},
+  {id:'cl_yesil',word:'yeşil',meaning:{en:'green',id:'hijau'},audio:'audio/pronunciation_tr_yesil.mp3',swatch:'#2e9e4f'},
+  {id:'cl_mavi',word:'mavi',meaning:{en:'blue',id:'biru'},audio:'audio/pronunciation_tr_mavi.mp3',swatch:'#2f6fe0'},
   {id:'cl_mor',word:'mor',meaning:{en:'purple',id:'ungu'},audio:'audio/pronunciation_tr_mor.mp3',swatch:'#8e24aa'},
   {id:'cl_pembe',word:'pembe',meaning:{en:'pink',id:'merah muda'},audio:'audio/pronunciation_tr_pembe.mp3',swatch:'#ff7ab0'},
-  {id:'cl_turuncu',word:'turuncu',meaning:{en:'orange',id:'oranye'},audio:'audio/pronunciation_tr_turuncu.mp3',swatch:'#ff6a00'},
+  {id:'cl_kahverengi',word:'kahverengi',meaning:{en:'brown',id:'cokelat'},audio:'audio/pronunciation_tr_kahverengi.mp3',swatch:'#8b5a2b'},
+  {id:'cl_gri',word:'gri',meaning:{en:'gray',id:'abu-abu'},audio:'audio/pronunciation_tr_gri.mp3',swatch:'#9aa3ad'},
+  {id:'cl_siyah',word:'siyah',meaning:{en:'black',id:'hitam'},audio:'audio/pronunciation_tr_siyah.mp3',swatch:'#1c1c1c'},
   {id:'cl_beyaz',word:'beyaz',meaning:{en:'white',id:'putih'},audio:'audio/pronunciation_tr_beyaz.mp3',swatch:'#ffffff'}
 ];
 

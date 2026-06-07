@@ -2,7 +2,11 @@ import { allLessonItems } from './lessonData.js';
 
 const USER_VERIFIED_AUDIO = new Set([
   'audio/pronunciation_tr_evler.mp3','audio/pronunciation_tr_kitaplar.mp3','audio/pronunciation_tr_kopekler.mp3','audio/pronunciation_tr_okullar.mp3','audio/pronunciation_tr_arabalar.mp3',
-  'audio/pronunciation_tr_elmayi.mp3','audio/pronunciation_tr_gazeteyi.mp3','audio/pronunciation_tr_kitabi.mp3','audio/pronunciation_tr_kopegi.mp3','audio/pronunciation_tr_arabayi.mp3'
+  'audio/pronunciation_tr_elmayi.mp3','audio/pronunciation_tr_gazeteyi.mp3','audio/pronunciation_tr_kitabi.mp3','audio/pronunciation_tr_kopegi.mp3','audio/pronunciation_tr_arabayi.mp3',
+  // Dative forms (owner-uploaded)
+  'audio/pronunciation_tr_eve.mp3','audio/pronunciation_tr_okula.mp3','audio/pronunciation_tr_kaleme.mp3','audio/pronunciation_tr_arabaya.mp3','audio/pronunciation_tr_suya.mp3','audio/pronunciation_tr_kitaba.mp3','audio/pronunciation_tr_kopege.mp3',
+  // Colors added (owner-uploaded)
+  'audio/pronunciation_tr_yesil.mp3','audio/pronunciation_tr_siyah.mp3','audio/pronunciation_tr_kahverengi.mp3','audio/pronunciation_tr_gri.mp3'
 ]);
 
 function pathsFor(item){
