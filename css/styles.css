@@ -76,6 +76,7 @@ button{cursor:pointer}
 .module-card.amber{background:linear-gradient(135deg,#ffe1a8,#fff3d4)}
 .module-card.aqua{background:linear-gradient(135deg,#bcfff5,#ecfffc)}
 .module-card.sky{background:linear-gradient(135deg,#cdefff,#f0fbff)}
+.module-card.rose{background:linear-gradient(135deg,#ffd6e7,#fff0f6)}
 .module-art{font-size:34px;font-weight:950}
 .module-copy strong{display:block;font-size:17px;color:#082052;line-height:1.08}
 .module-copy em{display:block;font-style:normal;color:#33506e;font-size:13px;margin-top:5px;line-height:1.25}

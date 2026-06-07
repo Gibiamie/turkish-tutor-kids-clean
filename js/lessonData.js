@@ -4,7 +4,8 @@ export const TOPICS = [
   { id:'meaning_builder', type:'builder', title:{en:'Meaning Builder', id:'Penyusun Makna'}, sub:{en:'Root + meaning blocks', id:'Kata dasar + blok makna'} },
   { id:'whose_builder', type:'builder', title:{en:'Whose? Builder', id:'Punya Siapa? Builder'}, sub:{en:'my, your, his/her, our, their', id:'punya saya, kamu, dia, kita, mereka'} },
   { id:'plural_builder', type:'builder', title:{en:'More Than One Builder', id:'Pembuat Lebih Dari Satu'}, sub:{en:'ev → evler, kitap → kitaplar', id:'ev → evler, kitap → kitaplar'} },
-  { id:'accusative_builder', type:'builder', title:{en:'Object Builder', id:'Pembuat Objek'}, sub:{en:'Build the object form', id:'Susun bentuk objek'} }
+  { id:'accusative_builder', type:'builder', title:{en:'Object Builder', id:'Pembuat Objek'}, sub:{en:'Build the object form', id:'Susun bentuk objek'} },
+  { id:'dative_builder', type:'builder', title:{en:'To Where? Builder', id:'Ke Mana? Builder'}, sub:{en:'eve, okula — the “to” form', id:'eve, okula — bentuk “ke”'} }
 ];
 
 export const ALPHABET_PRO = [
@@ -77,6 +78,18 @@ export const ACCUSATIVE_BUILDER = [
   {id:'acc_kitabi',prompt:{en:'the book',id:'buku itu'},answerParts:['kitab','ı'],options:['kitab','ı','i','yı'],finalWord:'kitabı',audio:'audio/pronunciation_tr_kitabi.mp3',image:'images/kitap.png',revealAfterCorrect:'kitap changes to kitab here: kitab + ı = kitabı',explanationKey:'softened_book_builder'},
   {id:'acc_kopegi',prompt:{en:'the dog',id:'anjing itu'},answerParts:['köpeğ','i'],options:['köpeğ','i','ı','yi'],finalWord:'köpeği',audio:'audio/pronunciation_tr_kopegi.mp3',image:'images/kopek.png',revealAfterCorrect:'köpek changes to köpeğ here: köpeğ + i = köpeği',explanationKey:'softened_k_builder'},
   {id:'acc_arabayi',prompt:{en:'the car',id:'mobil itu'},answerParts:['araba','yı'],options:['araba','yı','yi','ı'],finalWord:'arabayı',audio:'audio/pronunciation_tr_arabayi.mp3',image:'images/araba.png',revealAfterCorrect:'araba + yı = arabayı',explanationKey:'y_glide_accusative'}
+];
+
+// Dative case (“to / toward”). Audio for these forms is not yet recorded;
+// items intentionally ship without audio rather than reuse a wrong root sound.
+export const DATIVE_BUILDER = [
+  {id:'dat_eve',prompt:{en:'to the house',id:'ke rumah'},answerParts:['ev','e'],options:['ev','e','a','ye'],finalWord:'eve',audio:null,image:'images/ev.png',revealAfterCorrect:'ev + e = eve',explanationKey:'dative_basic'},
+  {id:'dat_okula',prompt:{en:'to school',id:'ke sekolah'},answerParts:['okul','a'],options:['okul','a','e','ya'],finalWord:'okula',audio:null,image:'images/okul.png',revealAfterCorrect:'okul + a = okula',explanationKey:'dative_basic'},
+  {id:'dat_kaleme',prompt:{en:'to the pencil',id:'ke pensil'},answerParts:['kalem','e'],options:['kalem','e','a','ye'],finalWord:'kaleme',audio:null,image:'images/kalem.png',revealAfterCorrect:'kalem + e = kaleme',explanationKey:'dative_basic'},
+  {id:'dat_arabaya',prompt:{en:'to the car',id:'ke mobil'},answerParts:['araba','ya'],options:['araba','ya','a','e'],finalWord:'arabaya',audio:null,image:'images/araba.png',revealAfterCorrect:'araba + ya = arabaya',explanationKey:'dative_y_glide'},
+  {id:'dat_suya',prompt:{en:'to the water',id:'ke air'},answerParts:['su','ya'],options:['su','ya','a','e'],finalWord:'suya',audio:null,image:'images/su.png',revealAfterCorrect:'su + ya = suya',explanationKey:'dative_y_glide'},
+  {id:'dat_kitaba',prompt:{en:'to the book',id:'ke buku'},answerParts:['kitab','a'],options:['kitab','a','e','ya'],finalWord:'kitaba',audio:null,image:'images/kitap.png',revealAfterCorrect:'kitap changes to kitab here: kitab + a = kitaba',explanationKey:'dative_softened_kitap'},
+  {id:'dat_kopege',prompt:{en:'to the dog',id:'ke anjing'},answerParts:['köpeğ','e'],options:['köpeğ','e','a','ye'],finalWord:'köpeğe',audio:null,image:'images/kopek.png',revealAfterCorrect:'köpek changes to köpeğ here: köpeğ + e = köpeğe',explanationKey:'dative_softened_kopek'}
 ];
 
 const whosePeople = {
@@ -247,7 +260,31 @@ export const EXPLANATIONS = {
     mistake:{en:'Do not choose ler here. arabalar sounds natural.',id:'Jangan pilih ler di sini. arabalar terdengar alami.'},
     practice:{en:['Say araba.','Now imagine many cars.','Tap araba + lar.'],id:['Ucapkan araba.','Sekarang bayangkan banyak mobil.','Ketuk araba + lar.']}
   },
-  plural_basic:{main:{en:'For more than one, Turkish adds a small block after the word. Listen and choose the block that sounds natural.',id:'Untuk lebih dari satu, bahasa Turki menambahkan blok kecil setelah kata. Dengarkan dan pilih blok yang terdengar alami.'}}
+  plural_basic:{main:{en:'For more than one, Turkish adds a small block after the word. Listen and choose the block that sounds natural.',id:'Untuk lebih dari satu, bahasa Turki menambahkan blok kecil setelah kata. Dengarkan dan pilih blok yang terdengar alami.'}},
+  dative_basic:{
+    main:{en:'The “to” block is -e or -a, chosen to match the word’s vowels. ev → eve (to the house), okul → okula (to school).',id:'Blok “ke” adalah -e atau -a, dipilih agar cocok dengan vokal kata. ev → eve (ke rumah), okul → okula (ke sekolah).'},
+    hear:{en:'Front-vowel words take -e (eve, kaleme); back-vowel words take -a (okula).',id:'Kata vokal depan memakai -e (eve, kaleme); kata vokal belakang memakai -a (okula).'},
+    mistake:{en:'Do not use -a after ev. ev has the vowel e, so it takes -e: eve.',id:'Jangan gunakan -a setelah ev. ev punya vokal e, jadi memakai -e: eve.'},
+    practice:{en:['Look at the word and its vowels.','Choose -e or -a to match.','Build: ev + e = eve.'],id:['Lihat kata dan vokalnya.','Pilih -e atau -a yang cocok.','Susun: ev + e = eve.']}
+  },
+  dative_y_glide:{
+    main:{en:'When a word ends in a vowel, add a y bridge before the “to” block. araba → arabaya, su → suya.',id:'Jika kata berakhir vokal, tambahkan jembatan y sebelum blok “ke”. araba → arabaya, su → suya.'},
+    hear:{en:'Listen: araba → arabaya. The y keeps two vowels from clashing.',id:'Dengarkan: araba → arabaya. Huruf y mencegah dua vokal bertabrakan.'},
+    mistake:{en:'Do not say arabaa. Add the y bridge: arabaya.',id:'Jangan ucapkan arabaa. Tambahkan jembatan y: arabaya.'},
+    practice:{en:['Say the word; it ends in a vowel.','Add y, then -a or -e.','Build: araba + ya = arabaya.'],id:['Ucapkan kata; berakhir vokal.','Tambahkan y, lalu -a atau -e.','Susun: araba + ya = arabaya.']}
+  },
+  dative_softened_kitap:{
+    main:{en:'kitap becomes kitab before the “to” block, then add -a: kitab + a = kitaba (to the book).',id:'kitap menjadi kitab sebelum blok “ke”, lalu tambahkan -a: kitab + a = kitaba (ke buku).'},
+    hear:{en:'Listen: kitap → kitaba. The p softens to b.',id:'Dengarkan: kitap → kitaba. Bunyi p melembut menjadi b.'},
+    mistake:{en:'Do not build kitapa. Use kitab + a = kitaba.',id:'Jangan susun kitapa. Gunakan kitab + a = kitaba.'},
+    practice:{en:['Look at kitap.','Soften p to b → kitab.','Build: kitab + a = kitaba.'],id:['Lihat kitap.','Lembutkan p menjadi b → kitab.','Susun: kitab + a = kitaba.']}
+  },
+  dative_softened_kopek:{
+    main:{en:'köpek becomes köpeğ before the “to” block, then add -e: köpeğ + e = köpeğe (to the dog).',id:'köpek menjadi köpeğ sebelum blok “ke”, lalu tambahkan -e: köpeğ + e = köpeğe (ke anjing).'},
+    hear:{en:'Listen: köpek → köpeğe. The k softens to ğ.',id:'Dengarkan: köpek → köpeğe. Bunyi k melembut menjadi ğ.'},
+    mistake:{en:'Do not build köpeke. Use köpeğ + e = köpeğe.',id:'Jangan susun köpeke. Gunakan köpeğ + e = köpeğe.'},
+    practice:{en:['Look at köpek.','Soften k to ğ → köpeğ.','Build: köpeğ + e = köpeğe.'],id:['Lihat köpek.','Lembutkan k menjadi ğ → köpeğ.','Susun: köpeğ + e = köpeğe.']}
+  }
 };
 
 export function datasetFor(topicId){
@@ -257,6 +294,7 @@ export function datasetFor(topicId){
   if(topicId==='whose_builder') return WHOSE_BUILDER;
   if(topicId==='plural_builder') return PLURAL_BUILDER;
   if(topicId==='accusative_builder') return ACCUSATIVE_BUILDER;
+  if(topicId==='dative_builder') return DATIVE_BUILDER;
   return [];
 }
 export function topicById(id){ return TOPICS.find(t=>t.id===id) || null; }
