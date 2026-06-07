@@ -9,7 +9,8 @@ export const TOPICS = [
   { id:'combo_builder', type:'builder', title:{en:'Suffix Stack Builder', id:'Susun Banyak Imbuhan'}, sub:{en:'evler + imiz + de = evlerimizde', id:'evler + imiz + de = evlerimizde'} },
   { id:'greetings', type:'vocab', title:{en:'Greetings', id:'Salam'}, sub:{en:'merhaba, günaydın, teşekkürler', id:'merhaba, günaydın, teşekkürler'} },
   { id:'colors', type:'vocab', title:{en:'Colors', id:'Warna'}, sub:{en:'kırmızı, mavi, sarı…', id:'kırmızı, mavi, sarı…'} },
-  { id:'family', type:'vocab', title:{en:'Family', id:'Keluarga'}, sub:{en:'anne, baba, çocuk…', id:'anne, baba, çocuk…'} }
+  { id:'family', type:'vocab', title:{en:'Family', id:'Keluarga'}, sub:{en:'anne, baba, çocuk…', id:'anne, baba, çocuk…'} },
+  { id:'deconstruct', type:'deconstruct', title:{en:'What Does It Mean?', id:'Apa Artinya?'}, sub:{en:'Turkish word → meaning', id:'kata Turki → arti'} }
 ];
 
 export const ALPHABET_PRO = [
@@ -134,6 +135,21 @@ export const COLORS = [
   {id:'cl_gri',word:'gri',meaning:{en:'gray',id:'abu-abu'},audio:'audio/pronunciation_tr_gri.mp3',swatch:'#9aa3ad'},
   {id:'cl_siyah',word:'siyah',meaning:{en:'black',id:'hitam'},audio:'audio/pronunciation_tr_siyah.mp3',swatch:'#1c1c1c'},
   {id:'cl_beyaz',word:'beyaz',meaning:{en:'white',id:'putih'},audio:'audio/pronunciation_tr_beyaz.mp3',swatch:'#ffffff'}
+];
+
+// Deconstruction: show a Turkish word, choose its meaning. Words are already
+// taught elsewhere; all have audio for support.
+export const DECONSTRUCT = [
+  {id:'dc_ev',word:'ev',meaning:{en:'house',id:'rumah'},audio:'audio/pronunciation_tr_ev.mp3'},
+  {id:'dc_okul',word:'okul',meaning:{en:'school',id:'sekolah'},audio:'audio/pronunciation_tr_okul.mp3'},
+  {id:'dc_kitap',word:'kitap',meaning:{en:'book',id:'buku'},audio:'audio/pronunciation_tr_kitap.mp3'},
+  {id:'dc_su',word:'su',meaning:{en:'water',id:'air'},audio:'audio/pronunciation_tr_su.mp3'},
+  {id:'dc_anne',word:'anne',meaning:{en:'mother',id:'ibu'},audio:'audio/pronunciation_tr_anne.mp3'},
+  {id:'dc_merhaba',word:'merhaba',meaning:{en:'hello',id:'halo'},audio:'audio/pronunciation_tr_merhaba.mp3'},
+  {id:'dc_kirmizi',word:'kırmızı',meaning:{en:'red',id:'merah'},audio:'audio/pronunciation_tr_kirmizi.mp3'},
+  {id:'dc_kopek',word:'köpek',meaning:{en:'dog',id:'anjing'},audio:'audio/pronunciation_tr_kopek.mp3'},
+  {id:'dc_evde',word:'evde',meaning:{en:'at home',id:'di rumah'},audio:'audio/pronunciation_tr_evde.mp3'},
+  {id:'dc_evler',word:'evler',meaning:{en:'houses',id:'rumah-rumah'},audio:'audio/pronunciation_tr_evler.mp3'}
 ];
 
 export const FAMILY = [
@@ -366,6 +382,7 @@ export function datasetFor(topicId){
   if(topicId==='greetings') return GREETINGS;
   if(topicId==='colors') return COLORS;
   if(topicId==='family') return FAMILY;
+  if(topicId==='deconstruct') return DECONSTRUCT;
   return [];
 }
 export function topicById(id){ return TOPICS.find(t=>t.id===id) || null; }

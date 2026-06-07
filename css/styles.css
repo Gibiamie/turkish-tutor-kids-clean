@@ -81,6 +81,7 @@ button{cursor:pointer}
 .module-card.sun{background:linear-gradient(135deg,#fff0b8,#fffae6)}
 .module-card.lilac{background:linear-gradient(135deg,#e3dcff,#f5f1ff)}
 .module-card.indigo{background:linear-gradient(135deg,#cdd6ff,#eef1ff)}
+.module-card.teal{background:linear-gradient(135deg,#bdf3ea,#ecfffb)}
 .module-art{font-size:34px;font-weight:950}
 .module-copy strong{display:block;font-size:17px;color:#082052;line-height:1.08}
 .module-copy em{display:block;font-style:normal;color:#33506e;font-size:13px;margin-top:5px;line-height:1.25}
@@ -135,6 +136,8 @@ button{cursor:pointer}
 .visual.emoji-cue span{font-size:46px}
 .recall-cue .visual.emoji-cue span{font-size:84px}
 .recall-cue .visual.swatch{border:1px solid rgba(0,0,0,.12)}
+.recall-cue .word-stage{display:flex;align-items:center;gap:12px}
+.recall-cue .word-stage h2{margin:0;font-size:34px;color:#082052}
 .recall-option{min-height:62px;border:1.5px solid var(--line);background:#fff;border-radius:16px;font-weight:850;font-size:18px;color:#092052;box-shadow:var(--soft-shadow);transition:transform .06s ease,box-shadow .15s ease,border-color .15s ease}
 .recall-option:hover{border-color:#b9d4f0;transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,23,42,.10)}
 .recall-option:active{transform:scale(.98)}
@@ -183,6 +186,8 @@ button{cursor:pointer}
 .seg{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-weight:900}
 .seg.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 .explain-block{border:1px solid var(--line);border-radius:18px;padding:12px;margin:10px 0;background:#f8fafc}
+.explain-block.word-formula{background:linear-gradient(135deg,#e8f5ff,#f3fbff);border-color:#bfe3ff}
+.explain-block.word-formula strong{font-size:18px;color:#0b76f6}
 .link-btn{border:0;background:transparent;color:var(--primary);font-weight:900;padding:0}
 .full{width:100%;margin-top:10px}
 @media (min-width:900px){
