@@ -167,7 +167,8 @@ export const ANIMALS = [
   {id:'an_kus',word:'kuş',meaning:{en:'bird',id:'burung'},audio:'audio/pronunciation_tr_kus.mp3',emoji:'🐦'},
   {id:'an_at',word:'at',meaning:{en:'horse',id:'kuda'},audio:'audio/pronunciation_tr_at.mp3',emoji:'🐴'},
   {id:'an_inek',word:'inek',meaning:{en:'cow',id:'sapi'},audio:'audio/pronunciation_tr_inek.mp3',emoji:'🐮'},
-  {id:'an_aslan',word:'aslan',meaning:{en:'lion',id:'singa'},audio:'audio/pronunciation_tr_aslan.mp3',emoji:'🦁'}
+  {id:'an_aslan',word:'aslan',meaning:{en:'lion',id:'singa'},audio:'audio/pronunciation_tr_aslan.mp3',emoji:'🦁'},
+  {id:'an_tavsan',word:'tavşan',meaning:{en:'rabbit',id:'kelinci'},audio:'audio/pronunciation_tr_tavsan.mp3',emoji:'🐰'}
 ];
 
 // Deconstruction: show a Turkish word, choose its meaning. Words are already
