@@ -141,6 +141,8 @@ button{cursor:pointer}
 .recall-grid.stack{grid-template-columns:1fr}
 .visual.swatch{border:1px solid rgba(0,0,0,.12)}
 .visual.emoji-cue span{font-size:46px}
+.visual .bignum{font-size:62px;font-weight:900;color:#0b2d6b}
+.recall-cue .visual .bignum{font-size:96px}
 .recall-cue .visual.emoji-cue span{font-size:84px}
 .recall-cue .visual.swatch{border:1px solid rgba(0,0,0,.12)}
 .recall-cue .word-stage{display:flex;align-items:center;gap:12px}

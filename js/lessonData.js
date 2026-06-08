@@ -9,7 +9,9 @@ export const TOPICS = [
   { id:'combo_builder', type:'builder', title:{en:'Suffix Stack Builder', id:'Susun Banyak Imbuhan'}, sub:{en:'evler + imiz + de = evlerimizde', id:'evler + imiz + de = evlerimizde'} },
   { id:'greetings', type:'vocab', title:{en:'Greetings', id:'Salam'}, sub:{en:'merhaba, günaydın, teşekkürler', id:'merhaba, günaydın, teşekkürler'} },
   { id:'colors', type:'vocab', title:{en:'Colors', id:'Warna'}, sub:{en:'kırmızı, mavi, sarı…', id:'kırmızı, mavi, sarı…'} },
+  { id:'numbers', type:'vocab', title:{en:'Numbers', id:'Angka'}, sub:{en:'0 – 10', id:'0 – 10'} },
   { id:'family', type:'vocab', title:{en:'Family', id:'Keluarga'}, sub:{en:'anne, baba, çocuk…', id:'anne, baba, çocuk…'} },
+  { id:'animals', type:'vocab', title:{en:'Animals', id:'Hewan'}, sub:{en:'kedi, köpek, kuş…', id:'kedi, köpek, kuş…'} },
   { id:'deconstruct', type:'deconstruct', title:{en:'What Does It Mean?', id:'Apa Artinya?'}, sub:{en:'Turkish word → meaning', id:'kata Turki → arti'} },
   { id:'review', type:'review', title:{en:'Mixed Review', id:'Ulang Campur'}, sub:{en:'Practice everything · no score', id:'Latih semua · tanpa skor'} }
 ];
@@ -135,7 +137,37 @@ export const COLORS = [
   {id:'cl_kahverengi',word:'kahverengi',meaning:{en:'brown',id:'cokelat'},audio:'audio/pronunciation_tr_kahverengi.mp3',swatch:'#8b5a2b'},
   {id:'cl_gri',word:'gri',meaning:{en:'gray',id:'abu-abu'},audio:'audio/pronunciation_tr_gri.mp3',swatch:'#9aa3ad'},
   {id:'cl_siyah',word:'siyah',meaning:{en:'black',id:'hitam'},audio:'audio/pronunciation_tr_siyah.mp3',swatch:'#1c1c1c'},
-  {id:'cl_beyaz',word:'beyaz',meaning:{en:'white',id:'putih'},audio:'audio/pronunciation_tr_beyaz.mp3',swatch:'#ffffff'}
+  {id:'cl_beyaz',word:'beyaz',meaning:{en:'white',id:'putih'},audio:'audio/pronunciation_tr_beyaz.mp3',swatch:'#ffffff'},
+  {id:'cl_lacivert',word:'lacivert',meaning:{en:'navy',id:'biru tua'},audio:'audio/pronunciation_tr_lacivert.mp3',swatch:'#1a237e'},
+  {id:'cl_turkuaz',word:'turkuaz',meaning:{en:'turquoise',id:'toska'},audio:'audio/pronunciation_tr_turkuaz.mp3',swatch:'#1abc9c'},
+  {id:'cl_bej',word:'bej',meaning:{en:'beige',id:'krem'},audio:'audio/pronunciation_tr_bej.mp3',swatch:'#d9c2a0'},
+  {id:'cl_altin',word:'altın',meaning:{en:'gold',id:'emas'},audio:'audio/pronunciation_tr_altin.mp3',swatch:'#d4af37'},
+  {id:'cl_gumus',word:'gümüş',meaning:{en:'silver',id:'perak'},audio:'audio/pronunciation_tr_gumus.mp3',swatch:'#b8bcc4'}
+];
+
+export const NUMBERS = [
+  {id:'num_0',word:'sıfır',meaning:{en:'0',id:'0'},audio:'audio/pronunciation_tr_sifir.mp3',digit:'0'},
+  {id:'num_1',word:'bir',meaning:{en:'1',id:'1'},audio:'audio/pronunciation_tr_bir.mp3',digit:'1'},
+  {id:'num_2',word:'iki',meaning:{en:'2',id:'2'},audio:'audio/pronunciation_tr_iki.mp3',digit:'2'},
+  {id:'num_3',word:'üç',meaning:{en:'3',id:'3'},audio:'audio/pronunciation_tr_uc.mp3',digit:'3'},
+  {id:'num_4',word:'dört',meaning:{en:'4',id:'4'},audio:'audio/pronunciation_tr_dort.mp3',digit:'4'},
+  {id:'num_5',word:'beş',meaning:{en:'5',id:'5'},audio:'audio/pronunciation_tr_bes.mp3',digit:'5'},
+  {id:'num_6',word:'altı',meaning:{en:'6',id:'6'},audio:'audio/pronunciation_tr_alti.mp3',digit:'6'},
+  {id:'num_7',word:'yedi',meaning:{en:'7',id:'7'},audio:'audio/pronunciation_tr_yedi.mp3',digit:'7'},
+  {id:'num_8',word:'sekiz',meaning:{en:'8',id:'8'},audio:'audio/pronunciation_tr_sekiz.mp3',digit:'8'},
+  {id:'num_9',word:'dokuz',meaning:{en:'9',id:'9'},audio:'audio/pronunciation_tr_dokuz.mp3',digit:'9'},
+  {id:'num_10',word:'on',meaning:{en:'10',id:'10'},audio:'audio/pronunciation_tr_on.mp3',digit:'10'}
+];
+
+// Animals — audio ready; using emoji cues until clay images are produced.
+export const ANIMALS = [
+  {id:'an_kopek',word:'köpek',meaning:{en:'dog',id:'anjing'},audio:'audio/pronunciation_tr_kopek.mp3',emoji:'🐶'},
+  {id:'an_kedi',word:'kedi',meaning:{en:'cat',id:'kucing'},audio:'audio/pronunciation_tr_kedi.mp3',emoji:'🐱'},
+  {id:'an_balik',word:'balık',meaning:{en:'fish',id:'ikan'},audio:'audio/pronunciation_tr_balik.mp3',emoji:'🐟'},
+  {id:'an_kus',word:'kuş',meaning:{en:'bird',id:'burung'},audio:'audio/pronunciation_tr_kus.mp3',emoji:'🐦'},
+  {id:'an_at',word:'at',meaning:{en:'horse',id:'kuda'},audio:'audio/pronunciation_tr_at.mp3',emoji:'🐴'},
+  {id:'an_inek',word:'inek',meaning:{en:'cow',id:'sapi'},audio:'audio/pronunciation_tr_inek.mp3',emoji:'🐮'},
+  {id:'an_aslan',word:'aslan',meaning:{en:'lion',id:'singa'},audio:'audio/pronunciation_tr_aslan.mp3',emoji:'🦁'}
 ];
 
 // Deconstruction: show a Turkish word, choose its meaning. Words are already
@@ -374,7 +406,7 @@ export const EXPLANATIONS = {
 let _reviewCache=null;
 export function reviewDataset(){
   if(_reviewCache) return _reviewCache;
-  const pool=[...ROOT_WORDS,...COLORS,...FAMILY,...GREETINGS];
+  const pool=[...ROOT_WORDS,...COLORS,...NUMBERS,...FAMILY,...ANIMALS,...GREETINGS];
   for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [pool[i],pool[j]]=[pool[j],pool[i]]; }
   _reviewCache=pool.slice(0,12);
   return _reviewCache;
@@ -390,7 +422,9 @@ export function datasetFor(topicId){
   if(topicId==='combo_builder') return COMBO_BUILDER;
   if(topicId==='greetings') return GREETINGS;
   if(topicId==='colors') return COLORS;
+  if(topicId==='numbers') return NUMBERS;
   if(topicId==='family') return FAMILY;
+  if(topicId==='animals') return ANIMALS;
   if(topicId==='deconstruct') return DECONSTRUCT;
   if(topicId==='review') return reviewDataset();
   return [];
