@@ -159,16 +159,16 @@ export const NUMBERS = [
   {id:'num_10',word:'on',meaning:{en:'10',id:'10'},audio:'audio/pronunciation_tr_on.mp3',digit:'10'}
 ];
 
-// Animals — audio ready; using emoji cues until clay images are produced.
+// Animals — audio ready; clay images cleaned and integrated.
 export const ANIMALS = [
-  {id:'an_kopek',word:'köpek',meaning:{en:'dog',id:'anjing'},audio:'audio/pronunciation_tr_kopek.mp3',emoji:'🐶'},
-  {id:'an_kedi',word:'kedi',meaning:{en:'cat',id:'kucing'},audio:'audio/pronunciation_tr_kedi.mp3',emoji:'🐱'},
-  {id:'an_balik',word:'balık',meaning:{en:'fish',id:'ikan'},audio:'audio/pronunciation_tr_balik.mp3',emoji:'🐟'},
-  {id:'an_kus',word:'kuş',meaning:{en:'bird',id:'burung'},audio:'audio/pronunciation_tr_kus.mp3',emoji:'🐦'},
-  {id:'an_at',word:'at',meaning:{en:'horse',id:'kuda'},audio:'audio/pronunciation_tr_at.mp3',emoji:'🐴'},
-  {id:'an_inek',word:'inek',meaning:{en:'cow',id:'sapi'},audio:'audio/pronunciation_tr_inek.mp3',emoji:'🐮'},
-  {id:'an_aslan',word:'aslan',meaning:{en:'lion',id:'singa'},audio:'audio/pronunciation_tr_aslan.mp3',emoji:'🦁'},
-  {id:'an_tavsan',word:'tavşan',meaning:{en:'rabbit',id:'kelinci'},audio:'audio/pronunciation_tr_tavsan.mp3',emoji:'🐰'}
+  {id:'an_kopek',word:'köpek',meaning:{en:'dog',id:'anjing'},audio:'audio/pronunciation_tr_kopek.mp3',image:'images/kopek.png',fallback:'🐶'},
+  {id:'an_kedi',word:'kedi',meaning:{en:'cat',id:'kucing'},audio:'audio/pronunciation_tr_kedi.mp3',image:'images/kedi.png',fallback:'🐱'},
+  {id:'an_balik',word:'balık',meaning:{en:'fish',id:'ikan'},audio:'audio/pronunciation_tr_balik.mp3',image:'images/balik.png',fallback:'🐟'},
+  {id:'an_kus',word:'kuş',meaning:{en:'bird',id:'burung'},audio:'audio/pronunciation_tr_kus.mp3',image:'images/kus.png',fallback:'🐦'},
+  {id:'an_at',word:'at',meaning:{en:'horse',id:'kuda'},audio:'audio/pronunciation_tr_at.mp3',image:'images/at.png',fallback:'🐴'},
+  {id:'an_inek',word:'inek',meaning:{en:'cow',id:'sapi'},audio:'audio/pronunciation_tr_inek.mp3',image:'images/inek.png',fallback:'🐮'},
+  {id:'an_aslan',word:'aslan',meaning:{en:'lion',id:'singa'},audio:'audio/pronunciation_tr_aslan.mp3',image:'images/aslan.png',fallback:'🦁'},
+  {id:'an_tavsan',word:'tavşan',meaning:{en:'rabbit',id:'kelinci'},audio:'audio/pronunciation_tr_tavsan.mp3',image:'images/tavsan.png',fallback:'🐰'}
 ];
 
 // Deconstruction: show a Turkish word, choose its meaning. Words are already
