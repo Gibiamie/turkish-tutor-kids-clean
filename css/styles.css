@@ -82,6 +82,7 @@ button{cursor:pointer}
 .module-card.lilac{background:linear-gradient(135deg,#e3dcff,#f5f1ff)}
 .module-card.indigo{background:linear-gradient(135deg,#cdd6ff,#eef1ff)}
 .module-card.teal{background:linear-gradient(135deg,#bdf3ea,#ecfffb)}
+.module-card.peach{background:linear-gradient(135deg,#ffd9c2,#fff2ea)}
 .module-art{font-size:34px;font-weight:950}
 .module-copy strong{display:block;font-size:17px;color:#082052;line-height:1.08}
 .module-copy em{display:block;font-style:normal;color:#33506e;font-size:13px;margin-top:5px;line-height:1.25}

@@ -10,7 +10,8 @@ export const TOPICS = [
   { id:'greetings', type:'vocab', title:{en:'Greetings', id:'Salam'}, sub:{en:'merhaba, günaydın, teşekkürler', id:'merhaba, günaydın, teşekkürler'} },
   { id:'colors', type:'vocab', title:{en:'Colors', id:'Warna'}, sub:{en:'kırmızı, mavi, sarı…', id:'kırmızı, mavi, sarı…'} },
   { id:'family', type:'vocab', title:{en:'Family', id:'Keluarga'}, sub:{en:'anne, baba, çocuk…', id:'anne, baba, çocuk…'} },
-  { id:'deconstruct', type:'deconstruct', title:{en:'What Does It Mean?', id:'Apa Artinya?'}, sub:{en:'Turkish word → meaning', id:'kata Turki → arti'} }
+  { id:'deconstruct', type:'deconstruct', title:{en:'What Does It Mean?', id:'Apa Artinya?'}, sub:{en:'Turkish word → meaning', id:'kata Turki → arti'} },
+  { id:'review', type:'review', title:{en:'Mixed Review', id:'Ulang Campur'}, sub:{en:'Practice everything · no score', id:'Latih semua · tanpa skor'} }
 ];
 
 export const ALPHABET_PRO = [
@@ -370,6 +371,14 @@ export const EXPLANATIONS = {
   }
 };
 
+let _reviewCache=null;
+export function reviewDataset(){
+  if(_reviewCache) return _reviewCache;
+  const pool=[...ROOT_WORDS,...COLORS,...FAMILY,...GREETINGS];
+  for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [pool[i],pool[j]]=[pool[j],pool[i]]; }
+  _reviewCache=pool.slice(0,12);
+  return _reviewCache;
+}
 export function datasetFor(topicId){
   if(topicId==='alphabet') return ALPHABET_PRO;
   if(topicId==='root_words') return ROOT_WORDS;
@@ -383,7 +392,9 @@ export function datasetFor(topicId){
   if(topicId==='colors') return COLORS;
   if(topicId==='family') return FAMILY;
   if(topicId==='deconstruct') return DECONSTRUCT;
+  if(topicId==='review') return reviewDataset();
   return [];
 }
 export function topicById(id){ return TOPICS.find(t=>t.id===id) || null; }
-export function allLessonItems(){ return TOPICS.flatMap(topic => datasetFor(topic.id).map(item => ({...item, topicId:topic.id, topicType:topic.type}))); }
+// Exclude the 'review' topic: it reuses other items, so it must not double-count in progress/audit.
+export function allLessonItems(){ return TOPICS.filter(t=>t.type!=='review').flatMap(topic => datasetFor(topic.id).map(item => ({...item, topicId:topic.id, topicType:topic.type}))); }
