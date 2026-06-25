@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Redirecting…</title>
+</head>
+<body>
+  <script>
+    (function(){
+      var repoBase = '/turkish-tutor-kids-clean';
+      var path = window.location.pathname;
+      var route = path.startsWith(repoBase) ? path.slice(repoBase.length) : path;
+      var target = repoBase + '/?route=' + encodeURIComponent(route || '/') + window.location.hash;
+      window.location.replace(target);
+    })();
+  </script>
+</body>
+</html>
