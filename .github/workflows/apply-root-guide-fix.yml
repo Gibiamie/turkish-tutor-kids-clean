@@ -1,0 +1,72 @@
+name: Apply Root Words teaching fix
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-root-guide:
+    if: ${{ !contains(github.event.head_commit.message || '', '[root-guide-fix]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Replace empty Root Words guidance with teaching content
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('js/app.js')
+          text = path.read_text(encoding='utf-8')
+          replacements = [
+              (
+                  "function root(x,p,q,n){const l=s.language;",
+                  "function root(x,p,q,n){const l=s.language,meaning=localized(x.meaning,l),word=x.word||'',rootLead=l==='id'?`Kata bahasa Turki “${word}” berarti “${meaning}”. Ketuk tombol suara, dengarkan dengan saksama, lalu ucapkan “${word}” sebelum latihan.`:`The Turkish word “${word}” means “${meaning}”. Tap the speaker, listen carefully, then say “${word}” before practice.`;"
+              ),
+              (
+                  "${guide(l==='id'?'Dengarkan, lihat, lalu mulai latihan.':'Listen, look, then start practice.')}",
+                  "${guide(rootLead)}"
+              ),
+              (
+                  "<div><p>${esc(localized(x.meaning,l))}</p></div>",
+                  "<div><h2 class=\"word-large\">${esc(word)}</h2><p>${esc(meaning)}</p></div>"
+              ),
+              (
+                  "${guide(l==='id'?'Cocokkan petunjuk dengan kata Turki yang benar.':'Match the clue with the correct Turkish word.')}",
+                  "${guide(l==='id'?`Sekarang pilih kata Turki yang berarti “${meaning}”.`:`Now choose the Turkish word that means “${meaning}”.`)}"
+              )
+          ]
+          changed = False
+          for old, new in replacements:
+              if old in text:
+                  text = text.replace(old, new, 1)
+                  changed = True
+              elif new not in text:
+                  raise SystemExit(f'Expected source fragment not found: {old[:90]}')
+          if changed:
+              path.write_text(text, encoding='utf-8')
+          PY
+          node --check js/app.js
+          grep -F 'The Turkish word “${word}” means “${meaning}”' js/app.js
+          grep -F '<h2 class="word-large">${esc(word)}</h2>' js/app.js
+          if grep -Fq 'Listen, look, then start practice.' js/app.js; then
+            echo 'Generic empty Root Words guide still exists.' >&2
+            exit 1
+          fi
+      - name: Commit corrected source application
+        run: |
+          if git diff --quiet -- js/app.js; then
+            echo 'Root Words teaching fix already present.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add js/app.js
+          git commit -m '[root-guide-fix] Teach each Root Words item in Laya guide'
+          git push origin main
